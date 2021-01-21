@@ -1,0 +1,46 @@
+{
+  "name": "kitmarketfront",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env PORT=3000 next dev",
+    "build": "cross-env ANALYZE=true NODE_ENV=production next build",
+    "prestart": "npm run build",
+    "start": "cross-env NODE_ENV=production PORT=3000 node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeongJin984/KitMarketFront.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeongJin984/KitMarketFront/issues"
+  },
+  "homepage": "https://github.com/JeongJin984/KitMarketFront#readme",
+  "dependencies": {
+    "@emotion/core": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@next/bundle-analyzer": "^10.0.5",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "immer": "^8.0.1",
+    "next": "^10.0.5",
+    "next-redux-wrapper": "^6.0.2",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-saga": "^1.1.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
