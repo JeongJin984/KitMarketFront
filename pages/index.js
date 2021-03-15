@@ -26,8 +26,8 @@ const Home = () => {
 		}, []
 	) 
 
-	const Button = styled.button`
-		background: transparent;
+	const LoginButton = styled.button`
+		background: #8FBC8F;
 		border-radius: 10px;
 		border: 2px solid #497649;
 		color: black;
@@ -37,11 +37,23 @@ const Home = () => {
 		:hover {
 			background-color: #E1FFE1;	
 		}
+		`;
 
+	const CancelButton = styled.button`
+		background: white;
+		border-radius: 10px;
+		border: 2px solid #497649;
+		color: black;
+		margin: 0.5em 1em;
+		padding: 0.5em 2em;
+
+		:hover {
+			background-color: #E1FFE1;	
+		}
 		`;
 
 	const Card = styled.section`
-		height: 300px;
+		height: 350px;
 		width: 400px;
 		border-radius: 30px;
 		border-width : 3px;
@@ -51,7 +63,7 @@ const Home = () => {
 		position: absolute;
 		left: 50%;
 		top: 50%; 
- 		transform: translate(-50%, 100%);
+ 		transform: translate(-50%, 90%);
 	`
 
 
@@ -76,14 +88,12 @@ const Home = () => {
 							<Input type="password" name="password" id="examplePassword" placeholder="password" />
 							</Col>
 						</FormGroup>
-						<FormGroup>
-							
-						</FormGroup>
+						<CardText className = "text-right"><a href="#">Forget Password?</a></CardText>
 						<FormGroup check row>
-							<Col sm={{ size: 9, offset: 1 }}>
-							<Button>Login</Button>
-							</Col>
+							<CancelButton>Cancel</CancelButton>
+							<LoginButton>Login</LoginButton>
 						</FormGroup>
+						<CardText>Not a member? <a href="#">Sign up</a></CardText>
 					</Form>
 					</Card>
 				</Col>
