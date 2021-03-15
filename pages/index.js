@@ -44,6 +44,9 @@ const Home = () => {
 							<Input type="password" name="password" id="examplePassword" placeholder="password" />
 							</Col>
 						</FormGroup>
+						<FormGroup>
+							
+						</FormGroup>
 						<FormGroup check row>
 							<Col sm={{ size: 9, offset: 1 }}>
 							<Button class = 'Loginbutton'>Login</Button>

@@ -11,9 +11,20 @@
     float: right;
     padding : 3px;
 }
+.Loginbutton:hover{
+    width: 50px;
+    float: right;
+    padding : 3px;
+    background-color: gray;
+}
 .Joinbutton {
     width: 50px;
     float: left;
     padding : 3px;
-
+}
+.Joinbutton:hover {
+    width: 50px;
+    float: left;
+    padding : 3px;
+    background-color: gray;
 }
