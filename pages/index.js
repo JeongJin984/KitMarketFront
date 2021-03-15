@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 
+import styled, { css } from 'styled-components'
+
 import { Row, Col, Button, Form, FormGroup, Label, Input, FormText, Card, CardTitle, CardText  } from 'reactstrap';
 
 import { useDispatch } from 'react-redux';
@@ -24,23 +26,53 @@ const Home = () => {
 		}, []
 	) 
 
+	const Button = styled.button`
+		background: transparent;
+		border-radius: 10px;
+		border: 2px solid #497649;
+		color: black;
+		margin: 0.5em 1em;
+		padding: 0.5em 2em;
+
+		:hover {
+			background-color: #E1FFE1;	
+		}
+
+		`;
+
+	const Card = styled.section`
+		height: 300px;
+		width: 400px;
+		border-radius: 30px;
+		border-width : 3px;
+		border-style : dashed;
+		border-color : #497649;
+		background: #F0FFF0;
+		position: absolute;
+		left: 50%;
+		top: 50%; 
+ 		transform: translate(-50%, 100%);
+	`
+
+
+
 	return (
-		<div class='Logincard'>
+		<div>
 			<Row>
-				<Col class = 'col' sm="6">
+				<Col className = "text-center">
 					<Card body>
-					<CardTitle tag="h5">LOGIN</CardTitle>
+					<CardTitle tag="h3">LOGIN</CardTitle>
 					<CardText>ID와 Password를 입력해주세요.</CardText>
-					<Form className = "text-center">
+					<Form >
 						<FormGroup row>
-							<Label className = "text-center" for="exampleEmail" sm={5}>ID</Label>
-							<Col sm={5}>
+							<Label className = "text-center" for="exampleEmail" sm={4}>ID</Label>
+							<Col sm={7}>
 							<Input type="email" name="email" id="exampleEmail" placeholder="ID" />
 							</Col>
 						</FormGroup>
 						<FormGroup row>
-							<Label className = "text-center" for="examplePassword" sm={5}>Password</Label>
-							<Col sm={5}>
+							<Label className = "text-center" for="examplePassword" sm={4}>Password</Label>
+							<Col sm={7}>
 							<Input type="password" name="password" id="examplePassword" placeholder="password" />
 							</Col>
 						</FormGroup>
@@ -49,8 +81,7 @@ const Home = () => {
 						</FormGroup>
 						<FormGroup check row>
 							<Col sm={{ size: 9, offset: 1 }}>
-							<Button class = 'Loginbutton'>Login</Button>
-							<Button class = 'Joinbutton'>Join</Button>
+							<Button>Login</Button>
 							</Col>
 						</FormGroup>
 					</Form>

@@ -1,5 +1,4 @@
 import { wrapper } from '../store'
-import './app.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
