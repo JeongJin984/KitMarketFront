@@ -1,0 +1,19 @@
+.Logincard {
+    text-align: center;
+    width: 30%;
+    margin: auto;
+  }
+.col {
+    padding: 200px 0;
+  }
+.Loginbutton{
+    width: 50px;
+    float: right;
+    padding : 3px;
+}
+.Joinbutton {
+    width: 50px;
+    float: left;
+    padding : 3px;
+
+}
