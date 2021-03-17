@@ -36,7 +36,7 @@ const Home = () => {
 	return (
 		<Container className="themed-container" fluid="lg">
       <Row>
-        <Col xs="4" style={{backgroundColor: "balck"}}></Col>
+        <Col xs="4" style={{backgroundColor: "white"}}></Col>
         <Col xs="4">
 					<Form style={{ marginTop: "40%" }}>
 						<img style={{ width: "100%"}} src="https://cdn.logo.com/hotlink-ok/logo-social.png" alt="BigCo Inc. logo"/>
