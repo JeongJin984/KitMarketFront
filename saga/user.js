@@ -1,39 +1,48 @@
-import { all, fork, takeLatest, put, call } from 'redux-saga/effects'
-import { 
-	LOGIN_REQUEST,
-	LOGIN_SUCCESS, 
-	LOGIN_FAILURE, 
-} from '../reducer/user'
+import { all, fork, takeLatest, put, call } from 'redux-saga/effects';
+import {
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  loginSuccess,
+  loginFailure,
+  logoutRequest,
+} from '../reducer/user';
 
-import axios from 'axios'
-const { frontURL } = require('../config/config')
+import axios from 'axios';
+const { frontURL } = require('../config/config');
 
-// function logInAPI(data) {
-// 	return axios.post('/user/login', data)
-// }
+function logInAPI(data) {
+  console.log('loginapi', data);
+  return axios.post('https://reqres.in/api/login', data);
+}
+
+function logOutAPI() {
+  console.log('logoutapi');
+  return axios.post('https://reqres.in/api/login');
+}
 
 function* logIn(action) {
-	try {
-		// const result = yield call(logInAPI, action.data)
-		console.log("asdfasdf")
-		yield put({
-			type: LOGIN_SUCCESS,
-			data: action.data
-		})
-	} catch (error) {
-		yield put({
-			type: LOGIN_FAILURE,
-			error: error
-		})
-	}
+  try {
+    const result = yield call(logInAPI, action.data);
+    yield put(loginSuccess(action.data));
+  } catch (error) {
+    //yield fork(console.log('error', error));
+    yield put(loginFailure(error));
+  }
+}
+
+function* logOut(action) {
+  const result = yield call(logOutAPI);
+  yield put(logoutRequest());
 }
 
 function* watchLogIn() {
-	yield takeLatest(LOGIN_REQUEST, logIn)
+  yield takeLatest(LOGIN_REQUEST, logIn);
+}
+
+function* watchLogout() {
+  yield takeLatest(LOGOUT_REQUEST, logOut);
 }
 
 export default function* userSaga() {
-	yield all([
-		fork(watchLogIn)
-	])
+  yield all([fork(watchLogIn), fork(watchLogout)]);
 }
