@@ -12,12 +12,12 @@ const { frontURL } = require('../config/config');
 
 function logInAPI(data) {
   console.log('loginapi', data);
-  return axios.post('https://reqres.in/api/login', data);
+  return axios.post('http://localhost:8080/api/login', data);
 }
 
 function logOutAPI() {
   console.log('logoutapi');
-  return axios.post('https://reqres.in/api/login');
+  return axios.post('http://localhost:8080/api/logout');
 }
 
 function* logIn(action) {
