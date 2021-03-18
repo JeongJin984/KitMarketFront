@@ -11,8 +11,11 @@ import axios from 'axios';
 const { frontURL } = require('../config/config');
 
 function logInAPI(data) {
-  console.log('loginapi', data);
-  return axios.post('http://localhost:8080/api/login', data);
+  return axios.post('http://localhost:8080/api/login', data, {
+    headers : {
+      'X-Request-With': 'XMLHttpRequest'
+    } 
+  });
 }
 
 function logOutAPI() {
@@ -23,9 +26,8 @@ function logOutAPI() {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    yield put(loginSuccess(action.data));
+    yield put(loginSuccess(result.data));
   } catch (error) {
-    //yield fork(console.log('error', error));
     yield put(loginFailure(error));
   }
 }

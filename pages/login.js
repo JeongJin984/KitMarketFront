@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import styled, { css } from 'styled-components';
 
@@ -17,17 +17,34 @@ import { useDispatch } from 'react-redux';
 import { loginRequest } from '../reducer/user';
 
 const Home = () => {
+    const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+
+    const onChangeUsername = useCallback(
+		(e) => {
+			setUsername(e.target.value)
+		},
+		[],
+	) 
+
+	const onChangePassword = useCallback(
+		(e) => {
+			setPassword(e.target.value)
+		},
+		[],
+	) 
+
+
   const dispatch = useDispatch();
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const data = {
-      username: e.target.formBasicUsername.value,
-      password: e.target.formBasicPassword.value,
-    };
-
+        username: username,
+        password: password
+    }
     dispatch(loginRequest(data));
-  }, []);
+  }, [username, password]);
 
   return (
     <Container className="themed-container" fluid="lg">
@@ -46,10 +63,12 @@ const Home = () => {
               </Label>
               <Input
                 valid
-                type="email"
+                type="text"
                 name="email"
                 id="exampleEmail"
-                placeholder="Email"
+                placeholder="UserName"
+                value={username}
+                onChange={onChangeUsername}
               />
             </FormGroup>{' '}
             <FormGroup>
@@ -61,6 +80,8 @@ const Home = () => {
                 name="password"
                 id="examplePassword"
                 placeholder="Password"
+                value={password}
+                onChange={onChangePassword}
               />
             </FormGroup>
             <Row>
@@ -75,7 +96,7 @@ const Home = () => {
                 </Form>
               </Col>
               <Col xs="5">
-                <Button style={{ width: '120px', margin: '3%' }}>LogIn</Button>
+                <Button type="submit" style={{ width: '120px', margin: '3%' }}>LogIn</Button>
               </Col>
             </Row>
           </Form>
