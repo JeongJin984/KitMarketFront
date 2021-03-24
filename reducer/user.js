@@ -4,6 +4,8 @@ const initialState = {
   error: '',
   isLoggedIn: false,
   isLogginIn: false,
+  isSignedUp: false,
+  isSigningUp: false,
   me: {
     username: '',
     password: '',
@@ -16,6 +18,10 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+
 export const loginRequest = (data) => {
   console.log('loginRequest', data);
   return {
@@ -24,27 +30,16 @@ export const loginRequest = (data) => {
   };
 };
 
-export const loginSuccess = (data) => {
-  console.log('loginsucc');
-  sessionStorage.setItem('user', data.username);
-  return {
-    type: LOGIN_SUCCESS,
-    data,
-  };
-};
-
-export const loginFailure = (error) => {
-  console.log('fail');
-  return {
-    type: LOGIN_FAILURE,
-    error,
-  };
-};
-
 export const logoutRequest = () => {
-  sessionStorage.removeItem('user');
   return {
     type: LOGOUT_REQUEST,
+  };
+};
+
+export const signUpRequest = (data) => {
+  return {
+    type: SIGNUP_REQUEST,
+    data,
   };
 };
 
@@ -74,6 +69,26 @@ const userReducer = (state = initialState, action) => {
       case LOGOUT_REQUEST:
         draft.isLoggedIn = false;
         draft.me = null;
+        break;
+
+      case SIGNUP_REQUEST:
+        draft.isSigningUp = true;
+        draft.isSignedUp = false;
+        draft.error = '';
+        break;
+
+      case SIGNUP_SUCCESS:
+        draft.isSigningUp = false;
+        draft.isSignedUp = true;
+        draft.me = action.data;
+        break;
+
+      case SIGNUP_FAILURE:
+        draft.isSigningUp = false;
+        draft.isSignedUp = false;
+        draft.error = action.error;
+        break;
+
       default:
         break;
     }

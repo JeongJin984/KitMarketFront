@@ -1,118 +1,205 @@
 import React, { useCallback, useState } from 'react';
 
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
-import { Button, 
-	Form, 
-	FormGroup, 
-	Label, 
-	Input, 
-	Container, 
-	Row, 
-	Col,
-	Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormFeedback,
+  Label,
+  Input,
+  Container,
+  Row,
+  Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 
 import { useDispatch } from 'react-redux';
-import { LOGIN_REQUEST } from '../reducer/user';
+import { signUpRequest } from '../reducer/user';
+import { useRouter } from 'next/router';
 
 const Home = () => {
-	const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState('false');
+  const [isPwdValid, setIsPwdValid] = useState('false');
+  const [password, setPassword] = useState('');
 
-	const toggle = () => setDropdownOpen(prevState => !prevState);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
+  const onChangePassword = useCallback((e) => {
+    setPassword(e.target.value);
+  }, []);
 
-	const dispatch = useDispatch();
+  const checkPassword = useCallback(
+    (e) => {
+      if (password === e.target.value) {
+        setIsPwdValid('valid');
+      } else {
+        setIsPwdValid('invalid');
+      }
+    },
+    [password]
+  );
 
-	const handleSubmit = useCallback(
-		(e) => {
-			e.preventDefault();
-			dispatch({
-				type: LOGIN_REQUEST,
-				data: {
-					username: {
-						username: e.target.formBasicUsername.value,
-						password: e.target.formBasicPassword.value
-					}
-				}
-			})
-		}, []
-	) 
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const username = formData.get('username');
+    const email = formData.get('username');
+    const data = {
+      username: username,
+      email: email,
+      password: password,
+    };
+    dispatch(signUpRequest(data));
+  }, []);
 
-	return (
-		<Container className="themed-container" fluid="lg">
+  const validateEmail = useCallback((e) => {
+    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailRex.test(e.target.value)) {
+      setIsEmailValid('valid');
+    } else {
+      setIsEmailValid('invalid');
+    }
+  }, []);
+
+  const onClickCancle = (e) => {
+    e.preventDefault();
+    router.push('/login');
+  };
+
+  return (
+    <Container className="themed-container" fluid="lg">
       <Row>
-        <Col xs="2" style={{backgroundColor: "white"}}></Col>
+        <Col xs="2" style={{ backgroundColor: 'white' }}></Col>
         <Col xs="8">
-					<Form style={{ marginTop: "30%" }}>
-						<Label style={{marginTop: "5%"}}><h1>회원 가입</h1></Label>
-						{' '}
-						<FormGroup>
-							<Label>Username</Label>
-								<Row>
-									<Col xs="10">
-										<Label for="exampleUsername" hidden>Username</Label>
-										<Input type="username" name="username" id="exampleUsername" placeholder="Username" />	
-									</Col>
-									<Col xs="2">
-										<Button style={{width: "95px", margin: "2%"}}>중복 확인</Button>
-									</Col>
-								</Row>
-						</FormGroup>
-						{' '}
-						<FormGroup>
-							<Label>Email</Label>
-								<Row>
-									<Col xs="10">
-										<Label for="exampleEmail" hidden>Email</Label>
-										<Input valid type="email" name="email" id="exampleEmail" placeholder="Email" />	
-									</Col>
-									<Col xs="2">
-										<Button style={{width: "95px", margin: "2%"}}>중복 확인</Button>
-									</Col>
-								</Row>
-						</FormGroup>
-						{' '}
-						<FormGroup>
-							<Label>Password</Label>
-							<Label for="examplePassword" hidden>Password</Label>
-							<Row>
-								<Col xs="6">
-									<Input valid type="password" name="password" id="examplePassword" placeholder="Password" />
-								</Col>
-								<Col xs="6">
-									<Input valid type="password" name="password" id="examplePassword" placeholder="Password Check" />
-								</Col>
-							</Row>
-						</FormGroup>
-						{' '}
-						<FormGroup>
-							
-						</FormGroup>
-						{' '}
-					</Form>
-					<Row>
-						<Col xs="4">
-
-						</Col>
-						<Col xs="4">
-							<Row>
-							<Col xs="6">
-							<Button outline color="secondary" style={{marginTop : "50px", width: "100%", height: "50px"}}>취소</Button>
-							</Col>
-							<Col xs="6">
-							<Button style={{marginTop : "50px", width: "100%", height: "50px"}}>회원가입</Button>
-							</Col>
-							</Row>
-						</Col>
-						<Col xs="4">
-		
-						</Col>
-					</Row>
-				</Col>
+          <Form onSubmit={handleSubmit} style={{ marginTop: '30%' }}>
+            <Label style={{ marginTop: '5%' }}>
+              <h1>회원 가입</h1>
+            </Label>{' '}
+            <FormGroup required>
+              <Label>Username</Label>
+              <Row>
+                <Col xs="10">
+                  <Label for="exampleUsername" hidden>
+                    Username
+                  </Label>
+                  <Input
+                    type="text"
+                    name="username"
+                    id="exampleUsername"
+                    placeholder="Username"
+                    required
+                  />
+                </Col>
+                <Col xs="2">
+                  <Button style={{ width: '95px', margin: '2%' }}>
+                    중복 확인
+                  </Button>
+                </Col>
+              </Row>
+            </FormGroup>{' '}
+            <FormGroup>
+              <Label>Email</Label>
+              <Row>
+                <Col xs="10">
+                  <Label for="exampleEmail" hidden>
+                    Email
+                  </Label>
+                  <Input
+                    type="email"
+                    name="email"
+                    id="exampleEmail"
+                    placeholder="Email"
+                    onChange={validateEmail}
+                    invalid={isEmailValid === 'invalid'}
+                    required
+                  />
+                  <FormFeedback invalid>올바르지 않은 형식입니다.</FormFeedback>
+                </Col>
+                <Col xs="2">
+                  <Button style={{ width: '95px', margin: '2%' }}>
+                    중복 확인
+                  </Button>
+                </Col>
+              </Row>
+            </FormGroup>{' '}
+            <FormGroup>
+              <Label>Password</Label>
+              <Label for="examplePassword" hidden>
+                Password
+              </Label>
+              <Row>
+                <Col xs="6">
+                  <Input
+                    type="password"
+                    name="password"
+                    id="examplePassword"
+                    placeholder="Password"
+                    onChange={onChangePassword}
+                    required
+                  />
+                </Col>
+                <Col xs="6">
+                  <Input
+                    type="password"
+                    name="passwordCheck"
+                    id="examplePassword"
+                    placeholder="Password Check"
+                    onChange={checkPassword}
+                    invalid={isPwdValid === 'invalid'}
+                    required
+                  />
+                </Col>
+              </Row>
+            </FormGroup>{' '}
+            <FormGroup></FormGroup>{' '}
+            <Row>
+              <Col xs="4"></Col>
+              <Col xs="4">
+                <Row>
+                  <Col xs="6">
+                    <Button
+                      outline
+                      color="secondary"
+                      style={{
+                        marginTop: '50px',
+                        width: '100%',
+                        height: '50px',
+                      }}
+                      onClick={onClickCancle}
+                    >
+                      취소
+                    </Button>
+                  </Col>
+                  <Col xs="6">
+                    <Button
+                      type="submit"
+                      style={{
+                        marginTop: '50px',
+                        width: '100%',
+                        height: '50px',
+                      }}
+                    >
+                      회원가입
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs="4"></Col>
+            </Row>
+          </Form>
+        </Col>
         <Col xs="2"></Col>
       </Row>
-		</Container>
-	  );
-}
+    </Container>
+  );
+};
 
 export default Home;
