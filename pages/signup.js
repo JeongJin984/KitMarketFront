@@ -23,12 +23,11 @@ import { signUpRequest } from '../reducer/user';
 import { useRouter } from 'next/router';
 
 const Home = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState('false');
-  const [isPwdValid, setIsPwdValid] = useState('false');
+
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPwdValid, setIsPwdValid] = useState(false);
   const [password, setPassword] = useState('');
 
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,9 +38,9 @@ const Home = () => {
   const checkPassword = useCallback(
     (e) => {
       if (password === e.target.value) {
-        setIsPwdValid('valid');
+        setIsPwdValid(true);
       } else {
-        setIsPwdValid('invalid');
+        setIsPwdValid(false);
       }
     },
     [password]
@@ -51,21 +50,22 @@ const Home = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const username = formData.get('username');
-    const email = formData.get('username');
+    const email = formData.get('email');
+    const password = formData.get('password')
     const data = {
       username: username,
       email: email,
       password: password,
     };
     dispatch(signUpRequest(data));
-  }, []);
+  }, [password]);
 
   const validateEmail = useCallback((e) => {
     const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRex.test(e.target.value)) {
-      setIsEmailValid('valid');
+      setIsEmailValid(true);
     } else {
-      setIsEmailValid('invalid');
+      setIsEmailValid(false);
     }
   }, []);
 
@@ -77,12 +77,14 @@ const Home = () => {
   return (
     <Container className="themed-container" fluid="lg">
       <Row>
-        <Col xs="2" style={{ backgroundColor: 'white' }}></Col>
-        <Col xs="8">
-          <Form onSubmit={handleSubmit} style={{ marginTop: '30%' }}>
-            <Label style={{ marginTop: '5%' }}>
-              <h1>회원 가입</h1>
-            </Label>{' '}
+        <Col xs="3" style={{ backgroundColor: 'white' }}></Col>
+        <Col xs="6">
+          <Form onSubmit={handleSubmit} style={{ marginTop: '25%' }}>
+            <div style={{textAlign: "center"}}>
+              <Label style={{ marginTop: '5%' }}>
+                  <h1>회원 가입</h1>
+              </Label>{' '}
+            </div>
             <FormGroup required>
               <Label>Username</Label>
               <Row>
@@ -112,15 +114,27 @@ const Home = () => {
                   <Label for="exampleEmail" hidden>
                     Email
                   </Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    id="exampleEmail"
-                    placeholder="Email"
-                    onChange={validateEmail}
-                    invalid={isEmailValid === 'invalid'}
-                    required
-                  />
+                  {
+                    isEmailValid ?
+                    <Input
+                      type="email"
+                      name="email"
+                      id="exampleEmail"
+                      placeholder="Email"
+                      onChange={validateEmail}
+                      valid
+                      required
+                    /> :
+                    <Input
+                      type="email"
+                      name="email"
+                      id="exampleEmail"
+                      placeholder="Email"
+                      onChange={validateEmail}
+                      invalid
+                      required
+                    />
+                  }
                   <FormFeedback invalid>올바르지 않은 형식입니다.</FormFeedback>
                 </Col>
                 <Col xs="2">
@@ -147,22 +161,34 @@ const Home = () => {
                   />
                 </Col>
                 <Col xs="6">
-                  <Input
-                    type="password"
-                    name="passwordCheck"
-                    id="examplePassword"
-                    placeholder="Password Check"
-                    onChange={checkPassword}
-                    invalid={isPwdValid === 'invalid'}
-                    required
-                  />
+                  {
+                    isPwdValid ?
+                      <Input
+                        type="password"
+                        name="passwordCheck"
+                        id="examplePassword"
+                        placeholder="Password Check"
+                        onChange={checkPassword}
+                        valid
+                        required
+                      /> :
+                      <Input
+                        type="password"
+                        name="passwordCheck"
+                        id="examplePassword"
+                        placeholder="Password Check"
+                        onChange={checkPassword}
+                        invalid
+                        required
+                      />
+                  }
                 </Col>
               </Row>
             </FormGroup>{' '}
             <FormGroup></FormGroup>{' '}
             <Row>
-              <Col xs="4"></Col>
-              <Col xs="4">
+              <Col xs="3"></Col>
+              <Col xs="6">
                 <Row>
                   <Col xs="6">
                     <Button
@@ -185,6 +211,7 @@ const Home = () => {
                         marginTop: '50px',
                         width: '100%',
                         height: '50px',
+                        marginLeft: "10px"
                       }}
                     >
                       회원가입
@@ -192,7 +219,7 @@ const Home = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col xs="4"></Col>
+              <Col xs="3"></Col>
             </Row>
           </Form>
         </Col>

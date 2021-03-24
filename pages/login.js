@@ -27,14 +27,6 @@ const Home = () => {
 		},
 		[],
 	) 
-
-	const onChangePassword = useCallback(
-		(e) => {
-			setPassword(e.target.value)
-		},
-		[],
-	) 
-
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
   }, []);

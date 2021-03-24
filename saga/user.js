@@ -59,8 +59,8 @@ function* logOut(action) {
 
 function* signUp(action) {
   try {
-    const result = yield call(signUpAPI, action.data);
-    console.log('signup successful');
+    //const result = yield call(signUpAPI, action.data);
+    console.log(action.data);
     // yield put({
     //   type: SIGNUP_SUCCESS,
     // });
