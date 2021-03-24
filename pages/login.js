@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 import { loginRequest } from '../reducer/user';
 
 const Home = () => {
-    const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
     const onChangeUsername = useCallback(

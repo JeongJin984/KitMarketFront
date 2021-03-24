@@ -11,7 +11,7 @@ import axios from 'axios';
 const { frontURL } = require('../config/config');
 
 function logInAPI(data) {
-  return axios.post('http://localhost:8080/api/login', data, {
+  return axios.post('/api/login', data, {
     headers : {
       'X-Request-With': 'XMLHttpRequest'
     } 
