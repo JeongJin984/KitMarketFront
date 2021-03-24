@@ -52,7 +52,7 @@ const Home = () => {
                     <Row>
                         <Col xs = "1">
                     <img
-                    resizeMode={'cover'}
+                    resizemode={'cover'}
                     style={{ width: '170%'}}
                     src="https://cdn.logo.com/hotlink-ok/logo-social.png"
                     alt="BigCo Inc. logo"
