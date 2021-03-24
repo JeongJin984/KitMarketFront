@@ -112,16 +112,27 @@ const Home = () => {
                   <Label for="exampleEmail" hidden>
                     Email
                   </Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    id="exampleEmail"
-                    placeholder="Email"
-                    onChange={validateEmail}
-                    invalid={isEmailValid === 'invalid'}
-                    required
-                  />
-                  <FormFeedback invalid>올바르지 않은 형식입니다.</FormFeedback>
+                  {isEmailValid === 'invalid' ? (
+                    <Input
+                      type="email"
+                      name="email"
+                      id="exampleEmail"
+                      placeholder="Email"
+                      onChange={validateEmail}
+                      invalid
+                      required
+                    />
+                  ) : (
+                    <Input
+                      type="email"
+                      name="email"
+                      id="exampleEmail"
+                      placeholder="Email"
+                      onChange={validateEmail}
+                      required
+                    />
+                  )}
+                  <FormFeedback>올바르지 않은 형식입니다.</FormFeedback>
                 </Col>
                 <Col xs="2">
                   <Button style={{ width: '95px', margin: '2%' }}>
@@ -147,15 +158,26 @@ const Home = () => {
                   />
                 </Col>
                 <Col xs="6">
-                  <Input
-                    type="password"
-                    name="passwordCheck"
-                    id="examplePassword"
-                    placeholder="Password Check"
-                    onChange={checkPassword}
-                    invalid={isPwdValid === 'invalid'}
-                    required
-                  />
+                  {isPwdValid === 'invalid' ? (
+                    <Input
+                      type="password"
+                      name="passwordCheck"
+                      id="examplePassword"
+                      placeholder="Password Check"
+                      onChange={checkPassword}
+                      invalid
+                      required
+                    />
+                  ) : (
+                    <Input
+                      type="password"
+                      name="passwordCheck"
+                      id="examplePassword"
+                      placeholder="Password Check"
+                      onChange={checkPassword}
+                      required
+                    />
+                  )}
                 </Col>
               </Row>
             </FormGroup>{' '}
