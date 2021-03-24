@@ -15,36 +15,38 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { loginRequest } from '../reducer/user';
+import { useRouter } from 'next/router';
 
 const Home = () => {
-    const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const onChangeUsername = useCallback((e) => {
+    setUsername(e.target.value);
+  }, []);
 
-    const onChangeUsername = useCallback(
-		(e) => {
-			setUsername(e.target.value)
-		},
-		[],
-	) 
-
-	const onChangePassword = useCallback(
-		(e) => {
-			setPassword(e.target.value)
-		},
-		[],
-	) 
-
+  const onChangePassword = useCallback((e) => {
+    setPassword(e.target.value);
+  }, []);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    const data = {
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const data = {
         username: username,
-        password: password
-    }
-    dispatch(loginRequest(data));
-  }, [username, password]);
+        password: password,
+      };
+      dispatch(loginRequest(data));
+    },
+    [username, password]
+  );
+
+  const onClickSignUp = useCallback((e) => {
+    e.preventDefault();
+    router.push('/signup');
+  }, []);
 
   return (
     <Container className="themed-container" fluid="lg">
@@ -96,7 +98,9 @@ const Home = () => {
                 </Form>
               </Col>
               <Col xs="5">
-                <Button type="submit" style={{ width: '120px', margin: '3%' }}>LogIn</Button>
+                <Button type="submit" style={{ width: '120px', margin: '3%' }}>
+                  LogIn
+                </Button>
               </Col>
             </Row>
           </Form>
@@ -104,6 +108,7 @@ const Home = () => {
             outline
             color="info"
             style={{ width: '100%', marginTop: '30px', height: '100px' }}
+            onClick={onClickSignUp}
           >
             Don't you have Account? <br /> Make Account!
           </Button>{' '}
