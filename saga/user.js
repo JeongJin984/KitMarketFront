@@ -12,24 +12,36 @@ import axios from 'axios';
 
 const { frontURL } = require('../config/config');
 function logInAPI(data) {
-  return axios.post('http://localhost:8080/api/login', data, {
+  return axios({
+    method: 'post',
+    url: '/api/login',
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: data,
+  });
+}
+
+function logOutAPI() {
+  console.log('logoutapi');
+  return axios({
+    method: 'post',
+    url: '/api/logout',
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
   });
 }
 
-function logOutAPI() {
-  console.log('logoutapi');
-  return axios.post('http://localhost:8080/api/logout');
-}
-
 function signUpAPI(data) {
   console.log('signUpAPI');
-  return axios.post('http://localhost:8080/api/signup', data, {
+  return axios({
+    method: 'post',
+    url: '/api/signup',
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
+    data: data,
   });
 }
 
@@ -60,10 +72,10 @@ function* logOut(action) {
 function* signUp(action) {
   try {
     const result = yield call(signUpAPI, action.data);
+    yield put({
+      type: SIGNUP_SUCCESS,
+    });
     console.log('signup successful');
-    // yield put({
-    //   type: SIGNUP_SUCCESS,
-    // });
   } catch (error) {
     yield put({
       type: SIGNUP_FAILURE,
