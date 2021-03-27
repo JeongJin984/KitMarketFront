@@ -20,7 +20,7 @@ import {
     ButtonDropdown,
     ButtonGroup, ButtonToolbar} from 'reactstrap';
 
-const AppLayout = (props) => {
+const AppLayout = ({children}) => {
     const [dropdownOpen, setOpen] = useState(false);
 
     const togglebutton = () => setOpen(!dropdownOpen);
@@ -93,9 +93,9 @@ const AppLayout = (props) => {
                     </Col>
                     <Col xs = "11"/*child */> 
                     <div>
-                    <Jumbotron style={{ marginTop: '2%' }}>
-                        <h1 className="display-3">Hello, world!</h1>
-                        <p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
+                    <Jumbotron style={{ height:'120%',marginTop: '2%' }}>
+                        <h1 className="display-3">프로그램 가제</h1>
+                        <p className="lead">간단한 설명</p>
                         <hr className="my-2" />
                         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                         <p className="lead">
