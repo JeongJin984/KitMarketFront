@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import AppLayout from '../components';
+import AppLayout from '../components/AppLayout';
 
-const home = () => {
+const Home = () => {
     return (
         <AppLayout>
             <div>
@@ -11,4 +11,4 @@ const home = () => {
     )
 }
 
-export default home;
+export default Home;

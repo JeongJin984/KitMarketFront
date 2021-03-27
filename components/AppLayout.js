@@ -20,7 +20,7 @@ import {
     ButtonDropdown,
     ButtonGroup, ButtonToolbar} from 'reactstrap';
 
-const AppLayout = ({children}) => {
+const AppLayout = ({ children }) => {
     const [dropdownOpen, setOpen] = useState(false);
 
     const togglebutton = () => setOpen(!dropdownOpen);
