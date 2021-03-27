@@ -92,6 +92,24 @@ const AppLayout = ({ children }) => {
                             </div>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col xs = "5">
+                        </Col>
+                        <Col xs = "2">
+                        <p></p>
+                            <ButtonToolbar >
+                                <ButtonGroup style={{ marginTop: '15%', marginBottom:'10%'}}>
+                                    <Button outline color="secondary">1</Button>
+                                    <Button outline color="secondary">2</Button>
+                                    <Button outline color="secondary">3</Button>
+                                    <Button outline color="secondary">4</Button>
+                                    <Button outline color="secondary">5</Button>
+                                </ButtonGroup>
+                            </ButtonToolbar>
+                        </Col>
+                        <Col xs = "5">
+                        </Col>
+                    </Row>
                 </Col>
                 <Col xs= "1">
                 </Col>
