@@ -115,7 +115,7 @@ const AppLayout = ({ children }) => {
 				</Col>
 			</Row>
 		</div>
-	  );
+	);
 }
 
 export default AppLayout;
