@@ -13,20 +13,18 @@ import {
   Col,
 } from 'reactstrap';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest } from '../reducer/user';
 import { useRouter } from 'next/router';
 
-const Home = () => {
-  const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [checked, setChecked] = useState(false);
 
-    const onChangeUsername = useCallback(
-		(e) => {
-			setUsername(e.target.value)
-		},
-		[],
-	) 
+  const onChangeUsername = useCallback((e) => {
+    setUsername(e.target.value);
+  }, []);
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
   }, []);
@@ -38,13 +36,19 @@ const Home = () => {
     (e) => {
       e.preventDefault();
       const data = {
-        username: username,
-        password: password,
+        username,
+        password,
+        'remember-me': checked,
       };
       dispatch(loginRequest(data));
     },
     [username, password]
   );
+
+  const handleCheck = useCallback((e) => {
+    console.log(e.target.checked);
+    setChecked(e.target.checked);
+  }, []);
 
   const onClickSignUp = useCallback((e) => {
     e.preventDefault();
@@ -69,7 +73,7 @@ const Home = () => {
               <Input
                 valid
                 type="text"
-                name="email"
+                name="username"
                 id="exampleEmail"
                 placeholder="UserName"
                 value={username}
@@ -93,7 +97,11 @@ const Home = () => {
               <Col xs="7">
                 <Form>
                   <FormGroup check inline>
-                    <Input id="InlineCheckboxes-checkbox-1" type="checkbox" />
+                    <Input
+                      id="InlineCheckboxes-checkbox-1"
+                      type="checkbox"
+                      onChange={handleCheck}
+                    />
                     <Label for="InlineCheckboxes-checkbox-1" check>
                       로그인 유지
                     </Label>
@@ -122,4 +130,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;
