@@ -62,11 +62,11 @@ const Login = () => {
         <Col xs="4">
           <Form onSubmit={handleSubmit} style={{ marginTop: '40%' }}>
             <img
-              style={{ width: '100%' }}
-              src="https://cdn.logo.com/hotlink-ok/logo-social.png"
-              alt="BigCo Inc. logo"
+              style={{ marginLeft: '10%', width: '70%' }}
+              src="/images/knilogo.png"
+              alt="KnI logo"
             />
-            <FormGroup>
+            <FormGroup style={{marginTop : '15%'}}>
               <Label for="exampleEmail" hidden>
                 Email
               </Label>
