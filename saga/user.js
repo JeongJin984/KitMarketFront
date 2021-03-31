@@ -12,24 +12,33 @@ import axios from 'axios';
 
 const { frontURL } = require('../config/config');
 function logInAPI(data) {
-  return axios.post('/api/login', data, {
-    headers : {
-      'X-Request-With': 'XMLHttpRequest'
-    } 
+  return axios({
+    method: 'post',
+    url: '/api/login',
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data,
   });
 }
 
 function logOutAPI() {
   console.log('logoutapi');
-  return axios.post('http://localhost:8080/api/logout');
+  return axios({
+    methos: 'post',
+    url: '/api/logout',
+  });
 }
 
 function signUpAPI(data) {
   console.log('signUpAPI');
-  return axios.post('http://localhost:8080/api/signup', data, {
+  return axios({
+    method: 'post',
+    url: '/api/signup',
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
+    data,
   });
 }
 
