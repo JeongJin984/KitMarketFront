@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
+
 import styled, { css } from 'styled-components';
 
 import {
@@ -60,22 +61,22 @@ const AppLayout = ({ children }) => {
                 <Collapse isOpen={isOpen} navbar>
                   <Nav className="mr-auto" navbar>
                     <NavItem>
-                      <Link href="/helloworld">공모전　　</Link>
+                      <NavLink href="/components/">공모전　　</NavLink>
                     </NavItem>
                     <NavItem>
-                      <Link href="/helloworld">조별과제　　</Link>
+                      <NavLink href="/components/">조별과제　　</NavLink>
                     </NavItem>
                     <NavItem>
-                      <Link href="/helloworld">OTT　　</Link>
+                      <NavLink href="/components/">OTT　　</NavLink>
                     </NavItem>
                     <NavItem>
-                      <Link href="/helloworld">스터디　　</Link>
+                      <NavLink href="/components/">스터디　　</NavLink>
                     </NavItem>
                     <NavItem>
-                      <Link href="/helloworld">공동구매　　</Link>
+                      <NavLink href="/components/">공동구매　　</NavLink>
                     </NavItem>
                     <NavItem>
-                      <Link href="/helloworld">카풀/택시　　</Link>
+                      <NavLink href="/components/">카풀/택시　　</NavLink>
                     </NavItem>
                   </Nav>
                   <Nav className="ml-auto" navbar>
