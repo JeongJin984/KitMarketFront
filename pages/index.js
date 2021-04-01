@@ -75,20 +75,20 @@ const Home = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store, req }) => {
-    console.log('start');
-    const cookie = req ? req.headers.cookie : '';
-    if (req && cookie) {
-      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-    }
-    console.log('cookie', req.headers);
-    store.dispatch(loadMainPostsRequest());
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-    await store.sagaTask.toPromise();
-    // getState()로 로그인 여부 확인가능
-    //console.log('me', store.getState().user.me);
-  }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store, req }) => {
+//     console.log('start');
+//     const cookie = req ? req.headers.cookie : '';
+//     if (req && cookie) {
+//       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+//     }
+//     console.log('cookie', req.headers);
+//     store.dispatch(loadMainPostsRequest());
+//     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+//     await store.sagaTask.toPromise();
+//     // getState()로 로그인 여부 확인가능
+//     //console.log('me', store.getState().user.me);
+//   }
+// );
 
 export default Home;

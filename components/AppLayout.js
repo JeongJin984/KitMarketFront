@@ -83,25 +83,6 @@ const AppLayout = ({ children }) => {
                       <NavLink href="/helloworld">카풀/택시　　</NavLink>
                     </NavItem>
                   </Nav>
-                  <Nav className="ml-auto" navbar>
-                    <ButtonDropdown
-                      isOpen={dropdownOpen}
-                      toggle={togglebutton}
-                    >
-                      <Button id="caret" color="light"></Button>
-                      <DropdownToggle split color="light" />
-                      <DropdownMenu>
-                        <DropdownItem>회원정보</DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>내 모임 현황</DropdownItem>
-                        <DropdownItem>내 모임 신청 현황</DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>신청 대기 중</DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem>로그아웃</DropdownItem>
-                      </DropdownMenu>
-                    </ButtonDropdown>
-                  </Nav>
                     <>
                       <Button outline color="primary">
                         Signup
@@ -110,7 +91,6 @@ const AppLayout = ({ children }) => {
                     </>
                   <Nav className="ml-auto" navbar>
                     <ButtonDropdown isOpen={dropdownOpen} toggle={togglebutton}>
-                      {/* <Button id="caret" color="light"></Button> */}
                       <DropdownToggle split color="light">
                       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
                       <link rel="stylesheet" href="style.css" />
