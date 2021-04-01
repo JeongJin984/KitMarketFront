@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import AppLayout from '../components/AppLayout';
 import PostRow from '../components/PostRow';
-
+import { wrapper } from '../store';
+import { END } from 'redux-saga';
+import axios from 'axios';
 import { loadMainPostsRequest } from '../reducer/post';
 
 import {
@@ -21,13 +23,12 @@ import {
 } from 'reactstrap';
 
 const Home = () => {
-  const dispatch = useDispatch();
-  // const { mainPosts } = useSelector((state) => state.post);
-  // console.log(mainPosts);
+  const { mainPosts } = useSelector((state) => state.post);
+  console.log(mainPosts);
   // useEffect(() => {
   //   dispatch(loadMainPostsRequest());
   // }, []);
-  const mainPosts = [1, 2, 3, 4, 5];
+  //const mainPosts = [1, 2, 3, 4, 5];
   return (
     <AppLayout>
       {/* <Col xs ="1">
@@ -59,5 +60,21 @@ const Home = () => {
     </AppLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store, req }) => {
+    console.log('start');
+    const cookie = req ? req.headers.cookie : '';
+    if (req && cookie) {
+      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+    }
+    console.log('cookie', req.headers);
+    store.dispatch(loadMainPostsRequest());
+    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+    await store.sagaTask.toPromise();
+    // getState()로 로그인 여부 확인가능
+    //console.log('me', store.getState().user.me);
+  }
+);
 
 export default Home;

@@ -23,7 +23,7 @@ const PostCard = ({ postInfo }) => {
           alt="Card image cap"
         />
         <CardBody>
-          <CardTitle tag="h5">Card title</CardTitle>
+          <CardTitle tag="h5">{postInfo.title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
             Card subtitle
           </CardSubtitle>
