@@ -1,8 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 
-import styled, { css } from 'styled-components';
-
 import {
   Row,
   Col,
@@ -16,13 +14,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Jumbotron,
   Button,
   ButtonDropdown,
   ButtonGroup,
