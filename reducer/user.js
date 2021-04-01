@@ -4,12 +4,12 @@ const initialState = {
   error: '',
   isLoggedIn: false,
   isLogginIn: false,
-  'remember-me': false,
   isSignedUp: false,
   isSigningUp: false,
   me: {
     username: '',
     password: '',
+    'remember-me': false,
   },
 };
 
@@ -58,7 +58,6 @@ const userReducer = (state = initialState, action) => {
         draft.isLoggedIn = true;
         draft.error = '';
         draft.me = action.data;
-        draft['remember-me'] = action.data['remember-me'];
         break;
 
       case LOGIN_FAILURE:
@@ -71,7 +70,6 @@ const userReducer = (state = initialState, action) => {
       case LOGOUT_REQUEST:
         draft.isLoggedIn = false;
         draft.me = null;
-        draft['remember-me'] = false;
         break;
 
       case SIGNUP_REQUEST:
