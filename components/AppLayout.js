@@ -51,7 +51,7 @@ const AppLayout = ({ children }) => {
                 alt="KnI logo"
               />
             </Col>
-            <Col xs="11" style={{ marginTop: '1%' }}>
+            <Col xs="11" style={{ marginTop: '1%'}}>
               <Navbar className="Navbar" color="light" light expand="md">
                 <NavbarBrand href="/">
                   <img
@@ -63,7 +63,7 @@ const AppLayout = ({ children }) => {
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
-                  <Nav className="mr-auto" navbar>
+                  <Nav className="mr-auto" style={{ marginLeft:'-6%'}} navbar>
                     <NavItem>
                       <NavLink href="/helloworld">공모전　　</NavLink>
                     </NavItem>
@@ -83,34 +83,53 @@ const AppLayout = ({ children }) => {
                       <NavLink href="/helloworld">카풀/택시　　</NavLink>
                     </NavItem>
                   </Nav>
-                  {loggedIn ? (
-                    <Nav className="ml-auto" navbar>
-                      <ButtonDropdown
-                        isOpen={dropdownOpen}
-                        toggle={togglebutton}
-                      >
-                        <Button id="caret" color="light"></Button>
-                        <DropdownToggle split color="light" />
-                        <DropdownMenu>
-                          <DropdownItem>회원정보</DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem>내 모임 현황</DropdownItem>
-                          <DropdownItem>내 모임 신청 현황</DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem>신청 대기 중</DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem>로그아웃</DropdownItem>
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </Nav>
-                  ) : (
+                  <Nav className="ml-auto" navbar>
+                    <ButtonDropdown
+                      isOpen={dropdownOpen}
+                      toggle={togglebutton}
+                    >
+                      <Button id="caret" color="light"></Button>
+                      <DropdownToggle split color="light" />
+                      <DropdownMenu>
+                        <DropdownItem>회원정보</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>내 모임 현황</DropdownItem>
+                        <DropdownItem>내 모임 신청 현황</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>신청 대기 중</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>로그아웃</DropdownItem>
+                      </DropdownMenu>
+                    </ButtonDropdown>
+                  </Nav>
                     <>
                       <Button outline color="primary">
                         Signup
                       </Button>{' '}
                       <Button color="link"> Login</Button>
                     </>
-                  )}
+                  <Nav className="ml-auto" navbar>
+                    <ButtonDropdown isOpen={dropdownOpen} toggle={togglebutton}>
+                      {/* <Button id="caret" color="light"></Button> */}
+                      <DropdownToggle split color="light">
+                      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
+                      <link rel="stylesheet" href="style.css" />
+                      <a className="user-btn" href="#">
+                          <i className="fas fa-user" style={{color:'black'}}/>
+                      </a>
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem>회원정보</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>내 모임 현황</DropdownItem>
+                        <DropdownItem>내 모임 신청 현황</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>신청 대기 중</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>로그아웃</DropdownItem>
+                      </DropdownMenu>
+                    </ButtonDropdown>
+                  </Nav>
                 </Collapse>
               </Navbar>
               <div>{children}</div>
