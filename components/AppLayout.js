@@ -38,15 +38,20 @@ const AppLayout = ({ children }) => {
             <Col xs="1">
               <img
                 resizemode={'cover'}
-                style={{ width: '170%' }}
-                src="https://cdn.logo.com/hotlink-ok/logo-social.png"
-                alt="BigCo Inc. logo"
+                style={{ marginLeft : '30%', width: '80%' }}
+                src="/images/logo.png"
+                alt="KnI logo"
               />
             </Col>
             <Col xs="11" style={{ marginTop: '1%' }}>
               <Navbar className="Navbar" color="light" light expand="md">
-                <NavbarBrand style={{ marginRight: '5%' }} href="/">
-                  프로젝트 가제
+                <NavbarBrand href="/">
+                  <img
+                  resizemode={'cover'}
+                  style={{ width: '40%' }}
+                  src="/images/kni.png"
+                  alt="KnI"
+                  />
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
@@ -92,36 +97,41 @@ const AppLayout = ({ children }) => {
             </Col>
           </Row>
           <Row>
-            <Col xs="5"></Col>
-            <Col xs="2">
-              <p></p>
-              <ButtonToolbar>
-                <ButtonGroup style={{ marginTop: '15%', marginBottom: '10%' }}>
-                  <Button outline color="secondary">
-                    1
-                  </Button>
-                  <Button outline color="secondary">
-                    2
-                  </Button>
-                  <Button outline color="secondary">
-                    3
-                  </Button>
-                  <Button outline color="secondary">
-                    4
-                  </Button>
-                  <Button outline color="secondary">
-                    5
-                  </Button>
-                </ButtonGroup>
-              </ButtonToolbar>
-            </Col>
-            <Col xs="5"></Col>
-          </Row>
-        </Col>
-        <Col xs="1"></Col>
-      </Row>
-    </div>
-  );
-};
+						<Col xs='1'> </Col>
+						<Col xs='11'>
+							<Row>
+								<Col xs = '5'>
+								</Col>
+								<Col xs= '1' >
+									<ButtonToolbar >
+									<ButtonGroup style={{ marginLeft : '28%', marginTop: '40%', marginBottom:'10%',}}>
+										<Button outline color="secondary">
+                      1
+                    </Button>
+										<Button outline color="secondary">
+                      2
+                    </Button>
+										<Button outline color="secondary">
+                      3
+                    </Button>
+										<Button outline color="secondary">
+                      4
+                    </Button>
+										<Button outline color="secondary">
+                      5
+                    </Button>
+									</ButtonGroup>
+									</ButtonToolbar>
+								</Col>
+							</Row>
+						</Col>
+					</Row>
+				</Col>
+				<Col xs= "1">
+				</Col>
+			</Row>
+		</div>
+	);
+}
 
 export default AppLayout;

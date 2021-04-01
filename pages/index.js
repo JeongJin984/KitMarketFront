@@ -30,8 +30,9 @@ const Home = () => {
   const mainPosts = [1, 2, 3, 4, 5];
   return (
     <AppLayout>
-      <Col xs="1"></Col>
-      <Col xs="11" /*child */>
+      {/* <Col xs ="1">
+            </Col> */}
+      <Col xs="12" /*child */>
         <div>
           <Jumbotron style={{ height: '120%', marginTop: '2%' }}>
             <h1 className="display-3">프로그램 가제</h1>
