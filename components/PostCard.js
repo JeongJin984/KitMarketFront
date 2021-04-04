@@ -25,7 +25,7 @@ const PostCard = ({ postInfo }) => {
         <CardBody>
           <CardTitle tag="h5">{postInfo.title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            Card subtitle
+            {postInfo.account}
           </CardSubtitle>
           <CardText>
             Some quick example text to build on the card title and make up the
