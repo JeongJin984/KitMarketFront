@@ -19,7 +19,7 @@ const ModalButton = () => {
         textAlign:'center',
         margin:'0',
         position:'absolute',
-        bottom:'-80%',
+        bottom:'-5%',
         right:'-5%'}}>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
         <link rel="stylesheet" href="style.css" />

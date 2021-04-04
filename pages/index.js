@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import AppLayout from '../components/AppLayout';
 import ModalButton from '../components/ModalButton';
-import PostRow from '../components/PostRow';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
