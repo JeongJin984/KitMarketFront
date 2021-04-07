@@ -30,12 +30,12 @@ const ModalButton = () => {
       <Modal size='lg' isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>게시글 작성</ModalHeader>
         <ModalBody>
-          <label tag="h3">제목</label>
+          <label style={{ fontWeight: 'bold'}}>제목</label>
           <Input placeholder="제목" />
           <br />
           <Row>
             <Col xs = '3'>
-              <label>구하는 인원</label>
+              <label style={{ fontWeight: 'bold'}}>구하는 인원</label>
             </Col>
             <Col xs='6'>
               <Row>
@@ -55,10 +55,10 @@ const ModalButton = () => {
             </Col>
           </Row>
           <br />
-          <label>내용</label>
+          <label style={{ fontWeight: 'bold'}}>내용</label>
           <Input type="textarea" name="text" id="exampleText" placeholder="내용"/>
           <br />
-          <label>마감 날짜 & 시간</label>
+          <label style={{ fontWeight: 'bold'}}>마감 날짜 & 시간</label>
           <Row>
             <Col xs = '2'>
               <Input placeholder=""/>
