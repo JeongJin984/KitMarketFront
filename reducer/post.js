@@ -1,10 +1,45 @@
 import produce from 'immer';
 
 const initialState = {
-  email: '',
   isLoadingPosts: false,
   isLoadedPosts: false,
-  mainPosts: [],
+  mainPosts: [
+    {
+      id: 346,
+      account: 'Account0',
+      title: 'Contest25',
+      content: "I'm Contest25",
+      applications: null,
+    },
+    {
+      id: 326,
+      account: 'Account0',
+      title: 'Contest20',
+      content: "I'm Contest20",
+      applications: null,
+    },
+    {
+      id: 306,
+      account: 'Account0',
+      title: 'Contest15',
+      content: "I'm Contest15",
+      applications: null,
+    },
+    {
+      id: 286,
+      account: 'Account0',
+      title: 'Contest10',
+      content: "I'm Contest10",
+      applications: null,
+    },
+    {
+      id: 266,
+      account: 'Account0',
+      title: 'Contest5',
+      content: "I'm Contest5",
+      applications: null,
+    },
+  ],
   isPosting: false,
   isPosted: false,
   error: '',
@@ -18,9 +53,10 @@ export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
-export const loadMainPostsRequest = () => {
+export const loadMainPostsRequest = (category) => {
   return {
     type: LOAD_MAIN_POSTS_REQUEST,
+    category,
   };
 };
 

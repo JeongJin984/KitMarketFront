@@ -10,10 +10,10 @@ import {
   ADD_POST_FAILURE,
 } from '../reducer/post';
 
-function loadPostsAPI() {
+function loadPostsAPI(category) {
   return axios({
     method: 'GET',
-    url: '/api/postList',
+    url: `/api/${category}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -24,9 +24,10 @@ function loadPostsAPI() {
 // 	return axios.post('/chat/', data)
 // }
 
-function* loadPosts() {
+function* loadPosts(action) {
   try {
-    const result = yield call(loadPostsAPI);
+    console.log(action.category);
+    const result = yield call(loadPostsAPI, action.category);
     console.log('result', result.data);
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
@@ -38,6 +39,7 @@ function* loadPosts() {
       type: LOAD_MAIN_POSTS_FAILURE,
       error,
     });
+    console.log('load post error');
   }
 }
 
