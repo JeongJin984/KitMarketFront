@@ -37,7 +37,13 @@ const Home = () => {
             <Col xs="1">
               <ButtonToolbar>
                 <ButtonGroup
-                  style={{ marginLeft: '90%', marginTop: '40%', marginBottom: '10%',}}>
+                  style={{ marginLeft: '5%', marginTop: '40%', marginBottom: '10%',}}>
+                  <Button outline color="secondary">
+                    ⟪
+                  </Button>
+                  <Button outline color="secondary">
+                    ⟨
+                  </Button>
                   <Button outline color="secondary">
                     1
                   </Button>
@@ -52,6 +58,12 @@ const Home = () => {
                   </Button>
                   <Button outline color="secondary">
                     5
+                  </Button>
+                  <Button outline color="secondary">
+                    ⟩
+                  </Button>
+                  <Button outline color="secondary">
+                    ⟫
                   </Button>
                 </ButtonGroup>
               </ButtonToolbar>
