@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
 
 import {
   Row,
@@ -20,6 +22,7 @@ import {
   ButtonGroup,
   ButtonToolbar,
 } from 'reactstrap';
+
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
@@ -86,7 +89,7 @@ const AppLayout = ({ children }) => {
                       </Link>
                     </NavItem>
                     <NavItem>
-                      <Link
+                      <Link style={{ textDecoration: 'none' }}
                         href={{
                           pathname: '/helloworld',
                         }}
@@ -184,43 +187,7 @@ const AppLayout = ({ children }) => {
               <div>{children}</div>
             </Col>
           </Row>
-          <Row>
-            <Col xs="1"> </Col>
-            <Col xs="11">
-              <Row>
-                <Col xs="5"></Col>
-                <Col xs="1">
-                  <ButtonToolbar>
-                    <ButtonGroup
-                      style={{
-                        marginLeft: '28%',
-                        marginTop: '40%',
-                        marginBottom: '10%',
-                      }}
-                    >
-                      <Button outline color="secondary">
-                        1
-                      </Button>
-                      <Button outline color="secondary">
-                        2
-                      </Button>
-                      <Button outline color="secondary">
-                        3
-                      </Button>
-                      <Button outline color="secondary">
-                        4
-                      </Button>
-                      <Button outline color="secondary">
-                        5
-                      </Button>
-                    </ButtonGroup>
-                  </ButtonToolbar>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
         </Col>
-        <Col xs="1"></Col>
       </Row>
     </div>
   );

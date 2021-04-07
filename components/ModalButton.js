@@ -19,8 +19,8 @@ const ModalButton = () => {
         textAlign:'center',
         margin:'0',
         position:'absolute',
-        bottom:'-15%',
-        right:'-5%'}}>
+        bottom:'5%',
+        right:'-7%'}}>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
         <link rel="stylesheet" href="style.css" />
         <a className="search-btn" href="#">

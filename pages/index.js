@@ -5,7 +5,7 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import { loadMainPostsRequest } from '../reducer/post';
 
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
 import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
 import AppLayout from '../components/AppLayout';
@@ -20,9 +20,7 @@ const Home = () => {
 
   return (
     <AppLayout>
-      {/* <Col xs ="1">
-            </Col> */}
-      <Col xs="12" /*child */>
+      <Col xs="12">
         <JumbotronComponent />
         <Row>
           {mainPosts.map((postInfo) => (
@@ -31,6 +29,36 @@ const Home = () => {
         </Row>
       </Col>
       <ModalButton />
+      <Row>
+        <Col xs="1"> </Col>
+        <Col xs="11">
+          <Row>
+            <Col xs="4"></Col>
+            <Col xs="1">
+              <ButtonToolbar>
+                <ButtonGroup
+                  style={{ marginLeft: '90%', marginTop: '40%', marginBottom: '10%',}}>
+                  <Button outline color="secondary">
+                    1
+                  </Button>
+                  <Button outline color="secondary">
+                    2
+                  </Button>
+                  <Button outline color="secondary">
+                    3
+                  </Button>
+                  <Button outline color="secondary">
+                    4
+                  </Button>
+                  <Button outline color="secondary">
+                    5
+                  </Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     </AppLayout>
   );
 };
