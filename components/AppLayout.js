@@ -75,22 +75,67 @@ const AppLayout = ({ children }) => {
                 <Collapse isOpen={isOpen} navbar>
                   <Nav className="mr-auto" style={{ marginLeft: '-6%' }} navbar>
                     <NavItem>
-                      <NavLink href="/contest">공모전　　</NavLink>
+                      <Link
+                        href={{
+                          pathname: '/category',
+                          query: { category: 'contestList' },
+                        }}
+                        as="/category/"
+                      >
+                        공모전　　
+                      </Link>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="/helloworld">조별과제　　</NavLink>
+                      <Link
+                        href={{
+                          pathname: '/helloworld',
+                        }}
+                        //as="/category/"
+                      >
+                        조별과제　　
+                      </Link>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="/helloworld">OTT　　</NavLink>
+                      <Link
+                        href={{
+                          pathname: '/helloworld',
+                        }}
+                        //as="/category/"
+                      >
+                        OTT　　
+                      </Link>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="/helloworld">스터디　　</NavLink>
+                      <Link
+                        href={{
+                          pathname: '/category',
+                          query: { category: 'studyList' },
+                        }}
+                        as="/category/"
+                      >
+                        스터디　　
+                      </Link>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="/helloworld">공동구매　　</NavLink>
+                      <Link
+                        href={{
+                          pathname: '/helloworld',
+                        }}
+                        //as="/category/"
+                      >
+                        공동구매　　
+                      </Link>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="/helloworld">카풀/택시　　</NavLink>
+                      <Link
+                        href={{
+                          pathname: '/category',
+                          query: { category: 'carPoolList' },
+                        }}
+                        as="/category/"
+                      >
+                        카풀/택시　　
+                      </Link>
                     </NavItem>
                   </Nav>
                   {loggedIn ? (
