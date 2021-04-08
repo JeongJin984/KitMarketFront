@@ -1,7 +1,5 @@
 import React, { useState, } from 'react';
-import { Row, Col, Card, Button, CardTitle, CardText, CardSubtitle,Form,
-  FormGroup,Popover, PopoverHeader, PopoverBody,
-  Label,Input } from 'reactstrap';
+import { Row, Col, Card, Button, CardTitle, CardText, CardSubtitle, Form, FormGroup, UncontrolledPopover, PopoverHeader, PopoverBody, Badge, Label, Input } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 
 const PostView = () => {
@@ -49,8 +47,7 @@ const PostView = () => {
 							<br />
 							<br />
 							<br />
-							<div>이전으로</div>
-							{/* 헌재님 이겁니다!! */}
+							<Badge href="#" color="light">이전으로</Badge>
 						</Col>
 						<Col xs="3">
 						<Button id="Popover1" outline color='secondary' onClick={toggle}
@@ -63,10 +60,10 @@ const PostView = () => {
 								marginRight:'5%'}}>
 								연락하기
 						</Button>
-						<Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
+						<UncontrolledPopover trigger="legacy" placement="bottom" target="Popover1">
 							<PopoverHeader>'작성자' 연락처</PopoverHeader>
-							<PopoverBody>카카오톡 id : asdfghjkl</PopoverBody>
-						</Popover>
+							<PopoverBody>카카오톡 id : asdfghjk</PopoverBody>
+						</UncontrolledPopover>
 						<Button color="secondary" onClick={toggle}
 							style={{
 								marginLeft:'-120%',
