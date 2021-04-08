@@ -78,7 +78,7 @@ const ModalButton = () => {
           </Row>
           <br />
           <label style={{ fontWeight: 'bold'}}>내용</label>
-          <Input type="textarea" name="text" id="exampleText" placeholder="내용"/>
+          <Input style={{ height: 300 }} type="textarea" name="text" id="exampleText" placeholder="내용"/>
           <br />
           <label style={{ fontWeight: 'bold'}}>마감 날짜 & 시간</label>
           <Row>
