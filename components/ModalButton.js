@@ -30,11 +30,33 @@ const ModalButton = () => {
       <Modal size='lg' isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>게시글 작성</ModalHeader>
         <ModalBody>
-          <label style={{ fontWeight: 'bold'}}>제목</label>
-          <Input placeholder="제목" />
+          <Row>
+            <Col xs='2'>
+              <label style={{ fontWeight: 'bold'}}>카테고리</label>
+            </Col>
+            <Col xs='3'>
+              <Input type="select" name="select" id="exampleSelect">
+              <option>공모전</option>
+              <option>조별과제</option>
+              <option>OTT</option>
+              <option>스터디</option>
+              <option>공동구매</option>
+              <option>카풀/택시</option>
+          </Input>
+            </Col>
+          </Row>
           <br />
           <Row>
-            <Col xs = '3'>
+            <Col xs='2'>
+              <label style={{ fontWeight: 'bold'}}>제목</label>
+            </Col>
+            <Col xs='10'>
+              <Input placeholder="제목" />
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col xs = '2'>
               <label style={{ fontWeight: 'bold'}}>구하는 인원</label>
             </Col>
             <Col xs='6'>

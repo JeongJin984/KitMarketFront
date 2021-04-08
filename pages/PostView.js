@@ -12,6 +12,9 @@ const PostView = () => {
 			<Row style={{padding:'1%', marginTop:'2%'}}>
 				<Col xs = "8" style={{marginRight:'1%', flexWrap:'wrap'}}>
 				<Card body outline style={{ backgroundColor: '#E6E6E6', borderColor: '#E6E6E6' }}>
+				<CardText tag="h6" className="mb-2 text-muted text-right">
+                2021.04.08. 6:30PM
+				</CardText>
 				<br />
 				<Row>
             <Col xs = "7">
@@ -39,17 +42,6 @@ const PostView = () => {
             </Col>
           </Row>
 					<br />
-					<Row>
-            <Col xs = "6">
-            </Col>
-            <Col xs = "6">
-              <CardText tag="h6" className="mb-2 text-muted text-right">
-                2021.04.08. 6:30PM
-								<br />
-								<br />
-              </CardText>
-            </Col>
-          </Row>
 					<Row>
 						<Col xs="9">
 							<br />
