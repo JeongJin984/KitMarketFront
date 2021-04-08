@@ -1,13 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, } from 'react';
 import { Row, Col, Card, Button, CardTitle, CardText, CardSubtitle,Form,
-  FormGroup,
+  FormGroup,Popover, PopoverHeader, PopoverBody,
   Label,Input } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 
 const PostView = () => {
-	const [modal, setModal] = useState(false);
+	const [popoverOpen, setPopoverOpen] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => setPopoverOpen(!popoverOpen);
+
 
   return (
     <AppLayout>
@@ -52,7 +53,7 @@ const PostView = () => {
 							{/* 헌재님 이겁니다!! */}
 						</Col>
 						<Col xs="3">
-						<Button outline color='secondary' onClick={toggle}
+						<Button id="Popover1" outline color='secondary' onClick={toggle}
 							style={{
 								width:'90px',
 								height:'90px',
@@ -62,7 +63,11 @@ const PostView = () => {
 								marginRight:'5%'}}>
 								연락하기
 						</Button>
-						<Button color="dark" onClick={toggle}
+						<Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
+							<PopoverHeader>'작성자' 연락처</PopoverHeader>
+							<PopoverBody>카카오톡 id : asdfghjkl</PopoverBody>
+						</Popover>
+						<Button color="secondary" onClick={toggle}
 							style={{
 								marginLeft:'-120%',
 								width:'90px',
@@ -113,7 +118,7 @@ const PostView = () => {
 							</FormGroup>
             </Form>
 						<hr />
-						<Button color="secondary" size="lg">완료</Button>
+						<Button color="dark" size="lg">완료</Button>
 					</Card>
 				</Col>
 			</Row>
