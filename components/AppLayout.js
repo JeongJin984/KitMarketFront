@@ -3,6 +3,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
+const NavStyle = styled.nav`
+  // display: flex;
+  // justify-content: space-between;
+  // text-decoration:none;
+  a {
+    background-color: none;
+    color: #7a7a79;
+    padding: 0.5rem;
+    text-decoration: none;
+
+    &[aria-current] {
+      background-color: none;
+      color: none;
+    }
+  }
+`;
 
 import {
   Row,
@@ -19,10 +35,7 @@ import {
   DropdownItem,
   Button,
   ButtonDropdown,
-  ButtonGroup,
-  ButtonToolbar,
 } from 'reactstrap';
-
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
@@ -76,6 +89,7 @@ const AppLayout = ({ children }) => {
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
+                  <NavStyle>
                   <Nav className="mr-auto" style={{ marginLeft: '-6%' }} navbar>
                     <NavItem>
                       <Link
@@ -83,6 +97,7 @@ const AppLayout = ({ children }) => {
                           pathname: '/category',
                           query: { category: 'contestList' },
                         }}
+                        style={{boxShadow: "none"}}
                         as="/category/"
                       >
                         공모전　　
@@ -141,6 +156,7 @@ const AppLayout = ({ children }) => {
                       </Link>
                     </NavItem>
                   </Nav>
+                  </NavStyle>
                   {loggedIn ? (
                     <Nav className="ml-auto" navbar>
                       <ButtonDropdown
@@ -174,12 +190,12 @@ const AppLayout = ({ children }) => {
                     </Nav>
                   ) : (
                     <>
-                      <Button outline color="primary" onClick={onClickSignUp}>
-                        Signup
-                      </Button>{' '}
-                      <Button color="link" onClick={onClickLogIn}>
-                        Login
-                      </Button>
+                        <Button outline color="dark" onClick={onClickSignUp} style={{marginLeft:"40%"}}>
+                          Signup
+                        </Button>{' '}
+                        <Button color="#00FFFFFF" onClick={onClickLogIn}>
+                          Login
+                        </Button>
                     </>
                   )}
                 </Collapse>
