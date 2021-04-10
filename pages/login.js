@@ -38,7 +38,7 @@ const Login = () => {
       const data = {
         username,
         password,
-        'remember-me': checked,
+        'rememberMe': checked,
       };
       dispatch(loginRequest(data));
     },
