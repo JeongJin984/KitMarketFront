@@ -34,16 +34,8 @@ const PostCard = ({ postInfo }) => {
           </Row>
 
           <CardTitle tag="h3">{postInfo.title}</CardTitle>
-          <CardText style={{ height: 70 }}>
-            {postInfo.content}
-            <CardSubtitle
-              tag="h5"
-              style={{ marginTop: '5%' }}
-              className="text-right"
-            >
-            </CardSubtitle>
-          </CardText>
-          <CardText tag="h5" style={{marginBottom:'5%'}} className="text-right">
+          <CardText style={{ height: 70 }}>{postInfo.content}</CardText>
+          <CardText tag="h5" className="text-right">
             {postInfo.curNum}/{postInfo.maxNum}
           </CardText>
           <Row>
