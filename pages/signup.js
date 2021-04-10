@@ -23,7 +23,6 @@ import { signUpRequest } from '../reducer/user';
 import { useRouter } from 'next/router';
 
 const Home = () => {
-
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwdValid, setIsPwdValid] = useState(false);
   const [password, setPassword] = useState('');
@@ -46,19 +45,22 @@ const Home = () => {
     [password]
   );
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const username = formData.get('username');
-    const email = formData.get('email');
-    const password = formData.get('password')
-    const data = {
-      username: username,
-      email: email,
-      password: password,
-    };
-    dispatch(signUpRequest(data));
-  }, [password]);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const username = formData.get('username');
+      const email = formData.get('email');
+      const password = formData.get('password');
+      const data = {
+        username: username,
+        email: email,
+        password: password,
+      };
+      dispatch(signUpRequest(data));
+    },
+    [password]
+  );
 
   const validateEmail = useCallback((e) => {
     const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -80,9 +82,9 @@ const Home = () => {
         <Col xs="3" style={{ backgroundColor: 'white' }}></Col>
         <Col xs="6">
           <Form onSubmit={handleSubmit} style={{ marginTop: '25%' }}>
-            <div style={{textAlign: "center"}}>
+            <div style={{ textAlign: 'center' }}>
               <Label style={{ marginTop: '5%' }}>
-                  <h1>회원 가입</h1>
+                <h1>회원 가입</h1>
               </Label>{' '}
             </div>
             <FormGroup required>
@@ -114,8 +116,7 @@ const Home = () => {
                   <Label for="exampleEmail" hidden>
                     Email
                   </Label>
-                  {
-                    isEmailValid ?
+                  {isEmailValid ? (
                     <Input
                       type="email"
                       name="email"
@@ -124,7 +125,8 @@ const Home = () => {
                       onChange={validateEmail}
                       valid
                       required
-                    /> :
+                    />
+                  ) : (
                     <Input
                       type="email"
                       name="email"
@@ -134,7 +136,7 @@ const Home = () => {
                       invalid
                       required
                     />
-                  }
+                  )}
                   <FormFeedback invalid>올바르지 않은 형식입니다.</FormFeedback>
                 </Col>
                 <Col xs="2">
@@ -161,27 +163,27 @@ const Home = () => {
                   />
                 </Col>
                 <Col xs="6">
-                  {
-                    isPwdValid ?
-                      <Input
-                        type="password"
-                        name="passwordCheck"
-                        id="examplePassword"
-                        placeholder="Password Check"
-                        onChange={checkPassword}
-                        valid
-                        required
-                      /> :
-                      <Input
-                        type="password"
-                        name="passwordCheck"
-                        id="examplePassword"
-                        placeholder="Password Check"
-                        onChange={checkPassword}
-                        invalid
-                        required
-                      />
-                  }
+                  {isPwdValid ? (
+                    <Input
+                      type="password"
+                      name="passwordCheck"
+                      id="examplePassword"
+                      placeholder="Password Check"
+                      onChange={checkPassword}
+                      valid
+                      required
+                    />
+                  ) : (
+                    <Input
+                      type="password"
+                      name="passwordCheck"
+                      id="examplePassword"
+                      placeholder="Password Check"
+                      onChange={checkPassword}
+                      invalid
+                      required
+                    />
+                  )}
                 </Col>
               </Row>
             </FormGroup>{' '}
@@ -211,8 +213,9 @@ const Home = () => {
                         marginTop: '50px',
                         width: '100%',
                         height: '50px',
-                        marginLeft: "10px"
+                        marginLeft: '10px',
                       }}
+                      onClick={handleSubmit}
                     >
                       회원가입
                     </Button>

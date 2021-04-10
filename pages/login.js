@@ -109,7 +109,11 @@ const Login = () => {
                 </Form>
               </Col>
               <Col xs="5">
-                <Button type="submit" style={{ width: '120px', margin: '3%' }}>
+                <Button
+                  type="submit"
+                  style={{ width: '120px', margin: '3%' }}
+                  onClick={handleSubmit}
+                >
                   LogIn
                 </Button>
               </Col>
