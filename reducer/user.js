@@ -9,7 +9,7 @@ const initialState = {
   me: {
     username: '',
     password: '',
-    'remember-me': false,
+    rememberMe: false,
   },
 };
 

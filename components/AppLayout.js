@@ -36,24 +36,16 @@ import {
   Button,
   ButtonDropdown,
 } from 'reactstrap';
+import { useSelector } from 'react-redux';
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const toggle = () => setIsOpen(!isOpen);
   const togglebutton = () => setOpen(!dropdownOpen);
-
-  useEffect(() => {
-    const user = sessionStorage.getItem('user');
-    if (user === null) {
-      setLoggedIn(false);
-    } else {
-      setLoggedIn(true);
-    }
-  }, []);
 
   const onClickSignUp = () => {
     router.push('/signup');
@@ -90,74 +82,79 @@ const AppLayout = ({ children }) => {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                   <NavStyle>
-                  <Nav className="mr-auto" style={{ marginLeft: '-6%' }} navbar>
-                    <NavItem>
-                      <Link
-                        href={{
-                          pathname: '/category',
-                          query: { category: 'contestList' },
-                        }}
-                        style={{boxShadow: "none"}}
-                        as="/category/"
-                      >
-                        공모전　　
-                      </Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link style={{ textDecoration: 'none' }}
-                        href={{
-                          pathname: '/helloworld',
-                        }}
-                        //as="/category/"
-                      >
-                        조별과제　　
-                      </Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link
-                        href={{
-                          pathname: '/helloworld',
-                        }}
-                        //as="/category/"
-                      >
-                        OTT　　
-                      </Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link
-                        href={{
-                          pathname: '/category',
-                          query: { category: 'studyList' },
-                        }}
-                        as="/category/"
-                      >
-                        스터디　　
-                      </Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link
-                        href={{
-                          pathname: '/helloworld',
-                        }}
-                        //as="/category/"
-                      >
-                        공동구매　　
-                      </Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link
-                        href={{
-                          pathname: '/category',
-                          query: { category: 'carPoolList' },
-                        }}
-                        as="/category/"
-                      >
-                        카풀/택시　　
-                      </Link>
-                    </NavItem>
-                  </Nav>
+                    <Nav
+                      className="mr-auto"
+                      style={{ marginLeft: '-6%' }}
+                      navbar
+                    >
+                      <NavItem>
+                        <Link
+                          href={{
+                            pathname: '/category',
+                            query: { category: 'contestList' },
+                          }}
+                          style={{ boxShadow: 'none' }}
+                          as="/category/"
+                        >
+                          공모전　　
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link
+                          style={{ textDecoration: 'none' }}
+                          href={{
+                            pathname: '/helloworld',
+                          }}
+                          //as="/category/"
+                        >
+                          조별과제　　
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link
+                          href={{
+                            pathname: '/helloworld',
+                          }}
+                          //as="/category/"
+                        >
+                          OTT　　
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link
+                          href={{
+                            pathname: '/category',
+                            query: { category: 'studyList' },
+                          }}
+                          as="/category/"
+                        >
+                          스터디　　
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link
+                          href={{
+                            pathname: '/helloworld',
+                          }}
+                          //as="/category/"
+                        >
+                          공동구매　　
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link
+                          href={{
+                            pathname: '/category',
+                            query: { category: 'carPoolList' },
+                          }}
+                          as="/category/"
+                        >
+                          카풀/택시　　
+                        </Link>
+                      </NavItem>
+                    </Nav>
                   </NavStyle>
-                  {loggedIn ? (
+                  {isLoggedIn ? (
                     <Nav className="ml-auto" navbar>
                       <ButtonDropdown
                         isOpen={dropdownOpen}
@@ -190,12 +187,17 @@ const AppLayout = ({ children }) => {
                     </Nav>
                   ) : (
                     <>
-                        <Button outline color="dark" onClick={onClickSignUp} style={{marginLeft:"40%"}}>
-                          Signup
-                        </Button>{' '}
-                        <Button color="#00FFFFFF" onClick={onClickLogIn}>
-                          Login
-                        </Button>
+                      <Button
+                        outline
+                        color="dark"
+                        onClick={onClickSignUp}
+                        style={{ marginLeft: '40%' }}
+                      >
+                        Signup
+                      </Button>{' '}
+                      <Button color="#00FFFFFF" onClick={onClickLogIn}>
+                        Login
+                      </Button>
                     </>
                   )}
                 </Collapse>
