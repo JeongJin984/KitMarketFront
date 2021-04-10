@@ -50,7 +50,6 @@ function* logIn(action) {
       type: LOGIN_SUCCESS,
       data: result.data,
     });
-    sessionStorage.setItem('user', data.username);
     console.log('login successful');
   } catch (error) {
     yield put({
@@ -63,16 +62,15 @@ function* logIn(action) {
 
 function* logOut(action) {
   const result = yield call(logOutAPI);
-  sessionStorage.removeItem('user');
 }
 
 function* signUp(action) {
   try {
-    //const result = yield call(signUpAPI, action.data);
+    const result = yield call(signUpAPI, action.data);
     console.log(action.data);
-    // yield put({
-    //   type: SIGNUP_SUCCESS,
-    // });
+    yield put({
+      type: SIGNUP_SUCCESS,
+    });
   } catch (error) {
     yield put({
       type: SIGNUP_FAILURE,
