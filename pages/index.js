@@ -37,7 +37,12 @@ const Home = () => {
             <Col xs="1">
               <ButtonToolbar>
                 <ButtonGroup
-                  style={{ marginLeft: '5%', marginTop: '40%', marginBottom: '10%',}}>
+                  style={{
+                    marginLeft: '5%',
+                    marginTop: '40%',
+                    marginBottom: '10%',
+                  }}
+                >
                   <Button outline color="secondary">
                     ⟪
                   </Button>
@@ -83,7 +88,7 @@ const Home = () => {
 //       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
 //     }
 //     console.log('cookie', req.headers);
-//     store.dispatch(loadMainPostsRequest());
+//     store.dispatch(loadMainPostsRequest('postList'));
 //     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
 //     await store.sagaTask.toPromise();
 //     // getState()로 로그인 여부 확인가능
