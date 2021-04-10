@@ -34,27 +34,25 @@ const PostCard = ({ postInfo }) => {
           </Row>
 
           <CardTitle tag="h3">{postInfo.title}</CardTitle>
-          <CardText style={{ height: '100%' }}>
+          <CardText style={{ height: 70 }}>
             {postInfo.content}
             <CardSubtitle
               tag="h5"
               style={{ marginTop: '5%' }}
               className="text-right"
             >
-              {postInfo.curNum}/{postInfo.maxNum}
             </CardSubtitle>
           </CardText>
-          {/* 카드 내용 세줄정도 보여주고 넘치는건 더보기,, 어쩌구 넣으면 될것같은데
-          지금은 일단 카드 내용이 많으면 카드가 커져요 */}
+          <CardText tag="h5" style={{marginBottom:'5%'}} className="text-right">
+            {postInfo.curNum}/{postInfo.maxNum}
+          </CardText>
           <Row>
-            <Col xs="6">
-              <CardSubtitle tag="h6" className="mb-2 text-muted">
+            <Col xs="5">
+              <CardSubtitle tag="h6" className="mb-2 text-muted ">
                 {date}
-                <br />
-                {time}
               </CardSubtitle>
             </Col>
-            <Col xs="6">
+            <Col xs="7">
               <CardSubtitle tag="h6" className="mb-2 text-muted text-right">
                 {postInfo.writer}
               </CardSubtitle>
