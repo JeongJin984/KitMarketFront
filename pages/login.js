@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import styled, { css } from 'styled-components';
 
@@ -31,6 +31,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -38,7 +39,7 @@ const Login = () => {
       const data = {
         username,
         password,
-        'rememberMe': checked,
+        rememberMe: checked,
       };
       dispatch(loginRequest(data));
     },
@@ -54,6 +55,12 @@ const Login = () => {
     e.preventDefault();
     router.push('/signup');
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/');
+    }
+  }, [isLoggedIn]);
 
   return (
     <Container className="themed-container" fluid="lg">
