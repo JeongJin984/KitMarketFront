@@ -31,22 +31,22 @@ const Category = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   async ({ store, req, query }) => {
-//     console.log('start');
-//     const category = query.category || 'postList';
-//     const cookie = req ? req.headers.cookie : '';
-//     if (req && cookie) {
-//       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-//     }
-//     console.log('cookie', req.headers);
-//     store.dispatch(loadMainPostsRequest(category));
-//     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-//     await store.sagaTask.toPromise();
-//     // getState()로 로그인 여부 확인가능
-//     //console.log('me', store.getState().user.me);
-//     axios.defaults.headers.Cookie = '';
-//   }
-// );
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store, req, query }) => {
+    console.log('start');
+    const category = query.category || 'postList';
+    const cookie = req ? req.headers.cookie : '';
+    if (req && cookie) {
+      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+    }
+    console.log('cookie', req.headers);
+    store.dispatch(loadMainPostsRequest(category));
+    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+    await store.sagaTask.toPromise();
+    // getState()로 로그인 여부 확인가능
+    //console.log('me', store.getState().user.me);
+    axios.defaults.headers.Cookie = '';
+  }
+);
 
 export default Category;
