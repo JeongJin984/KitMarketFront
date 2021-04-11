@@ -14,7 +14,7 @@ const { frontURL } = require('../config/config');
 function logInAPI(data) {
   return axios({
     method: 'post',
-    url: '/api/login',
+    url: `/api/login?rememberMe=${data.rememberMe}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },

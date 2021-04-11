@@ -36,18 +36,21 @@ const Login = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      const data = {
+      const data = checked ? {
         username,
         password,
-        rememberMe: checked,
-      };
+        rememberMe: "true",
+      } : {
+        username,
+        password,
+        rememberMe: "false"
+      }
       dispatch(loginRequest(data));
     },
-    [username, password]
+    [username, password, checked]
   );
 
   const handleCheck = useCallback((e) => {
-    console.log(e.target.checked);
     setChecked(e.target.checked);
   }, []);
 
