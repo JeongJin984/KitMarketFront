@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { wrapper } from '../../../store';
+import { END } from 'redux-saga';
+import axios from 'axios';
 import { loadPostRequest } from '../../../reducer/post';
 import {
   Row,
