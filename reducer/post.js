@@ -60,7 +60,7 @@ const initialState = {
       category: 'contest',
     },
     {
-      id: 266,
+      id: 267,
       writer: 'Account0',
       title: 'Contest25',
       content: "I'm Contest25",
@@ -71,7 +71,7 @@ const initialState = {
       category: 'contest',
     },
     {
-      id: 266,
+      id: 268,
       writer: 'Account0',
       title: 'Contest25',
       content: "I'm Contest25",
@@ -82,7 +82,7 @@ const initialState = {
       category: 'contest',
     },
     {
-      id: 266,
+      id: 269,
       writer: 'Account0',
       title: 'Contest25',
       content: "I'm Contest25",
