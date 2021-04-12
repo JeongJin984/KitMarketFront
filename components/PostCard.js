@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import {
@@ -15,11 +16,15 @@ import {
 const PostCard = ({ postInfo }) => {
   // const { mainPosts } = useSelector((state) => state.post);
   const date = postInfo.createdAt.split('T')[0];
-  const time = postInfo.createdAt.split('T')[1].split('.')[0];
+  const router = useRouter();
+  const onClickPost = () => {
+    console.log('click');
+    router.push(`/post/${postInfo.category}/${postInfo.id}`);
+  };
 
   return (
     <Col xs="3" style={{ marginTop: '2%', marginBottom: '2%' }}>
-      <Card style={{ width: '100%', height: '100%' }}>
+      <Card style={{ width: '100%', height: '100%' }} onClick={onClickPost}>
         <CardBody>
           <Row>
             <Col xs="7">
