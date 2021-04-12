@@ -90,22 +90,17 @@ const AppLayout = ({ children }) => {
                       <NavItem>
                         <Link
                           href={{
-                            pathname: '/category',
-                            query: { category: 'contestList' },
+                            pathname: '/board/contest',
                           }}
-                          style={{ boxShadow: 'none' }}
-                          as="/category/"
                         >
                           공모전　　
                         </Link>
                       </NavItem>
                       <NavItem>
                         <Link
-                          style={{ textDecoration: 'none' }}
                           href={{
                             pathname: '/helloworld',
                           }}
-                          //as="/category/"
                         >
                           조별과제　　
                         </Link>
@@ -115,7 +110,6 @@ const AppLayout = ({ children }) => {
                           href={{
                             pathname: '/helloworld',
                           }}
-                          //as="/category/"
                         >
                           OTT　　
                         </Link>
@@ -123,10 +117,8 @@ const AppLayout = ({ children }) => {
                       <NavItem>
                         <Link
                           href={{
-                            pathname: '/category',
-                            query: { category: 'studyList' },
+                            pathname: '/board/study',
                           }}
-                          as="/category/"
                         >
                           스터디　　
                         </Link>
@@ -136,7 +128,6 @@ const AppLayout = ({ children }) => {
                           href={{
                             pathname: '/helloworld',
                           }}
-                          //as="/category/"
                         >
                           공동구매　　
                         </Link>
@@ -144,10 +135,8 @@ const AppLayout = ({ children }) => {
                       <NavItem>
                         <Link
                           href={{
-                            pathname: '/category',
-                            query: { category: 'carPoolList' },
+                            pathname: '/board/carPool',
                           }}
-                          as="/category/"
                         >
                           카풀/택시　　
                         </Link>
