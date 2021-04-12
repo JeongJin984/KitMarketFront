@@ -5,6 +5,9 @@ import {
   LOAD_MAIN_POSTS_REQUEST,
   LOAD_MAIN_POSTS_SUCCESS,
   LOAD_MAIN_POSTS_FAILURE,
+  LOAD_POST_REQUEST,
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE,
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
   ADD_POST_FAILURE,
@@ -14,6 +17,16 @@ function loadPostsAPI(category) {
   return axios({
     method: 'GET',
     url: `/api/${category}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function loadPostAPI({ category, id }) {
+  return axios({
+    method: 'GET',
+    url: `/api/${category}/${id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -31,12 +44,29 @@ function* loadPosts(action) {
     console.log('result', result.data);
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
-      data: result.data.data,
+      data: result.data,
+    });
+    console.log('load posts success');
+  } catch (error) {
+    yield put({
+      type: LOAD_MAIN_POSTS_FAILURE,
+      error,
+    });
+    console.log('load posts error');
+  }
+}
+
+function* loadPost(action) {
+  try {
+    const result = yield call(loadPostAPI, action.data);
+    yield put({
+      type: LOAD_POST_SUCCESS,
+      data: result.data,
     });
     console.log('load post success');
   } catch (error) {
     yield put({
-      type: LOAD_MAIN_POSTS_FAILURE,
+      type: LOAD_POST_FAILURE,
       error,
     });
     console.log('load post error');
@@ -62,10 +92,14 @@ function* watchLoadPosts() {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadPosts);
 }
 
+function* watchLoadPost() {
+  yield takeLatest(LOAD_POST_REQUEST, loadPost);
+}
+
 function* watchPostChat() {
   yield takeLatest(ADD_POST_REQUEST, postChat);
 }
 
 export default function* chattingSaga() {
-  yield all([fork(watchLoadPosts), fork(watchPostChat)]);
+  yield all([fork(watchLoadPosts), fork(watchLoadPost), fork(watchPostChat)]);
 }

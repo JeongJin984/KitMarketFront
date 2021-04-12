@@ -3,6 +3,10 @@ import produce from 'immer';
 const initialState = {
   isLoadingPosts: false,
   isLoadedPosts: false,
+  isLoadingPost: false,
+  isLoadedPost: false,
+  singlePost: null,
+  meta: { size: 8, currentPage: 0, maxPage: 12 },
   mainPosts: [
     {
       id: 9,
@@ -102,6 +106,10 @@ export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
 export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
 
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
@@ -110,6 +118,13 @@ export const loadMainPostsRequest = (category) => {
   return {
     type: LOAD_MAIN_POSTS_REQUEST,
     category,
+  };
+};
+
+export const loadPostRequest = (data) => {
+  return {
+    type: LOAD_POST_REQUEST,
+    data,
   };
 };
 
@@ -123,11 +138,28 @@ const postReducer = (state = initialState, action) => {
       case LOAD_MAIN_POSTS_SUCCESS:
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = true;
-        draft.mainPosts = action.data;
+        draft.mainPosts = action.data.data;
+        draft.meta.size = action.data.size;
+        draft.meta.currentPage = action.data.currentPage;
+        draft.meta.maxPage = action.data.maxPage;
         break;
       case LOAD_MAIN_POSTS_FAILURE:
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = false;
+        draft.error = action.error;
+        break;
+      case LOAD_POST_REQUEST:
+        draft.isLoadingPost = true;
+        draft.isLoadedPost = false;
+        break;
+      case LOAD_POST_SUCCESS:
+        draft.isLoadingPost = false;
+        draft.isLoadedPost = true;
+        draft.singlePost = action.data;
+        break;
+      case LOAD_POST_FAILURE:
+        draft.isLoadingPost = false;
+        draft.isLoadedPost = false;
         draft.error = action.error;
         break;
       case ADD_POST_REQUEST:
