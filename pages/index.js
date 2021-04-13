@@ -80,17 +80,17 @@ const Home = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store, req }) => {
-    const cookie = req ? req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
-    if (req && cookie) {
-      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-    }
-    store.dispatch(loadMainPostsRequest('postList'));
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-    await store.sagaTask.toPromise();
-  }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store, req }) => {
+//     const cookie = req ? req.headers.cookie : '';
+//     axios.defaults.headers.Cookie = '';
+//     if (req && cookie) {
+//       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+//     }
+//     store.dispatch(loadMainPostsRequest('postList'));
+//     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+//     await store.sagaTask.toPromise();
+//   }
+// );
 
 export default Home;

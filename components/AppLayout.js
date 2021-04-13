@@ -163,12 +163,7 @@ const AppLayout = ({ children }) => {
                           </a>
                         </DropdownToggle>
                         <DropdownMenu>
-                          <DropdownItem>회원정보</DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem>내 모임 현황</DropdownItem>
-                          <DropdownItem>내 모임 신청 현황</DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem>신청 대기 중</DropdownItem>
+                          <DropdownItem>내 프로필 보기</DropdownItem>
                           <DropdownItem divider />
                           <DropdownItem>로그아웃</DropdownItem>
                         </DropdownMenu>
