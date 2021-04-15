@@ -4,6 +4,7 @@ import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import { loadPostRequest } from '../../../reducer/post';
+import styled from 'styled-components';
 import {
   Row,
   Col,
@@ -29,6 +30,14 @@ const PostView = () => {
 
   const { singlePost } = useSelector((state) => state.post);
   console.log(singlePost);
+  let category = '';
+  if (singlePost.category === 'contest') {
+    category = '공모전';
+  } else if (singlePost.category === 'study') {
+    category = '스터디';
+  } else if (singlePost.category === 'carPool') {
+    category = '카풀/택시';
+  }
 
   return (
     <AppLayout>
@@ -45,24 +54,24 @@ const PostView = () => {
           >
             <Row>
               <Col xs="3">
-                <CardTitle tag="h5">카풀/택시</CardTitle>
+                <CardTitle tag="h5">{category}</CardTitle>
               </Col>
               <Col xs="6">
                 <br />
                 <CardTitle className="text-center" tag="h3">
-                  옥계중에서 택시 같이 타실 분
+                  {singlePost.title}
                 </CardTitle>
               </Col>
               <Col xs="3">
                 <CardText className="text-right" tag="h5">
-                  D-99
+                  D-{singlePost.deadLine}
                 </CardText>
                 <CardText
                   className="text-right"
                   tag="h6"
                   style={{ marginTop: '10%' }}
                 >
-                  작성자
+                  {singlePost.writer}
                 </CardText>
               </Col>
             </Row>
@@ -74,18 +83,20 @@ const PostView = () => {
               style={{ backgroundColor: 'white', height: 400 }}
             >
               <CardText tag="h4" style={{ height: 350 }}>
-                옥계중에서 같이 택시 타실 분 구합니다 저는 월~금 다 1교시라서
-                8시 40분에는 타야해요. 같이 타실 분 연락 주십시오. 택시비 엔빵
-                야호야호~~~~~~
+                {singlePost.content}
               </CardText>
               <br />
               <Row>
                 <Col xs="6">
-                  <CardText tag="h5">4명중에 2명 구해요</CardText>
+                  <CardText tag="h5">
+                    {singlePost.maxNum}명중에{' '}
+                    {singlePost.maxNum - singlePost.curNum}명 구해요
+                  </CardText>
                 </Col>
                 <Col xs="6">
                   <CardText tag="h6" className="mb-2 text-muted text-right">
-                    2021.04.08. 6:30PM
+                    {/* 2021.04.08. 6:30PM */}
+                    {singlePost.createdAt}
                   </CardText>
                 </Col>
               </Row>
@@ -151,35 +162,16 @@ const PostView = () => {
             </CardTitle>
             <hr />
             <Form style={{ height: 500 }}>
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" /> 닉네임1
-                </Label>
-              </FormGroup>
-              <br />
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" /> 닉네임2
-                </Label>
-              </FormGroup>
-              <br />
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" /> 닉네임3
-                </Label>
-              </FormGroup>
-              <br />
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" /> 닉네임4
-                </Label>
-              </FormGroup>
-              <br />
-              <FormGroup check>
-                <Label check>
-                  <Input type="checkbox" /> 닉네임5
-                </Label>
-              </FormGroup>
+              {singlePost.applications.map((app) => (
+                <>
+                  <FormGroup check>
+                    <Label check>
+                      <Input type="checkbox" /> {app.content}
+                    </Label>
+                  </FormGroup>
+                  <br />{' '}
+                </>
+              ))}
             </Form>
             <hr />
             <Button color="dark" size="lg">
@@ -192,19 +184,20 @@ const PostView = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store, req, query }) => {
-    const cookie = req ? req.headers.cookie : '';
-    const category = query.category;
-    const id = query.id;
-    axios.defaults.headers.Cookie = '';
-    if (req && cookie) {
-      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-    }
-    store.dispatch(loadPostRequest({ category, id }));
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-    await store.sagaTask.toPromise();
-  }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store, req, query }) => {
+//     const cookie = req ? req.headers.cookie : '';
+//     const { category, id } = query;
+//     const data = { category, id };
+//     console.log(category, id);
+//     axios.defaults.headers.Cookie = '';
+//     if (req && cookie) {
+//       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+//     }
+//     store.dispatch(loadPostRequest(data));
+//     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+//     await store.sagaTask.toPromise();
+//   }
+// );
 
 export default PostView;
