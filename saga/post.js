@@ -13,6 +13,9 @@ import {
   ADD_POST_FAILURE,
 } from '../reducer/post';
 
+// function postChatAPI(data) {
+// 	return axios.post('/chat/', data)
+// }
 function loadPostsAPI(category) {
   return axios({
     method: 'GET',
@@ -22,20 +25,6 @@ function loadPostsAPI(category) {
     },
   });
 }
-
-function loadPostAPI({ category, id }) {
-  return axios({
-    method: 'GET',
-    url: `/api/${category}/${id}`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
-// function postChatAPI(data) {
-// 	return axios.post('/chat/', data)
-// }
 
 function* loadPosts(action) {
   try {
@@ -56,6 +45,16 @@ function* loadPosts(action) {
   }
 }
 
+function loadPostAPI({ category, id }) {
+  return axios({
+    method: 'GET',
+    url: `/api/${category}/${id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
 function* loadPost(action) {
   try {
     const result = yield call(loadPostAPI, action.data);
@@ -73,20 +72,48 @@ function* loadPost(action) {
   }
 }
 
-function* postChat(action) {
+function addPostAPI(data) {
+  return axios({
+    method: 'POST',
+    url: '/api/',
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data,
+  });
+}
+
+function* addPost(action) {
   try {
-    //		yield call(postChatAPI, action.data)
+    const result = yield call(addPostAPI, action.data); // reesult 존재?
     yield put({
       type: ADD_POST_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
+    console.log('add post success');
   } catch (error) {
     yield put({
       type: ADD_POST_FAILURE,
-      error: error,
+      error,
     });
+    console.log('add post error');
   }
 }
+
+// function* postChat(action) {
+//   try {
+//     //		yield call(postChatAPI, action.data)
+//     yield put({
+//       type: ADD_POST_SUCCESS,
+//       data: action.data,
+//     });
+//   } catch (error) {
+//     yield put({
+//       type: ADD_POST_FAILURE,
+//       error: error,
+//     });
+//   }
+// }
 
 function* watchLoadPosts() {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadPosts);
@@ -96,10 +123,14 @@ function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
-function* watchPostChat() {
-  yield takeLatest(ADD_POST_REQUEST, postChat);
+function* watchAddPost() {
+  yield takeLatest(ADD_POST_REQUEST, addPost);
 }
 
+// function* watchPostChat() {
+//   yield takeLatest(ADD_POST_REQUEST, postChat);
+// }
+
 export default function* chattingSaga() {
-  yield all([fork(watchLoadPosts), fork(watchLoadPost), fork(watchPostChat)]);
+  yield all([fork(watchLoadPosts), fork(watchLoadPost), fork(watchAddPost)]);
 }

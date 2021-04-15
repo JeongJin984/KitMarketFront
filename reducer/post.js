@@ -128,6 +128,13 @@ export const loadPostRequest = (data) => {
   };
 };
 
+export const addPostRequest = (data) => {
+  return {
+    type: ADD_POST_REQUEST,
+    data,
+  };
+};
+
 const postReducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
@@ -135,6 +142,7 @@ const postReducer = (state = initialState, action) => {
         draft.isLoadingPosts = true;
         draft.isLoadedPosts = false;
         break;
+
       case LOAD_MAIN_POSTS_SUCCESS:
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = true;
@@ -143,25 +151,30 @@ const postReducer = (state = initialState, action) => {
         draft.meta.currentPage = action.data.currentPage;
         draft.meta.maxPage = action.data.maxPage;
         break;
+
       case LOAD_MAIN_POSTS_FAILURE:
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = false;
         draft.error = action.error;
         break;
+
       case LOAD_POST_REQUEST:
         draft.isLoadingPost = true;
         draft.isLoadedPost = false;
         break;
+
       case LOAD_POST_SUCCESS:
         draft.isLoadingPost = false;
         draft.isLoadedPost = true;
         draft.singlePost = action.data;
         break;
+
       case LOAD_POST_FAILURE:
         draft.isLoadingPost = false;
         draft.isLoadedPost = false;
         draft.error = action.error;
         break;
+
       case ADD_POST_REQUEST:
         draft.isPosting = true;
         draft.isPosted = false;
