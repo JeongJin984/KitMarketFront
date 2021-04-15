@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadPostRequest } from '../../../reducer/post';
+import { loadPostRequest, joinPostRequest } from '../../../reducer/post';
 import styled from 'styled-components';
 import {
   Row,
@@ -27,9 +27,12 @@ import AppLayout from '../../../components/AppLayout';
 const PostView = () => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const toggle = () => setPopoverOpen(!popoverOpen);
+  const dispatch = useDispatch();
 
   const { singlePost } = useSelector((state) => state.post);
+  const { username } = useSelector((state) => state.user.me);
   console.log(singlePost);
+
   let category = '';
   if (singlePost.category === 'contest') {
     category = '공모전';
@@ -38,6 +41,11 @@ const PostView = () => {
   } else if (singlePost.category === 'carPool') {
     category = '카풀/택시';
   }
+
+  const onClickJoin = useCallback(() => {
+    const data = { id: singlePost.id, username };
+    dispatch(joinPostRequest(data));
+  }, [siglePost, username]);
 
   return (
     <AppLayout>
@@ -148,6 +156,7 @@ const PostView = () => {
                     textAlign: 'center',
                     margin: '0',
                   }}
+                  onClick={onClickJoin}
                 >
                   함께하기
                 </Button>

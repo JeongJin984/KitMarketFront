@@ -11,15 +11,18 @@ import {
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
   ADD_POST_FAILURE,
+  JOIN_POST_REQUEST,
+  JOIN_POST_SUCCESS,
+  JOIN_POST_FAILURE,
 } from '../reducer/post';
 
 // function postChatAPI(data) {
 // 	return axios.post('/chat/', data)
 // }
-function loadPostsAPI({ category, page }) {
+function loadPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/${category}?offset=${page}`,
+    url: `/api/${data.category}?offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -35,20 +38,18 @@ function* loadPosts(action) {
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
     });
-    console.log('load posts success');
   } catch (error) {
     yield put({
       type: LOAD_MAIN_POSTS_FAILURE,
       error,
     });
-    console.log('load posts error');
   }
 }
 
-function loadPostAPI({ category, id }) {
+function loadPostAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/${category}/${id}`,
+    url: `/api/${data.category}/${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -62,20 +63,18 @@ function* loadPost(action) {
       type: LOAD_POST_SUCCESS,
       data: result.data,
     });
-    console.log('load post success');
   } catch (error) {
     yield put({
       type: LOAD_POST_FAILURE,
       error,
     });
-    console.log('load post error');
   }
 }
 
 function addPostAPI(data) {
   return axios({
     method: 'POST',
-    url: '/api/',
+    url: `/api/${data.category}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -97,6 +96,34 @@ function* addPost(action) {
       error,
     });
     console.log('add post error');
+  }
+}
+
+function joinPostAPI(data) {
+  return axios({
+    method: 'POST',
+    url: `/api/join?postId=${data.id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: { username: data.username },
+  });
+}
+
+function* joinPost(action) {
+  try {
+    const result = yield call(joinPostAPI, action.data); // reesult 존재?
+    yield put({
+      type: JOIN_POST_SUCCESS,
+      data: result.data,
+    });
+    console.log('join post success');
+  } catch (error) {
+    yield put({
+      type: JOIN_POST_FAILURE,
+      error,
+    });
+    console.log('join post error');
   }
 }
 
@@ -127,10 +154,19 @@ function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 }
 
+function* watchJoinPost() {
+  yield takeLatest(JOIN_POST_REQUEST, joinPost);
+}
+
 // function* watchPostChat() {
 //   yield takeLatest(ADD_POST_REQUEST, postChat);
 // }
 
 export default function* chattingSaga() {
-  yield all([fork(watchLoadPosts), fork(watchLoadPost), fork(watchAddPost)]);
+  yield all([
+    fork(watchLoadPosts),
+    fork(watchLoadPost),
+    fork(watchAddPost),
+    fork(watchJoinPost),
+  ]);
 }

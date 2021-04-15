@@ -5,7 +5,51 @@ const initialState = {
   isLoadedPosts: false,
   isLoadingPost: false,
   isLoadedPost: false,
-  singlePost: null,
+  singlePost: {
+    id: 9,
+    writer: 'Account0',
+    title: 'Study0',
+    content: "I'm Study0",
+    deadLine: 21,
+    createdAt: '2021-04-10T15:05:44.373372',
+    maxNum: 3,
+    curNum: 0,
+    category: 'study',
+    participants: [
+      {
+        username: 'participant1',
+        email: 'partEmail1',
+        age: 2,
+      },
+      {
+        username: 'participant0',
+        email: 'partEmail0',
+        age: 1,
+      },
+      {
+        username: 'participant2',
+        email: 'partEmail2',
+        age: 3,
+      },
+    ],
+    applications: [
+      {
+        id: 10,
+        content: '댓글 2입니다.',
+        chatDate: null,
+      },
+      {
+        id: 12,
+        content: '댓글 1입니다.',
+        chatDate: null,
+      },
+      {
+        id: 11,
+        content: '댓글 3입니다.',
+        chatDate: null,
+      },
+    ],
+  },
   meta: { size: 8, currentPage: 0, maxPage: 12 },
   mainPosts: [
     {
@@ -99,6 +143,8 @@ const initialState = {
   ],
   isPosting: false,
   isPosted: false,
+  isJoiningPost: false,
+  isJoinedPost: false,
   error: '',
 };
 
@@ -113,6 +159,10 @@ export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+export const JOIN_POST_REQUEST = 'JOIN_POST_REQUEST';
+export const JOIN_POST_SUCCESS = 'JOIN_POST_SUCCESS';
+export const JOIN_POST_FAILURE = 'JOIN_POST_FAILURE';
 
 export const loadMainPostsRequest = (category) => {
   return {
@@ -131,6 +181,13 @@ export const loadPostRequest = (data) => {
 export const addPostRequest = (data) => {
   return {
     type: ADD_POST_REQUEST,
+    data,
+  };
+};
+
+export const joinPostRequest = (data) => {
+  return {
+    type: JOIN_POST_REQUEST,
     data,
   };
 };
@@ -188,8 +245,25 @@ const postReducer = (state = initialState, action) => {
         break;
 
       case ADD_POST_FAILURE:
+        draft.isPosting = false;
+        draft.isPosted = false;
         draft.error = action.error;
         break;
+
+      case JOIN_POST_REQUEST:
+        draft.isJoiningPost = true;
+        draft.isJoinedPost = false;
+        draft.error = '';
+
+      case JOIN_POST_SUCCESS:
+        draft.isJoiningPost = false;
+        draft.isJoinedPost = true;
+        draft.error = '';
+
+      case JOIN_POST_FAILURE:
+        draft.isJoiningPost = false;
+        draft.isJoinedPost = false;
+        draft.error = action.error;
 
       default:
         break;
