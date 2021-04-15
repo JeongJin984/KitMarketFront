@@ -1,18 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import { loadMainPostsRequest } from '../reducer/post';
 
-import { Row, Col, Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
+import { Row, Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
 import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
 import AppLayout from '../components/AppLayout';
 import ModalButton from '../components/ModalButton';
+import Pagination from '../components/Pagination';
 
 const Home = () => {
   const { mainPosts } = useSelector((state) => state.post);
+  const router = useRouter();
+  console.log(router.query);
   // console.log(mainPosts);
   // useEffect(() => {
   //   dispatch(loadMainPostsRequest());
@@ -20,61 +24,15 @@ const Home = () => {
 
   return (
     <AppLayout>
-      <Col xs="12">
-        <JumbotronComponent />
-        <Row>
-          {mainPosts.map((postInfo) => (
-            <PostCard postInfo={postInfo} key={postInfo.id} />
-          ))}
-        </Row>
-      </Col>
+      <JumbotronComponent />
+      <Row>
+        {mainPosts.map((postInfo) => (
+          <PostCard postInfo={postInfo} key={postInfo.id} />
+        ))}
+      </Row>
       <ModalButton />
       <Row>
-        <Col xs="1"> </Col>
-        <Col xs="11">
-          <Row>
-            <Col xs="4"></Col>
-            <Col xs="1">
-              <ButtonToolbar>
-                <ButtonGroup
-                  style={{
-                    marginLeft: '5%',
-                    marginTop: '40%',
-                    marginBottom: '10%',
-                  }}
-                >
-                  <Button outline color="secondary">
-                    ⟪
-                  </Button>
-                  <Button outline color="secondary">
-                    ⟨
-                  </Button>
-                  <Button outline color="secondary">
-                    1
-                  </Button>
-                  <Button outline color="secondary">
-                    2
-                  </Button>
-                  <Button outline color="secondary">
-                    3
-                  </Button>
-                  <Button outline color="secondary">
-                    4
-                  </Button>
-                  <Button outline color="secondary">
-                    5
-                  </Button>
-                  <Button outline color="secondary">
-                    ⟩
-                  </Button>
-                  <Button outline color="secondary">
-                    ⟫
-                  </Button>
-                </ButtonGroup>
-              </ButtonToolbar>
-            </Col>
-          </Row>
-        </Col>
+        <Pagination />
       </Row>
     </AppLayout>
   );

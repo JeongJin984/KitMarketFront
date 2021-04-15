@@ -11,6 +11,7 @@ import PostCard from '../../components/PostCard';
 import JumbotronComponent from '../../components/JumbotronComponent';
 import AppLayout from '../../components/AppLayout';
 import ModalButton from '../../components/ModalButton';
+import Pagination from '../../components/Pagination';
 
 const Category = () => {
   const router = useRouter();
@@ -18,15 +19,16 @@ const Category = () => {
   console.log(router.query);
   return (
     <AppLayout>
-      <Col xs="12">
-        <JumbotronComponent />
-        <Row>
-          {mainPosts.map((postInfo) => (
-            <PostCard postInfo={postInfo} key={postInfo.id} />
-          ))}
-        </Row>
-      </Col>
+      <JumbotronComponent />
+      <Row>
+        {mainPosts.map((postInfo) => (
+          <PostCard postInfo={postInfo} key={postInfo.id} />
+        ))}
+      </Row>
       <ModalButton />
+      <Row>
+        <Pagination />
+      </Row>
     </AppLayout>
   );
 };
