@@ -16,10 +16,10 @@ import {
 // function postChatAPI(data) {
 // 	return axios.post('/chat/', data)
 // }
-function loadPostsAPI(category) {
+function loadPostsAPI({ category, page }) {
   return axios({
     method: 'GET',
-    url: `/api/${category}`,
+    url: `/api/${category}?offset=${page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },

@@ -37,13 +37,16 @@ const Category = () => {
 //   async ({ store, req, query }) => {
 //     const q = query.category || 'post';
 //     const category = `${q}List`;
+//     const page = query.page - 1 || 0;
+//     const data = { category, page };
 //     const cookie = req ? req.headers.cookie : '';
 //     axios.defaults.headers.Cookie = '';
 //     if (req && cookie) {
 //       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
 //     }
 //     console.log('cookie', req.headers);
-//     store.dispatch(loadMainPostsRequest(category));
+
+//     store.dispatch(loadMainPostsRequest(data));
 //     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
 //     await store.sagaTask.toPromise();
 //   }
