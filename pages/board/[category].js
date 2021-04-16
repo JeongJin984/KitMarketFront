@@ -16,7 +16,6 @@ import Pagination from '../../components/Pagination';
 const Category = () => {
   const router = useRouter();
   const { mainPosts } = useSelector((state) => state.post);
-  console.log(router.query);
   return (
     <AppLayout>
       <JumbotronComponent />
@@ -44,7 +43,6 @@ const Category = () => {
 //     if (req && cookie) {
 //       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
 //     }
-//     console.log('cookie', req.headers);
 
 //     store.dispatch(loadMainPostsRequest(data));
 //     store.dispatch(END); // Request가 끝날 때 까지 기다려줌

@@ -16,8 +16,6 @@ import Pagination from '../components/Pagination';
 const Home = () => {
   const { mainPosts } = useSelector((state) => state.post);
   const router = useRouter();
-  console.log(router.query);
-  // console.log(mainPosts);
   // useEffect(() => {
   //   dispatch(loadMainPostsRequest());
   // }, []);

@@ -31,7 +31,6 @@ const PostView = () => {
 
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
-  console.log(singlePost);
 
   let category = '';
   if (singlePost.category === 'contest') {
@@ -198,7 +197,6 @@ const PostView = () => {
 //     const cookie = req ? req.headers.cookie : '';
 //     const { category, id } = query;
 //     const data = { category, id };
-//     console.log(category, id);
 //     axios.defaults.headers.Cookie = '';
 //     if (req && cookie) {
 //       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌

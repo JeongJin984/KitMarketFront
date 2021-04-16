@@ -31,9 +31,7 @@ function loadPostsAPI(data) {
 
 function* loadPosts(action) {
   try {
-    console.log(action.category);
     const result = yield call(loadPostsAPI, action.category);
-    console.log('result', result.data);
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -89,13 +87,11 @@ function* addPost(action) {
       type: ADD_POST_SUCCESS,
       data: result.data,
     });
-    console.log('add post success');
   } catch (error) {
     yield put({
       type: ADD_POST_FAILURE,
       error,
     });
-    console.log('add post error');
   }
 }
 
@@ -117,13 +113,11 @@ function* joinPost(action) {
       type: JOIN_POST_SUCCESS,
       data: result.data,
     });
-    console.log('join post success');
   } catch (error) {
     yield put({
       type: JOIN_POST_FAILURE,
       error,
     });
-    console.log('join post error');
   }
 }
 

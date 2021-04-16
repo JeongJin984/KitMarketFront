@@ -27,7 +27,6 @@ function logInAPI(data) {
 }
 
 function logOutAPI() {
-  console.log('logoutapi');
   return axios({
     methos: 'post',
     url: '/api/logout',
@@ -35,7 +34,6 @@ function logOutAPI() {
 }
 
 function signUpAPI(data) {
-  console.log('signUpAPI');
   return axios({
     method: 'post',
     url: '/api/signup',
@@ -49,20 +47,17 @@ function signUpAPI(data) {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    console.log('result', result.headers['Authorization']);
     yield put({
       type: LOGIN_SUCCESS,
     });
     cookie.save('token', result.data.Authorization, {
       path: '/',
     });
-    console.log('login successful');
   } catch (error) {
     yield put({
       type: LOGIN_FAILURE,
       error,
     });
-    console.log('login failure');
   }
 }
 
@@ -73,7 +68,6 @@ function* logOut(action) {
 function* signUp(action) {
   try {
     const result = yield call(signUpAPI, action.data);
-    console.log(action.data);
     yield put({
       type: SIGNUP_SUCCESS,
     });
@@ -82,18 +76,15 @@ function* signUp(action) {
       type: SIGNUP_FAILURE,
       error,
     });
-    console.log('signup failed', error);
   }
 }
 
 function loadProfileAPI() {
-  console.log('cookie', cookie.load('token'));
   return axios({
     method: 'GET',
     url: `/api/profile/user`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
-      Authorization: cookie.load('token'),
     },
   });
   return result
@@ -102,13 +93,11 @@ function loadProfileAPI() {
 function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
-    console.log('load profile');
-    // yield put({
-    //   type: LOAD_PROFILE_SUCCESS,
-    //   data: result.data,
-    // });
+    yield put({
+      type: LOAD_PROFILE_SUCCESS,
+      data: result.data,
+    });
   } catch (error) {
-      console.log(error)
   }
 }
 

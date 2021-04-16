@@ -5,7 +5,6 @@ import { Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
 const Pagination = () => {
   const { currentPage, maxPage } = useSelector((state) => state.post.meta);
   const router = useRouter();
-  console.log(currentPage, maxPage);
   const page = Array(maxPage)
     .fill()
     .map((page, i) => i + 1);
@@ -22,7 +21,6 @@ const Pagination = () => {
     [category]
   );
 
-  console.log(page);
   return (
     <ButtonToolbar
       style={{

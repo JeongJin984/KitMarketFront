@@ -18,7 +18,6 @@ const PostCard = ({ postInfo }) => {
   const date = postInfo.createdAt.split('T')[0];
   const router = useRouter();
   const onClickPost = () => {
-    console.log('click');
     router.push(`/post/${postInfo.category}/${postInfo.id}`);
   };
 

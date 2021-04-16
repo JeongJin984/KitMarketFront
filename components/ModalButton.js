@@ -52,7 +52,6 @@ const ModalButton = () => {
     const dDay = new Date(setDate);
     const distance = dDay.getTime() - current.getTime();
     const day = Math.floor(distance / (1000 * 60 * 60 * 24));
-    console.log(day);
     return day;
   }, []);
 
@@ -78,7 +77,6 @@ const ModalButton = () => {
         curNum,
         category,
       };
-      console.log(data);
       dispatch(addPostRequest(data));
     }
     //[username]
