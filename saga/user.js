@@ -53,7 +53,7 @@ function* logIn(action) {
     yield put({
       type: LOGIN_SUCCESS,
     });
-    cookie.save('token', result.headers.Authorization, {
+    cookie.save('token', result.data.Authorization, {
       path: '/',
     });
     console.log('login successful');
@@ -102,6 +102,7 @@ function loadProfileAPI() {
 function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
+    console.log('load profile');
     // yield put({
     //   type: LOAD_PROFILE_SUCCESS,
     //   data: result.data,
