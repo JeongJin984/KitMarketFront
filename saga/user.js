@@ -49,7 +49,7 @@ function signUpAPI(data) {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    console.log('result', result);
+    console.log('result', result.headers['Authorization']);
     yield put({
       type: LOGIN_SUCCESS,
     });
