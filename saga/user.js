@@ -14,7 +14,7 @@ const { frontURL } = require('../config/config');
 function logInAPI(data) {
   return axios({
     method: 'post',
-    url: `/api/login?rememberMe=${data.rememberMe}`,
+    url: `http://localhost:8083/api/login?rememberMe=${data.rememberMe}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -48,8 +48,11 @@ function* logIn(action) {
     console.log('result', result);
     yield put({
       type: LOGIN_SUCCESS,
-      data: result.data,
+      data: result.headers.Authorization,
     });
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${result.headers.Authorization}`;
     console.log('login successful');
   } catch (error) {
     yield put({
