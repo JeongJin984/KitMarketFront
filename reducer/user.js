@@ -6,11 +6,10 @@ const initialState = {
   isLogginIn: false,
   isSignedUp: false,
   isSigningUp: false,
-  me: {
-    username: '',
-    password: '',
-    rememberMe: false,
-  },
+  me: null,
+  isLoadingProfile: false,
+  isLoadedProfile: false,
+  profile: null,
 };
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -22,6 +21,10 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+
+export const LOAD_PROFILE_REQUEST = 'LOAD_PROFILE_REQUEST';
+export const LOAD_PROFILE_SUCCESS = 'LOAD_PROFILE_SUCCESS';
+export const LOAD_PROFILE_FAILURE = 'LOAD_PROFILE_FAILURE';
 
 export const loginRequest = (data) => {
   console.log('loginRequest', data);
@@ -40,6 +43,13 @@ export const logoutRequest = () => {
 export const signUpRequest = (data) => {
   return {
     type: SIGNUP_REQUEST,
+    data,
+  };
+};
+
+export const loadProfileRequest = (data) => {
+  return {
+    type: LOAD_PROFILE_REQUEST,
     data,
   };
 };
@@ -87,6 +97,22 @@ const userReducer = (state = initialState, action) => {
       case SIGNUP_FAILURE:
         draft.isSigningUp = false;
         draft.isSignedUp = false;
+        draft.error = action.error;
+        break;
+
+      case LOAD_PROFILE_REQUEST:
+        draft.isLoadingProfile = true;
+        draft.isLoadedProfile = false;
+        draft.error = '';
+        break;
+
+      case LOAD_PROFILE_SUCCESS:
+        draft.isLoadingProfile = false;
+        draft.isLoadedProfile = true;
+        draft.profile = action.data;
+        break;
+
+      case LOAD_PROFILE_FAILURE:
         draft.error = action.error;
         break;
 

@@ -6,6 +6,9 @@ import {
   LOGIN_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_FAILURE,
+  LOAD_PROFILE_REQUEST,
+  LOAD_PROFILE_SUCCESS,
+  LOAD_PROFILE_FAILURE,
 } from '../reducer/user';
 
 import axios from 'axios';
@@ -48,7 +51,6 @@ function* logIn(action) {
     console.log('result', result);
     yield put({
       type: LOGIN_SUCCESS,
-      data: result.headers.Authorization,
     });
     axios.defaults.headers.common[
       'Authorization'
@@ -83,6 +85,32 @@ function* signUp(action) {
   }
 }
 
+function loadProfileAPI(data) {
+  console.log(data);
+  return axios({
+    method: 'GET',
+    url: `/api/profile/${data.username}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* loadProfile(action) {
+  try {
+    const result = yield call(loadProfileAPI, action.data);
+    yield put({
+      type: LOAD_PROFILE_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_PROFILE_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchLogIn() {
   yield takeLatest(LOGIN_REQUEST, logIn);
 }
@@ -95,6 +123,15 @@ function* watchSignUp() {
   yield takeLatest(SIGNUP_REQUEST, signUp);
 }
 
+function* watchLoadProfile() {
+  yield takeLatest(LOAD_PROFILE_REQUEST, loadProfile);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogout), fork(watchSignUp)]);
+  yield all([
+    fork(watchLogIn),
+    fork(watchLogout),
+    fork(watchSignUp),
+    fork(watchLoadProfile),
+  ]);
 }

@@ -19,7 +19,7 @@ const ModalButton = () => {
   const [modal, setModal] = useState(false);
   const [maxNum, setMaxNum] = useState('');
   const [needNum, setNeedNum] = useState('');
-  const { username } = useSelector((state) => state.user.me);
+  //const { username } = useSelector((state) => state.user.me);
   const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
@@ -69,7 +69,7 @@ const ModalButton = () => {
       const createdAt = current.toISOString();
       const deadLine = getDDay(formData, current);
       const data = {
-        writer: username,
+        //writer: username,
         title,
         content,
         deadLine,
@@ -80,8 +80,8 @@ const ModalButton = () => {
       };
       console.log(data);
       dispatch(addPostRequest(data));
-    },
-    [username]
+    }
+    //[username]
   );
 
   return (
