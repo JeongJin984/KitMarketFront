@@ -93,7 +93,7 @@ function loadProfileAPI() {
     url: `/api/profile/user`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
-      Authorization: cookie.load('token'),
+      Authorization: `Bearer ${cookie.load('token')}`,
     },
   });
 }
@@ -101,6 +101,7 @@ function loadProfileAPI() {
 function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
+    console.log('res', result.headers);
     // yield put({
     //   type: LOAD_PROFILE_SUCCESS,
     //   data: result.data,
