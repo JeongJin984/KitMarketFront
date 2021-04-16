@@ -30,8 +30,7 @@ const profile = () => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  const { profile } = useSelector((state) => state.user);
-  console.log(profile);
+
   return (
     <AppLayout>
       <Card style={{ marginTop: '2%' }}>
@@ -395,6 +394,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
+    console.log(data)
     store.dispatch(loadProfileRequest(data));
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();

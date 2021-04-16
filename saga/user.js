@@ -86,28 +86,27 @@ function* signUp(action) {
 }
 
 function loadProfileAPI(data) {
-  console.log(data);
-  return axios({
+  const result = axios({
     method: 'GET',
-    url: `/api/profile/${data.username}`,
+    url: `/api/profile/user`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
   });
+  return result
 }
 
 function* loadProfile(action) {
   try {
-    const result = yield call(loadProfileAPI, action.data);
-    yield put({
-      type: LOAD_PROFILE_SUCCESS,
-      data: result.data,
-    });
+    console.log("header :", axios.defaults.headers)
+    const result =yield call(loadProfileAPI, action.data);
+    console.log("asdfasdf", result)
+    // yield put({
+    //   type: LOAD_PROFILE_SUCCESS,
+    //   data: result.data,
+    // });
   } catch (error) {
-    yield put({
-      type: LOAD_PROFILE_FAILURE,
-      error,
-    });
+      console.log(error)
   }
 }
 
