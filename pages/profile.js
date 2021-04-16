@@ -59,7 +59,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">{profile.username}</CardText>
+                  <CardText tag="h5"></CardText>
                 </Col>
               </Row>
               <hr />
@@ -71,7 +71,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">{profile.email}</CardText>
+                  <CardText tag="h5"></CardText>
                 </Col>
               </Row>
               <hr />
@@ -83,7 +83,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">{profile.age}</CardText>
+                  <CardText tag="h5"></CardText>
                 </Col>
               </Row>
               <hr />
@@ -387,15 +387,12 @@ const profile = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store, req, query }) => {
-    const username = query.username || '';
-    const data = { username };
     const cookie = req ? req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-    console.log(data)
-    store.dispatch(loadProfileRequest(data));
+    store.dispatch(loadProfileRequest());
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
   }

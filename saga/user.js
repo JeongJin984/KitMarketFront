@@ -12,6 +12,7 @@ import {
 } from '../reducer/user';
 
 import axios from 'axios';
+import cookie from 'react-cookies';
 
 const { frontURL } = require('../config/config');
 function logInAPI(data) {
@@ -52,9 +53,9 @@ function* logIn(action) {
     yield put({
       type: LOGIN_SUCCESS,
     });
-    axios.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${result.headers.Authorization}`;
+    cookie.save('token', result.headers.Authorization, {
+      path: '/',
+    });
     console.log('login successful');
   } catch (error) {
     yield put({
@@ -85,12 +86,14 @@ function* signUp(action) {
   }
 }
 
-function loadProfileAPI(data) {
-  const result = axios({
+function loadProfileAPI() {
+  console.log('cookie', cookie.load('token'));
+  return axios({
     method: 'GET',
     url: `/api/profile/user`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
+      Authorization: cookie.load('token'),
     },
   });
   return result
@@ -98,9 +101,7 @@ function loadProfileAPI(data) {
 
 function* loadProfile(action) {
   try {
-    console.log("header :", axios.defaults.headers)
-    const result =yield call(loadProfileAPI, action.data);
-    console.log("asdfasdf", result)
+    const result = yield call(loadProfileAPI);
     // yield put({
     //   type: LOAD_PROFILE_SUCCESS,
     //   data: result.data,
