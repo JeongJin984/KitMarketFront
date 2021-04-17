@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-const initialState = {
+export const initialState = {
   error: '',
   isLoggedIn: false,
   isLogginIn: false,
