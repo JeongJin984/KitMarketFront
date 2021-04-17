@@ -47,7 +47,7 @@ function* loadPosts(action) {
 function loadPostAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/${data.category}/${data.id}`,
+    url: `/api/${data.category}?id=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
