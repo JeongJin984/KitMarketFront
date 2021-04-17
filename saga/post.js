@@ -98,11 +98,11 @@ function* addPost(action) {
 function joinPostAPI(data) {
   return axios({
     method: 'POST',
-    url: `/api/join?postId=${data.id}`,
+    url: `/api/join`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
-    data: { username: data.username },
+    data: { username: data.username, postId: data.id },
   });
 }
 
