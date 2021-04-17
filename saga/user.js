@@ -14,11 +14,11 @@ import {
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-const { frontURL } = require('../config/config');
+const { frontURL, authURL } = require('../config/config');
 function logInAPI(data) {
   return axios({
     method: 'post',
-    url: `http://localhost:8083/api/login?rememberMe=${data.rememberMe}`,
+    url: `${authURL}/api/login?rememberMe=${data.rememberMe}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -68,44 +68,50 @@ function* signUp(action) {
     yield put({
       type: SIGNUP_SUCCESS,
     });
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 }
 
 function loadProfileAPI() {
-  return axios(
-    {
-      method: 'GET',
-      url: `/api/profile/user`,
-      headers: {
-        'X-Request-With': 'XMLHttpRequest',
-      },
-      validateStatus: (status) => {
-        return status === 200 || 401
-      }
-    }, 
-  )
+  return axios({
+    method: 'GET',
+    url: `/api/profile/user`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    validateStatus: (status) => {
+      return status === 200 || 401;
+    },
+  });
 }
 
 function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
-    console.log("result:::", result)
+    console.log('result:::', result);
 
-    if(result.status === 200) {
+    if (result.status === 200) {
       yield put({
         type: LOAD_PROFILE_SUCCESS,
         data: result.data,
       });
-    } else if(result.status === 401) {
-      console.log("description::: ", result.data.error_description)
+    } else if (result.status === 401) {
+      console.log('description::: ', result.data.error_description);
+      if (result.data.error_description.includes('Access token expired')) {
+        axios({
+          method: 'POST',
+          url: `${authURL}/api/refresh`,
+          headers: {
+            'X-Request-With': 'XMLHttpRequest',
+          },
+        });
+      } else {
+        throw '401 Error';
+      }
     }
-
   } catch (error) {
-    console.log("error:::", error)
-    type: LOAD_PROFILE_FAILURE
-    error: error
+    console.log('error:::', error);
+    type: LOAD_PROFILE_FAILURE;
+    error: error;
   }
 }
 
