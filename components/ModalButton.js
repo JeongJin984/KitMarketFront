@@ -58,6 +58,7 @@ const ModalButton = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
+
       const formData = new FormData(e.target);
       const current = new Date();
       const title = formData.get('title');
@@ -65,14 +66,12 @@ const ModalButton = () => {
       const maxNum = formData.get('maxNum');
       const curNum = formData.get('maxNum') - formData.get('needNum');
       const category = formData.get('category');
-      const createdAt = current.toISOString();
       const deadLine = getDDay(formData, current);
       const data = {
-        //writer: username,
+        writer: '유저',
         title: 'Title',
         content: 'Content!!',
         deadLine: '2022-02-02T02:02:00',
-        createdAt: '2021-04-10T12:56:18',
         maxNum: '4',
         curNum: '2',
         category: 'contest',
