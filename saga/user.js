@@ -50,9 +50,6 @@ function* logIn(action) {
     yield put({
       type: LOGIN_SUCCESS,
     });
-    cookie.save('token', result.data.Authorization, {
-      path: '/',
-    });
   } catch (error) {
     yield put({
       type: LOGIN_FAILURE,
@@ -93,11 +90,14 @@ function loadProfileAPI() {
 function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
+    console.log("result:::", result.data)
     yield put({
       type: LOAD_PROFILE_SUCCESS,
       data: result.data,
     });
   } catch (error) {
+    type: LOAD_PROFILE_FAILURE
+    error: error
   }
 }
 
