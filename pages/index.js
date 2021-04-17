@@ -38,7 +38,7 @@ const Home = () => {
 
 // export const getServerSideProps = wrapper.getServerSideProps(
 //   async ({ store, req, query }) => {
-//     const page = query.page || 0;
+//     const page = query.page - 1 || 0;
 //     const data = { category: 'postList', page };
 //     const cookie = req ? req.headers.cookie : '';
 //     axios.defaults.headers.Cookie = '';
