@@ -69,33 +69,41 @@ function* signUp(action) {
       type: SIGNUP_SUCCESS,
     });
   } catch (error) {
-    yield put({
-      type: SIGNUP_FAILURE,
-      error,
-    });
+    
   }
 }
 
 function loadProfileAPI() {
-  return axios({
-    method: 'GET',
-    url: `/api/profile/user`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-  return result
+  return axios(
+    {
+      method: 'GET',
+      url: `/api/profile/user`,
+      headers: {
+        'X-Request-With': 'XMLHttpRequest',
+      },
+      validateStatus: (status) => {
+        return status === 200 || 401
+      }
+    }, 
+  )
 }
 
 function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
-    console.log("result:::", result.data)
-    yield put({
-      type: LOAD_PROFILE_SUCCESS,
-      data: result.data,
-    });
+    console.log("result:::", result)
+
+    if(result.status === 200) {
+      yield put({
+        type: LOAD_PROFILE_SUCCESS,
+        data: result.data,
+      });
+    } else if(result.status === 401) {
+      console.log("description::: ", result.data.error_description)
+    }
+
   } catch (error) {
+    console.log("error:::", error)
     type: LOAD_PROFILE_FAILURE
     error: error
   }
