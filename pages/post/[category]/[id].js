@@ -29,8 +29,10 @@ const PostView = () => {
   const toggle = () => setPopoverOpen(!popoverOpen);
   const dispatch = useDispatch();
 
+  const [isClicked, setIsClicked] = useState(false);
   const { singlePost } = useSelector((state) => state.post);
-  const { username } = useSelector((state) => state.user.me);
+  //const { username } = useSelector((state) => state.user.me);
+  console.log(singlePost);
 
   let category = '';
   if (singlePost.category === 'contest') {
@@ -42,9 +44,14 @@ const PostView = () => {
   }
 
   const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, username };
+    const data = { id: singlePost.id, username: 'abc' };
     dispatch(joinPostRequest(data));
-  }, [siglePost, username]);
+    setIsClicked(true);
+  }, [singlePost]);
+
+  const onClickCancle = useCallback(() => {
+    setIsClicked(false);
+  }, []);
 
   return (
     <AppLayout>
@@ -144,21 +151,39 @@ const PostView = () => {
                   <PopoverHeader>'작성자' 연락처</PopoverHeader>
                   <PopoverBody>카카오톡 id : asdfghjk</PopoverBody>
                 </UncontrolledPopover>
-                <Button
-                  color="secondary"
-                  onClick={toggle}
-                  style={{
-                    marginLeft: '-120%',
-                    width: '90px',
-                    height: '90px',
-                    borderRadius: '75%',
-                    textAlign: 'center',
-                    margin: '0',
-                  }}
-                  onClick={onClickJoin}
-                >
-                  함께하기
-                </Button>
+                {isClicked ? (
+                  <Button
+                    color="secondary"
+                    onClick={toggle}
+                    style={{
+                      marginLeft: '-120%',
+                      width: '90px',
+                      height: '90px',
+                      borderRadius: '75%',
+                      textAlign: 'center',
+                      margin: '0',
+                    }}
+                    onClick={onClickCancle}
+                  >
+                    취소하기
+                  </Button>
+                ) : (
+                  <Button
+                    color="secondary"
+                    onClick={toggle}
+                    style={{
+                      marginLeft: '-120%',
+                      width: '90px',
+                      height: '90px',
+                      borderRadius: '75%',
+                      textAlign: 'center',
+                      margin: '0',
+                    }}
+                    onClick={onClickJoin}
+                  >
+                    함께하기
+                  </Button>
+                )}
               </Col>
             </Row>
           </Card>
