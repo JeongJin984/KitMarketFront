@@ -235,6 +235,8 @@ const postReducer = (state = initialState, action) => {
       case ADD_POST_REQUEST:
         draft.isPosting = true;
         draft.isPosted = false;
+        draft.mainPosts.pop();
+        draft.mainPosts.unshift(action.data);
         draft.error = '';
         break;
 

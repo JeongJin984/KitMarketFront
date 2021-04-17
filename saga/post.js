@@ -72,7 +72,7 @@ function* loadPost(action) {
 function addPostAPI(data) {
   return axios({
     method: 'POST',
-    url: `/api/${data.category}`,
+    url: `/api/post`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },

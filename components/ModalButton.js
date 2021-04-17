@@ -48,11 +48,11 @@ const ModalButton = () => {
       date < 10 ? `0${date}` : date
     }T${hours < 10 ? `0${hours}` : hours}:${
       minutes < 10 ? `0${minutes}` : minutes
-    }:00+0900`;
+    }:00`;
     const dDay = new Date(setDate);
     const distance = dDay.getTime() - current.getTime();
     const day = Math.floor(distance / (1000 * 60 * 60 * 24));
-    return day;
+    return setDate;
   }, []);
 
   const handleSubmit = useCallback(
@@ -69,13 +69,13 @@ const ModalButton = () => {
       const deadLine = getDDay(formData, current);
       const data = {
         //writer: username,
-        title,
-        content,
-        deadLine,
-        createdAt,
-        maxNum,
-        curNum,
-        category,
+        title: 'Title',
+        content: 'Content!!',
+        deadLine: '2022-02-02T02:02:00',
+        createdAt: '2021-04-10T12:56:18',
+        maxNum: '4',
+        curNum: '2',
+        category: 'contest',
       };
       dispatch(addPostRequest(data));
     }
