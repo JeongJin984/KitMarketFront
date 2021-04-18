@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadProfileRequest } from '../reducer/user';
+import { loadProfileRequest, refreshTokenRequest } from '../reducer/user';
 import {
   Card,
   CardBody,
@@ -22,6 +22,7 @@ import {
 } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 import classnames from 'classnames';
+import jwt_decode from "jwt-decode";
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');
@@ -29,7 +30,6 @@ const profile = () => {
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
 
   return (
     <AppLayout>
@@ -392,6 +392,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
+
     store.dispatch(loadProfileRequest());
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();

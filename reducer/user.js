@@ -26,6 +26,8 @@ export const LOAD_PROFILE_REQUEST = 'LOAD_PROFILE_REQUEST';
 export const LOAD_PROFILE_SUCCESS = 'LOAD_PROFILE_SUCCESS';
 export const LOAD_PROFILE_FAILURE = 'LOAD_PROFILE_FAILURE';
 
+export const LOAD_REFRESH_TOKEN_REQUEST = 'LOAD_REFRESH_TOKEN_REQUEST';
+
 export const loginRequest = (data) => {
   return {
     type: LOGIN_REQUEST,
@@ -49,6 +51,13 @@ export const signUpRequest = (data) => {
 export const loadProfileRequest = (data) => {
   return {
     type: LOAD_PROFILE_REQUEST,
+    data,
+  };
+};
+
+export const refreshTokenRequest = (data) => {
+  return {
+    type: LOAD_REFRESH_TOKEN_REQUEST,
     data,
   };
 };

@@ -9,10 +9,10 @@ import {
   LOAD_PROFILE_REQUEST,
   LOAD_PROFILE_SUCCESS,
   LOAD_PROFILE_FAILURE,
+  LOAD_REFRESH_TOKEN_REQUEST
 } from '../reducer/user';
 
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 const { frontURL, authURL } = require('../config/config');
 function logInAPI(data) {
@@ -88,30 +88,34 @@ function* loadProfile(action) {
   try {
     const result = yield call(loadProfileAPI);
     console.log('result:::', result);
-
     if (result.status === 200) {
       yield put({
         type: LOAD_PROFILE_SUCCESS,
         data: result.data,
       });
-    } else if (result.status === 401) {
-      console.log('description::: ', result.data.error_description);
-      if (result.data.error_description.includes('Access token expired')) {
-        axios({
-          method: 'POST',
-          url: `${authURL}/api/refresh`,
-          headers: {
-            'X-Request-With': 'XMLHttpRequest',
-          },
-        });
-      } else {
-        throw '401 Error';
-      }
     }
   } catch (error) {
     console.log('error:::', error);
     type: LOAD_PROFILE_FAILURE;
     error: error;
+  }
+}
+
+function refreshTokenAPI() {
+  return axios({
+    method: 'GET',
+    url: `http://localhost:8083/api/refresh`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* loadRefreshToken(action) {
+  try {
+    yield call(refreshTokenAPI, action.data)
+  } catch (error) {
+    
   }
 }
 
@@ -131,11 +135,16 @@ function* watchLoadProfile() {
   yield takeLatest(LOAD_PROFILE_REQUEST, loadProfile);
 }
 
+function* watchLoadRefreshToken() {
+  yield takeLatest(LOAD_REFRESH_TOKEN_REQUEST, loadRefreshToken);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
     fork(watchLogout),
     fork(watchSignUp),
     fork(watchLoadProfile),
+    fork(watchLoadRefreshToken)
   ]);
 }
