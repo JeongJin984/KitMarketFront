@@ -35,7 +35,6 @@ function logOutAPI() {
 }
 
 function signUpAPI(data) {
-  console.log("asdfasdf",data)
   return axios({
     method: 'post',
     url: `${authURL}/api/signup`,
@@ -51,6 +50,7 @@ function* logIn(action) {
     const result = yield call(logInAPI, action.data);
     yield put({
       type: LOGIN_SUCCESS,
+      data: result.data
     });
   } catch (error) {
     yield put({
