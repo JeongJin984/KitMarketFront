@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import styled, { css } from 'styled-components';
 
@@ -12,23 +12,49 @@ import {
   Container,
   Row,
   Col,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
 } from 'reactstrap';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signUpRequest } from '../reducer/user';
 import { useRouter } from 'next/router';
 
-const Home = () => {
+import { useCookies } from "react-cookie"
+import axios from 'axios';
+
+const signUp = () => {
+
+  const { isSignedUp } = useSelector(state => state.user)
+
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwdValid, setIsPwdValid] = useState(false);
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
   const router = useRouter();
+  
+  useEffect(() => {
+    if (isSignedUp) {
+      router.push('/login');
+    }
+  }, [isSignedUp]);
+
+  const onChangeUsername = useCallback((e) => {
+    setUsername(e.target.value);
+  }, []);
+
+  const onChangeEmail = useCallback((e) => {
+    setEmail(e.target.value);
+
+    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailRex.test(e.target.value)) {
+      setIsEmailValid(true);
+    } else {
+      setIsEmailValid(false);
+    }
+  }, []);
 
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
@@ -48,10 +74,6 @@ const Home = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      const formData = new FormData(e.target);
-      const username = formData.get('username');
-      const email = formData.get('email');
-      const password = formData.get('password');
       const data = {
         username: username,
         email: email,
@@ -59,17 +81,8 @@ const Home = () => {
       };
       dispatch(signUpRequest(data));
     },
-    [password]
+    [username, email, password]
   );
-
-  const validateEmail = useCallback((e) => {
-    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRex.test(e.target.value)) {
-      setIsEmailValid(true);
-    } else {
-      setIsEmailValid(false);
-    }
-  }, []);
 
   const onClickCancle = (e) => {
     e.preventDefault();
@@ -100,6 +113,7 @@ const Home = () => {
                     id="exampleUsername"
                     placeholder="Username"
                     required
+                    onChange={onChangeUsername}
                   />
                 </Col>
                 <Col xs="2">
@@ -122,7 +136,7 @@ const Home = () => {
                       name="email"
                       id="exampleEmail"
                       placeholder="Email"
-                      onChange={validateEmail}
+                      onChange={onChangeEmail}
                       valid
                       required
                     />
@@ -132,7 +146,7 @@ const Home = () => {
                       name="email"
                       id="exampleEmail"
                       placeholder="Email"
-                      onChange={validateEmail}
+                      onChange={onChangeEmail}
                       invalid
                       required
                     />
@@ -232,4 +246,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default signUp;

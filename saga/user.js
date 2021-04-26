@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 
 const { frontURL, authURL } = require('../config/config');
+
 function logInAPI(data) {
   return axios({
     method: 'post',
@@ -34,11 +35,12 @@ function logOutAPI() {
 }
 
 function signUpAPI(data) {
+  console.log("asdfasdf",data)
   return axios({
     method: 'post',
-    url: '/api/signup',
+    url: `${authURL}/api/signup`,
     headers: {
-      'X-Request-With': 'XMLHttpRequest',
+      'X-Request-With': 'XMLHttpRequest'
     },
     data,
   });
@@ -64,7 +66,7 @@ function* logOut(action) {
 
 function* signUp(action) {
   try {
-    const result = yield call(signUpAPI, action.data);
+    yield call(signUpAPI, action.data);
     yield put({
       type: SIGNUP_SUCCESS,
     });

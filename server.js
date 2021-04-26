@@ -8,9 +8,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const hpp = require('hpp')
 const helmet = require('helmet')
 const { query, response } = require('express')
-const Cookies = require('cookies')
 const axios = require('axios')
-const jwt_decode = require("jwt-decode");
 
 const loadJWT = require("./loadJWT")
 
@@ -27,7 +25,7 @@ app.prepare()
 
 		if (dev) {
 			server.use(morgan('dev'))
-			server.use(cookieParser(process.env.COOKIE_SECRET))
+			server.use(cookieParser())
 		} else {
 			console.log('uququququququququ')
 			server.set('trust proxy', 1)
@@ -38,23 +36,26 @@ app.prepare()
 			}))
 			server.use(cookieParser(process.env.COOKIE_SECRET))
 		}
-
-		server.use(express.json())
 		server.use(express.urlencoded({extended: true }))
 		server.use('/', express.static(path.join(__dirname, 'public')))
-    server.use(loadJWT('/'))
-    server.use(loadJWT('/api/login'));
+    server.use(loadJWT(['/', '/login', '/signup']))
 
     server.get('/profile', (req, res) => {
       app.render(req, res, '/profile', req.query)
     }) 
 
 		server.all('*', (req,res) => {
+      var cookies = req ? req.cookies : '';
+      axios.defaults.headers.Cookie = '';
+			if(req && cookies) {
+				axios.defaults.headers.Cookie = cookies
+				res.cookie('Authorization', cookies["Authorization"])
+				res.cookie('Refresh', cookies["Refresh"])
+			}
 			handle(req, res)
 		})
 
 		server.listen(3000, () => {
-			console.log(`next express port: 3000
-			`)
+			console.log(`next express port: 3000`)
 		})
 	})

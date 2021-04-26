@@ -22,7 +22,6 @@ import {
 } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 import classnames from 'classnames';
-import jwt_decode from "jwt-decode";
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');
@@ -392,7 +391,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-
     store.dispatch(loadProfileRequest());
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
