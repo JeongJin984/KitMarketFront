@@ -7,7 +7,6 @@ import axios from 'axios';
 import { loadMainPostsRequest } from '../reducer/post';
 
 import { Row, Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
-import { useCookies, Cookies } from 'react-cookie';
 
 import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
