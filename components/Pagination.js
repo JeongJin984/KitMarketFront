@@ -16,14 +16,14 @@ const Pagination = () => {
   const currentPageSet = page.slice(10 * pageSetNum, 10 * pageSetNum + 10);
 
   const { category } = router.query;
+  const existCategory = (page) =>
+    category
+      ? router.push(`/board/${category}?page=${page}`)
+      : router.push(`/?page=${page}`);
 
   const onClickPage = useCallback(
     (num) => {
-      if (category) {
-        router.push(`/board/${category}/?page=${num}`);
-      } else {
-        router.push(`/?page=${num}`);
-      }
+      existCategory(num);
     },
     [category]
   );
@@ -31,23 +31,23 @@ const Pagination = () => {
   const onClickNext = useCallback(() => {
     const nextPageNum = (pageSetNum + 1) * 10 + 1;
     if (maxPage >= nextPageNum) {
-      router.push(`/?page=${nextPageNum}`);
+      existCategory(nextPageNum);
     }
   }, [pageSetNum, maxPage]);
 
   const onClickPrev = useCallback(() => {
     const prevPageNum = pageSetNum * 10;
     if (prevPageNum >= 1) {
-      router.push(`/?page=${prevPageNum}`);
+      existCategory(prevPageNum);
     }
   }, [pageSetNum]);
 
   const onClickNextEnd = useCallback(() => {
-    router.push(`/?page=${maxPage}`);
+    existCategory(maxPage);
   }, [maxPage]);
 
   const onClickPrevEnd = useCallback(() => {
-    router.push(`/?page=1`);
+    existCategory(1);
   }, []);
 
   return (
