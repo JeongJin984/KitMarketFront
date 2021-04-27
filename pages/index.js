@@ -7,7 +7,7 @@ import axios from 'axios';
 import { loadMainPostsRequest } from '../reducer/post';
 
 import { Row, Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
-import { useCookies, Cookies } from "react-cookie"
+import { useCookies, Cookies } from 'react-cookie';
 
 import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
@@ -48,7 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-    //store.dispatch(loadMainPostsRequest(data));
+    store.dispatch(loadMainPostsRequest(data));
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
   }
