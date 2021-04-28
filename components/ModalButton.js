@@ -35,6 +35,7 @@ const ModalButton = () => {
   const currentYear = current.getFullYear();
 
   const dispatch = useDispatch();
+  const { isPosted } = useSelector((state) => state.post);
 
   const toggle = () => {
     onReset();
@@ -99,14 +100,16 @@ const ModalButton = () => {
         category,
       };
 
-      if (deadLineDate.getTime() < current.getTime()) {
+      if (deadLineDate.getTime() <= current.getTime()) {
         alert('현재 시간 이후를 입력해주세요.');
       } else {
-        console.log('add');
-        //dispatch(addPostRequest(data));
+        dispatch(addPostRequest(data));
+        if (isPosted === true) {
+          toggle();
+        }
       }
-    }
-    //[username]
+    },
+    [isPosted]
   );
 
   return (
