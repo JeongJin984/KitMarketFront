@@ -5,7 +5,19 @@ const initialState = {
   isLoadedPosts: false,
   isLoadingPost: false,
   isLoadedPost: false,
-  singlePost: {},
+  singlePost: {
+    id: '',
+    writer: '',
+    title: '',
+    content: '',
+    deadLine: '',
+    createdAt: '',
+    maxNum: '',
+    curNum: '',
+    category: '',
+    applications: [],
+    participants: [],
+  },
   meta: {},
   mainPosts: [],
   isPosting: false,
@@ -102,8 +114,6 @@ const postReducer = (state = initialState, action) => {
       case ADD_POST_REQUEST:
         draft.isPosting = true;
         draft.isPosted = false;
-        draft.mainPosts.pop();
-        draft.mainPosts.unshift(action.data);
         draft.error = '';
         break;
 
@@ -123,16 +133,20 @@ const postReducer = (state = initialState, action) => {
         draft.isJoiningPost = true;
         draft.isJoinedPost = false;
         draft.error = '';
+        break;
 
       case JOIN_POST_SUCCESS:
         draft.isJoiningPost = false;
         draft.isJoinedPost = true;
+        draft.singlePost.applications.push(action.data);
         draft.error = '';
+        break;
 
       case JOIN_POST_FAILURE:
         draft.isJoiningPost = false;
         draft.isJoinedPost = false;
         draft.error = action.error;
+        break;
 
       default:
         break;
