@@ -17,66 +17,94 @@ import {
 
 const ModalButton = () => {
   const [modal, setModal] = useState(false);
-  const [maxNum, setMaxNum] = useState('');
-  const [needNum, setNeedNum] = useState('');
+  const [inputs, setInputs] = useState({
+    title: '',
+    content: '',
+    maxNum: '',
+    needNum: '',
+    category: 'contest',
+    year: '',
+    month: '',
+    date: '',
+    ampm: 'AM',
+    hours: '',
+    minutes: '',
+  });
   //const { username } = useSelector((state) => state.user.me);
+  const current = new Date();
+  const currentYear = current.getFullYear();
+
   const dispatch = useDispatch();
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    onReset();
+    setModal(!modal);
+  };
 
-  const onChangeMaxNum = useCallback((e) => {
-    setMaxNum(e.target.value);
-  }, []);
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
 
-  const onChangeNeedNum = useCallback((e) => {
-    setNeedNum(e.target.value);
-  }, []);
-
-  const getDDay = useCallback((formData, current) => {
-    const year = formData.get('year');
-    const month = formData.get('month');
-    const date = formData.get('date');
-    const ampm = formData.get('ampm');
-    let hours = formData.get('hours');
-    hours = parseInt(hours);
-    if (ampm === 'PM') {
-      hours += 12;
-    }
-    const minutes = formData.get('minutes');
-
-    const setDate = `${year}-${month < 10 ? `0${month}` : month}-${
-      date < 10 ? `0${date}` : date
-    }T${hours < 10 ? `0${hours}` : hours}:${
-      minutes < 10 ? `0${minutes}` : minutes
-    }:00`;
-    const dDay = new Date(setDate);
-    const distance = dDay.getTime() - current.getTime();
-    const day = Math.floor(distance / (1000 * 60 * 60 * 24));
-    return setDate;
-  }, []);
+  const onReset = () => {
+    setInputs({
+      title: '',
+      content: '',
+      maxNum: '',
+      needNum: '',
+      category: 'contest',
+      year: '',
+      month: '',
+      date: '',
+      ampm: 'AM',
+      hours: '',
+      minutes: '',
+    });
+  };
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      const {
+        title,
+        content,
+        maxNum,
+        needNum,
+        category,
+        year,
+        month,
+        date,
+        ampm,
+        hours,
+        minutes,
+      } = inputs;
+      const ampmHours = ampm === 'PM' ? parseInt(hours) + 12 : hours;
+      const deadLine = `${year}-${month < 10 ? `0${month}` : month}-${
+        date < 10 ? `0${date}` : date
+      }T${ampmHours < 10 ? `0${ampmHours}` : ampmHours}:${
+        minutes < 10 ? `0${minutes}` : minutes
+      }:00`;
+      const deadLineDate = new Date(deadLine);
 
-      const formData = new FormData(e.target);
-      const current = new Date();
-      const title = formData.get('title');
-      const content = formData.get('content');
-      const maxNum = formData.get('maxNum');
-      const curNum = formData.get('maxNum') - formData.get('needNum');
-      const category = formData.get('category');
-      const deadLine = getDDay(formData, current);
       const data = {
         writer: '유저',
-        title: 'Title',
-        content: 'Content!!',
-        deadLine: '2022-02-02T02:02:00',
-        maxNum: '4',
-        curNum: '2',
-        category: 'contest',
+        title,
+        content,
+        deadLine,
+        maxNum,
+        curNum: maxNum - needNum,
+        category,
       };
-      dispatch(addPostRequest(data));
+
+      if (deadLineDate.getTime() < current.getTime()) {
+        alert('현재 시간 이후를 입력해주세요.');
+      } else {
+        console.log('add');
+        //dispatch(addPostRequest(data));
+      }
     }
     //[username]
   );
@@ -115,7 +143,7 @@ const ModalButton = () => {
                 <label style={{ fontWeight: 'bold' }}>카테고리</label>
               </Col>
               <Col xs="3">
-                <Input type="select" name="category" id="exampleSelect">
+                <Input type="select" name="category" onChange={onChange}>
                   <option value="contest">공모전</option>
                   <option>조별과제</option>
                   <option>OTT</option>
@@ -131,7 +159,7 @@ const ModalButton = () => {
                 <label style={{ fontWeight: 'bold' }}>제목</label>
               </Col>
               <Col xs="10">
-                <Input name="title" placeholder="제목" />
+                <Input name="title" onChange={onChange} placeholder="제목" />
               </Col>
             </Row>
             <br />
@@ -145,7 +173,8 @@ const ModalButton = () => {
                     <Input
                       name="maxNum"
                       type="number"
-                      onChange={onChangeMaxNum}
+                      min="2"
+                      onChange={onChange}
                       placeholder=""
                     />
                   </Col>
@@ -156,7 +185,9 @@ const ModalButton = () => {
                     <Input
                       name="needNum"
                       type="number"
-                      onChange={onChangeNeedNum}
+                      min="1"
+                      max={inputs.maxNum - 1}
+                      onChange={onChange}
                       placeholder=""
                     />
                   </Col>
@@ -172,7 +203,7 @@ const ModalButton = () => {
               style={{ height: 300 }}
               type="textarea"
               name="content"
-              id="exampleText"
+              onChange={onChange}
               placeholder="내용"
             />
             <br />
@@ -182,8 +213,8 @@ const ModalButton = () => {
                 <Input
                   name="year"
                   type="number"
-                  min="1"
-                  max="2022"
+                  min={currentYear}
+                  onChange={onChange}
                   placeholder=""
                 />
               </Col>
@@ -196,6 +227,7 @@ const ModalButton = () => {
                   type="number"
                   min="1"
                   max="12"
+                  onChange={onChange}
                   placeholder=""
                 />
               </Col>
@@ -208,6 +240,7 @@ const ModalButton = () => {
                   type="number"
                   min="1"
                   max="31"
+                  onChange={onChange}
                   placeholder=""
                 />
               </Col>
@@ -219,19 +252,33 @@ const ModalButton = () => {
             <Row>
               <Col xs="3"></Col>
               <Col xs="2">
-                <Input type="select" name="ampm" id="exampleSelect">
+                <Input type="select" name="ampm" onChange={onChange} required>
+                  <option value="">선택</option>
                   <option>AM</option>
                   <option>PM</option>
                 </Input>
               </Col>
               <Col xs="2" style={{ marginRight: '-3%' }}>
-                <Input name="hours" min="0" max="11" placeholder="" />
+                <Input
+                  name="hours"
+                  type="number"
+                  min="0"
+                  max="11"
+                  onChange={onChange}
+                  placeholder=""
+                />
               </Col>
               <Col xs="1" style={{ marginRight: '-3%' }}>
                 <label>시</label>
               </Col>
               <Col xs="2" style={{ marginRight: '-3%' }}>
-                <Input name="minutes" min="0" max="59" placeholder="" />
+                <Input
+                  name="minutes"
+                  min="0"
+                  max="59"
+                  onChange={onChange}
+                  placeholder=""
+                />
               </Col>
               <Col xs="1" style={{ marginRight: '-3%' }}>
                 <label>분</label>
