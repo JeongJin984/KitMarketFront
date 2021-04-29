@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
+
 const Pagination = () => {
   const { currentPage, maxPage } = useSelector((state) => state.post.meta);
   const router = useRouter();
@@ -66,7 +67,7 @@ const Pagination = () => {
         {currentPageSet.map((i) => {
           if (i - 1 === currentPage) {
             return (
-              <Button key={i} color="primary" onClick={() => onClickPage(i)}>
+              <Button key={i} color="secondary" onClick={() => onClickPage(i)}>
                 {i}
               </Button>
             );

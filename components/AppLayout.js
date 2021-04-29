@@ -4,9 +4,6 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 const NavStyle = styled.nav`
-  // display: flex;
-  // justify-content: space-between;
-  // text-decoration:none;
   a {
     background-color: none;
     color: #7a7a79;

@@ -38,7 +38,7 @@ app.prepare()
 		}
 		server.use(express.urlencoded({extended: true }))
 		server.use('/', express.static(path.join(__dirname, 'public')))
-    server.use(loadJWT(['/', '/login', '/signup']))
+    // server.use(loadJWT(['/', '/login', '/signup']))
 
     server.get('/profile', (req, res) => {
       app.render(req, res, '/profile', req.query)

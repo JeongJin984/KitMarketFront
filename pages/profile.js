@@ -11,6 +11,8 @@ import {
   CardSubtitle,
   CardText,
   Button,
+  ButtonToolbar,
+  ButtonGroup,
   Media,
   Row,
   Col,
@@ -25,7 +27,7 @@ import classnames from 'classnames';
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');
-
+  const [isClicked, setIsClicked] = useState(false);
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
@@ -173,7 +175,7 @@ const profile = () => {
                           <CardTitle className="text-left">카테고리</CardTitle>
                         </Col>
                         <Col xs="4" className="col text-right">
-                          <Button close />
+                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
                         </Col>
                       </Row>
                       <CardTitle tag="h5" className="text-center">
@@ -205,7 +207,7 @@ const profile = () => {
                           <CardTitle className="text-left">카테고리</CardTitle>
                         </Col>
                         <Col xs="4" className="col text-right">
-                          <Button close />
+                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
                         </Col>
                       </Row>
                       <CardTitle tag="h5" className="text-center">
@@ -232,6 +234,33 @@ const profile = () => {
                   </Col>
                   <Col xs="3"></Col>
                   <Col xs="3"></Col>
+                </Row>
+                <Row>
+                  <ButtonToolbar style={{margin: '3% auto 3% auto ',}}>
+                    <ButtonGroup>
+                      <Button outline color="secondary" >
+                        ⟪
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟨
+                      </Button>
+                      <Button outline color="secondary" >
+                        1
+                      </Button>
+                      <Button outline color="secondary" >
+                        2
+                      </Button>
+                      <Button outline color="secondary" >
+                        3
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟩
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟫
+                      </Button>
+                    </ButtonGroup>
+                  </ButtonToolbar>
                 </Row>
               </TabPane>
               <TabPane tabId="2">
@@ -244,7 +273,7 @@ const profile = () => {
                           <CardTitle className="text-left">카테고리</CardTitle>
                         </Col>
                         <Col xs="4" className="col text-right">
-                          <Button close />
+                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
                         </Col>
                       </Row>
                       <CardTitle tag="h5" className="text-center">
@@ -276,7 +305,7 @@ const profile = () => {
                           <CardTitle className="text-left">카테고리</CardTitle>
                         </Col>
                         <Col xs="4" className="col text-right">
-                          <Button close />
+                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
                         </Col>
                       </Row>
                       <CardTitle tag="h5" className="text-center">
@@ -304,6 +333,33 @@ const profile = () => {
                   <Col xs="3"></Col>
                   <Col xs="3"></Col>
                 </Row>
+                <Row>
+                  <ButtonToolbar style={{margin: '3% auto 3% auto ',}}>
+                    <ButtonGroup>
+                      <Button outline color="secondary" >
+                        ⟪
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟨
+                      </Button>
+                      <Button outline color="secondary" >
+                        1
+                      </Button>
+                      <Button outline color="secondary" >
+                        2
+                      </Button>
+                      <Button outline color="secondary" >
+                        3
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟩
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟫
+                      </Button>
+                    </ButtonGroup>
+                  </ButtonToolbar>
+                </Row>
               </TabPane>
               <TabPane tabId="3">
                 <br />
@@ -315,7 +371,7 @@ const profile = () => {
                           <CardTitle className="text-left">카테고리</CardTitle>
                         </Col>
                         <Col xs="4" className="col text-right">
-                          <Button close />
+                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
                         </Col>
                       </Row>
                       <CardTitle tag="h5" className="text-center">
@@ -347,7 +403,7 @@ const profile = () => {
                           <CardTitle className="text-left">카테고리</CardTitle>
                         </Col>
                         <Col xs="4" className="col text-right">
-                          <Button close />
+                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
                         </Col>
                       </Row>
                       <CardTitle tag="h5" className="text-center">
@@ -374,6 +430,33 @@ const profile = () => {
                   </Col>
                   <Col xs="3"></Col>
                   <Col xs="3"></Col>
+                </Row>
+                <Row>
+                  <ButtonToolbar style={{margin: '3% auto 3% auto ',}}>
+                    <ButtonGroup>
+                      <Button outline color="secondary" >
+                        ⟪
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟨
+                      </Button>
+                      <Button outline color="secondary" >
+                        1
+                      </Button>
+                      <Button outline color="secondary" >
+                        2
+                      </Button>
+                      <Button outline color="secondary" >
+                        3
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟩
+                      </Button>
+                      <Button outline color="secondary" >
+                        ⟫
+                      </Button>
+                    </ButtonGroup>
+                  </ButtonToolbar>
                 </Row>
               </TabPane>
             </TabContent>
