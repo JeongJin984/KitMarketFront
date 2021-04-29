@@ -200,7 +200,7 @@ const PostView = () => {
                 <>
                   <FormGroup check>
                     <Label check>
-                      <Input type="checkbox" /> {app.id}
+                      <Input type="checkbox" /> {app.content}
                     </Label>
                   </FormGroup>
                   <br />{' '}
