@@ -27,12 +27,13 @@ import AppLayout from '../../../components/AppLayout';
 const PostView = () => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const toggle = () => setPopoverOpen(!popoverOpen);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const [isClicked, setIsClicked] = useState(false);
-  const { singlePost } = useSelector((state) => state.post);
+  const { singlePost, isJoinedPost } = useSelector((state) => state.post);
   //const { username } = useSelector((state) => state.user.me);
-  console.log(singlePost);
+  const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
+  console.log(isJoinedPost);
 
   let category = '';
   if (singlePost.category === 'contest') {
@@ -46,8 +47,8 @@ const PostView = () => {
   const onClickJoin = useCallback(() => {
     const data = { id: singlePost.id, username: 'abc' };
     dispatch(joinPostRequest(data));
-    setIsClicked(true);
-  }, [singlePost]);
+    if (isJoinedPost === true) setIsClicked(true);
+  }, [singlePost, isJoinedPost]);
 
   const onClickCancle = useCallback(() => {
     setIsClicked(false);
@@ -110,7 +111,7 @@ const PostView = () => {
                 <Col xs="6">
                   <CardText tag="h6" className="mb-2 text-muted text-right">
                     {/* 2021.04.08. 6:30PM */}
-                    {singlePost.createdAt}
+                    {createdAt}
                   </CardText>
                 </Col>
               </Row>
@@ -199,7 +200,7 @@ const PostView = () => {
                 <>
                   <FormGroup check>
                     <Label check>
-                      <Input type="checkbox" /> {app.content}
+                      <Input type="checkbox" /> {app.id}
                     </Label>
                   </FormGroup>
                   <br />{' '}
@@ -217,19 +218,19 @@ const PostView = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   async ({ store, req, query }) => {
-//     const cookie = req ? req.headers.cookie : '';
-//     const { category, id } = query;
-//     const data = { category, id };
-//     axios.defaults.headers.Cookie = '';
-//     if (req && cookie) {
-//       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-//     }
-//     store.dispatch(loadPostRequest(data));
-//     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-//     await store.sagaTask.toPromise();
-//   }
-// );
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store, req, query }) => {
+    const cookie = req ? req.headers.cookie : '';
+    const { category, id } = query;
+    const data = { category, id };
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
+      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+    }
+    store.dispatch(loadPostRequest(data));
+    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+    await store.sagaTask.toPromise();
+  }
+);
 
 export default PostView;
