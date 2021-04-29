@@ -6,10 +6,16 @@ export const initialState = {
   isLogginIn: false,
   isSignedUp: false,
   isSigningUp: false,
-  me: null,
+  me: { username: '' },
   isLoadingProfile: false,
   isLoadedProfile: false,
-  profile: null,
+  profile: {
+    username: '',
+    email: '',
+    age: '',
+    createdPost: [],
+    participatingPost: [],
+  },
 };
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
