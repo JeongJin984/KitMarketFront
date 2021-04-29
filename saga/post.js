@@ -427,7 +427,7 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
-    const result = yield call(addPostAPI, action.data); // reesult 존재?
+    //const result = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
     });
@@ -452,7 +452,8 @@ function joinPostAPI(data) {
 
 function* joinPost(action) {
   try {
-    const result = yield call(joinPostAPI, action.data); // reesult 존재?
+    //const result = yield call(joinPostAPI, action.data);
+    const result = { data: { id: 4, content: 'comment' } };
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
