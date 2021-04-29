@@ -36,7 +36,8 @@ const PostCard = ({ postInfo }) => {
             </Col>
             <br />
           </Row>
-
+          {/* 마감처리 */}
+          {/* <CardText className="text-muted font-weight-bold" style={{fontSize : "145px", marginTop:"-15%", marginBottom:"-55%"}}>마감</CardText> */}
           <CardTitle tag="h3">{postInfo.title}</CardTitle>
           <CardText style={{ height: 50 }}>{postInfo.content}</CardText>
           <CardText tag="h5" className="text-right">
