@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { addPostRequest } from '../reducer/post';
@@ -37,8 +37,13 @@ const ModalButton = () => {
   const dispatch = useDispatch();
   const { isPosted } = useSelector((state) => state.post);
 
+  useEffect(() => {
+    if (modal === false) {
+      onReset();
+    }
+  }, [modal]);
+
   const toggle = () => {
-    onReset();
     setModal(!modal);
   };
 
@@ -89,7 +94,6 @@ const ModalButton = () => {
         minutes < 10 ? `0${minutes}` : minutes
       }:00`;
       const deadLineDate = new Date(deadLine);
-
       const data = {
         writer: '유저',
         title,
@@ -99,9 +103,13 @@ const ModalButton = () => {
         curNum: maxNum - needNum,
         category,
       };
+      console.log(data);
 
-      if (deadLineDate.getTime() <= current.getTime()) {
-        alert('현재 시간 이후를 입력해주세요.');
+      if (
+        deadLineDate.getTime() <= current.getTime() ||
+        isNaN(deadLineDate.getTime())
+      ) {
+        alert('올바른 날짜를 입력해주세요.');
       } else {
         dispatch(addPostRequest(data));
         if (isPosted === true) {
@@ -109,7 +117,7 @@ const ModalButton = () => {
         }
       }
     },
-    [isPosted]
+    [isPosted, inputs]
   );
 
   return (
