@@ -3,54 +3,15 @@ import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
 
-const Pagination = () => {
-  const { currentPage, maxPage } = useSelector((state) => state.post.meta);
-  const router = useRouter();
-  // const currentPage = router.query.page - 1 || 0;
-  // const maxPage = 15;
-
-  const page = Array(maxPage)
-    .fill()
-    .map((page, i) => i + 1);
-
-  const pageSetNum = parseInt(currentPage / 10);
-  const currentPageSet = page.slice(10 * pageSetNum, 10 * pageSetNum + 10);
-
-  const { category } = router.query;
-  const existCategory = (page) =>
-    category
-      ? router.push(`/board/${category}?page=${page}`)
-      : router.push(`/?page=${page}`);
-
-  const onClickPage = useCallback(
-    (num) => {
-      existCategory(num);
-    },
-    [category]
-  );
-
-  const onClickNext = useCallback(() => {
-    const nextPageNum = (pageSetNum + 1) * 10 + 1;
-    if (maxPage >= nextPageNum) {
-      existCategory(nextPageNum);
-    }
-  }, [pageSetNum, maxPage]);
-
-  const onClickPrev = useCallback(() => {
-    const prevPageNum = pageSetNum * 10;
-    if (prevPageNum >= 1) {
-      existCategory(prevPageNum);
-    }
-  }, [pageSetNum]);
-
-  const onClickNextEnd = useCallback(() => {
-    existCategory(maxPage);
-  }, [maxPage]);
-
-  const onClickPrevEnd = useCallback(() => {
-    existCategory(1);
-  }, []);
-
+const Pagination = ({
+  pages,
+  currentPage,
+  onClickPage,
+  onClickNext,
+  onClickPrev,
+  onClickNextEnd,
+  onClickPrevEnd,
+}) => {
   return (
     <ButtonToolbar
       style={{
@@ -64,22 +25,22 @@ const Pagination = () => {
         <Button outline color="secondary" onClick={onClickPrev}>
           ⟨
         </Button>
-        {currentPageSet.map((i) => {
-          if (i - 1 === currentPage) {
+        {pages.map((p) => {
+          if (p - 1 === currentPage) {
             return (
-              <Button key={i} color="secondary" onClick={() => onClickPage(i)}>
-                {i}
+              <Button key={p} color="secondary" onClick={() => onClickPage(p)}>
+                {p}
               </Button>
             );
           } else {
             return (
               <Button
                 outline
-                key={i}
+                key={p}
                 color="secondary"
-                onClick={() => onClickPage(i)}
+                onClick={() => onClickPage(p)}
               >
-                {i}
+                {p}
               </Button>
             );
           }
