@@ -11,14 +11,30 @@ import {
 
 const JumbotronComponent = () => {
   return (
-    <Jumbotron style={{ height: '120%', marginTop: '2%' }}>
-      <h1 className="display-3">K&I</h1>
-      <p className="lead">간단한 설명</p>
-      <br />
+    <Jumbotron style={{ height: '100%', marginTop: '2%' }}>
       <Row>
-        <Col xs="3"></Col>
+        <Col xs="3">
+        <img
+          resizemode={'cover'}
+          style={{ width: '100%', marginBottom:'-15%', marginTop:'-2%'}}
+          src="/images/Jumbotron1.png"
+          alt="KnI"
+        />
+        </Col>
         <Col xs="6">
-          <InputGroup size="lg" style={{position:'relative'}}>
+          <img
+            resizemode={'cover'}
+            style={{ width: '30%', marginTop:'-1%', marginLeft:'35%'}}
+            src="/images/kni.png"
+            alt="KnI"
+            />
+          <br />
+          <br />
+          <br />
+          <br />
+          <p className="lead" style={{ textAlign: 'center'}} >필요한 분야의 인원을 구해보세요</p>
+          <br />
+          <InputGroup size="lg" style={{position:'relative', marginBotton:'-30%'}}>
             <Input placeholder="Search..." type="text" style={{borderRadius: '100px', height:70}} />
               <Button outline color="secondary" type="submit"
               style={{
@@ -43,7 +59,14 @@ const JumbotronComponent = () => {
               </Button> 
           </InputGroup>
         </Col>
-        <Col xs="3"></Col>
+        <Col xs="3">
+        <img
+          resizemode={'cover'}
+          style={{ width: '100%', marginTop:'-2%', marginBottom:'-15%'}}
+          src="/images/Jumbotron2.png"
+          alt="KnI"
+        />
+        </Col>
       </Row>
     </Jumbotron>
   );
