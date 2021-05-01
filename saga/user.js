@@ -9,7 +9,7 @@ import {
   LOAD_PROFILE_REQUEST,
   LOAD_PROFILE_SUCCESS,
   LOAD_PROFILE_FAILURE,
-  LOAD_REFRESH_TOKEN_REQUEST
+  LOAD_REFRESH_TOKEN_REQUEST,
 } from '../reducer/user';
 
 import axios from 'axios';
@@ -35,12 +35,12 @@ function logOutAPI() {
 }
 
 function signUpAPI(data) {
-  console.log("asdfasdf",data)
+  console.log('asdfasdf', data);
   return axios({
     method: 'post',
     url: `${authURL}/api/signup`,
     headers: {
-      'X-Request-With': 'XMLHttpRequest'
+      'X-Request-With': 'XMLHttpRequest',
     },
     data,
   });
@@ -80,22 +80,76 @@ function loadProfileAPI() {
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
-    validateStatus: (status) => {
-      return status === 200 || 401;
-    },
   });
 }
 
 function* loadProfile(action) {
   try {
-    const result = yield call(loadProfileAPI);
-    console.log('result:::', result);
-    if (result.status === 200) {
-      yield put({
-        type: LOAD_PROFILE_SUCCESS,
-        data: result.data,
-      });
-    }
+    //const result = yield call(loadProfileAPI);
+    const result = {
+      data: {
+        username: 'user1',
+        email: 'a@b.com',
+        age: 3,
+        createdPost: [
+          {
+            title: 'created',
+            content: 'content',
+            createdAt: '2020-04-13',
+            maxNum: '3',
+            curNum: '1',
+            category: 'Study',
+          },
+          {
+            title: 'abc',
+            content: 'content',
+            createdAt: '2020-04-13',
+            maxNum: '3',
+            curNum: '1',
+            category: 'Study',
+          },
+          {
+            title: 'abc',
+            content: 'content',
+            createdAt: '2020-04-13',
+            maxNum: '3',
+            curNum: '1',
+            category: 'Study',
+          },
+          {
+            title: 'abc',
+            content: 'content',
+            createdAt: '2020-04-13',
+            maxNum: '3',
+            curNum: '1',
+            category: 'Study',
+          },
+          {
+            title: 'abc',
+            content: 'content',
+            createdAt: '2020-04-13',
+            maxNum: '3',
+            curNum: '1',
+            category: 'Study',
+          },
+        ],
+        participatingPost: [
+          {
+            title: 'participating',
+            content: 'content',
+            createdAt: '2020-04-13',
+            maxNum: '3',
+            curNum: '1',
+            category: 'Study',
+          },
+        ],
+      },
+    };
+    console.log('result:::');
+    yield put({
+      type: LOAD_PROFILE_SUCCESS,
+      data: result.data,
+    });
   } catch (error) {
     console.log('error:::', error);
     type: LOAD_PROFILE_FAILURE;
@@ -115,10 +169,8 @@ function refreshTokenAPI() {
 
 function* loadRefreshToken(action) {
   try {
-    yield call(refreshTokenAPI, action.data)
-  } catch (error) {
-    
-  }
+    yield call(refreshTokenAPI, action.data);
+  } catch (error) {}
 }
 
 function* watchLogIn() {
@@ -147,6 +199,6 @@ export default function* userSaga() {
     fork(watchLogout),
     fork(watchSignUp),
     fork(watchLoadProfile),
-    fork(watchLoadRefreshToken)
+    fork(watchLoadRefreshToken),
   ]);
 }

@@ -453,7 +453,7 @@ function joinPostAPI(data) {
 function* joinPost(action) {
   try {
     //const result = yield call(joinPostAPI, action.data);
-    const result = { data: { id: 4, content: 'comment' } };
+    const result = { data: { username: 'user' } };
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
