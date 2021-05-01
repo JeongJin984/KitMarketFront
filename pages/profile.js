@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadProfileRequest, refreshTokenRequest } from '../reducer/user';
+import { loadProfileRequest } from '../reducer/user';
 import {
   Card,
   CardBody,
   CardTitle,
-  CardSubtitle,
   CardText,
   Button,
-  ButtonToolbar,
-  ButtonGroup,
   Media,
   Row,
   Col,
@@ -24,13 +21,35 @@ import {
 } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 import classnames from 'classnames';
+import ProfilePost from '../components/ProfilePost';
+import ProfilePagination from '../components/ProfilePagination';
+import { useRouter } from 'next/router';
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');
-  const [isClicked, setIsClicked] = useState(false);
-  const toggle = (tab) => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
+  const { username, email, age, createdPost, participatingPost } = useSelector(
+    (state) => state.user.profile
+  );
+  const profile = useSelector((state) => state.user.profile);
+  console.log(profile);
+  console.log('createdPost', createdPost);
+  const router = useRouter();
+  const page = router.query.page || 1;
+
+  const slicedPosts = useCallback((posts, page) => {
+    const sliceNum = page * 4;
+    return posts.slice(sliceNum - 4, sliceNum);
+  }, []);
+
+  const toggle = useCallback(
+    (tab) => {
+      if (activeTab !== tab) {
+        setActiveTab(tab);
+        router.push('/profile');
+      }
+    },
+    [activeTab]
+  );
 
   return (
     <AppLayout>
@@ -60,7 +79,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5"></CardText>
+                  <CardText tag="h5">{username}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -72,7 +91,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5"></CardText>
+                  <CardText tag="h5">{email}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -168,295 +187,34 @@ const profile = () => {
               <TabPane tabId="1">
                 <br />
                 <Row>
-                  <Col xs="3">
-                    <Card body>
-                      <Row>
-                        <Col xs="8">
-                          <CardTitle className="text-left">카테고리</CardTitle>
-                        </Col>
-                        <Col xs="4" className="col text-right">
-                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
-                        </Col>
-                      </Row>
-                      <CardTitle tag="h5" className="text-center">
-                        제목
-                      </CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <br />
-                      <Row>
-                        <Col xs="5">
-                          <CardSubtitle tag="h6" className="mb-2 text-muted ">
-                            2020.04.13
-                          </CardSubtitle>
-                        </Col>
-                        <Col xs="7">
-                          <CardSubtitle tag="h6" className="mb-2 text-right">
-                            1/4
-                          </CardSubtitle>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Col>
-                  <Col xs="3">
-                    <Card body>
-                      <Row>
-                        <Col xs="8">
-                          <CardTitle className="text-left">카테고리</CardTitle>
-                        </Col>
-                        <Col xs="4" className="col text-right">
-                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
-                        </Col>
-                      </Row>
-                      <CardTitle tag="h5" className="text-center">
-                        제목
-                      </CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <br />
-                      <Row>
-                        <Col xs="5">
-                          <CardSubtitle tag="h6" className="mb-2 text-muted ">
-                            2020.04.13
-                          </CardSubtitle>
-                        </Col>
-                        <Col xs="7">
-                          <CardSubtitle tag="h6" className="mb-2 text-right">
-                            1/4
-                          </CardSubtitle>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Col>
-                  <Col xs="3"></Col>
-                  <Col xs="3"></Col>
+                  {slicedPosts(createdPost, page).map((post) => (
+                    <ProfilePost postInfo={post} />
+                  ))}
                 </Row>
                 <Row>
-                  <ButtonToolbar style={{margin: '3% auto 3% auto ',}}>
-                    <ButtonGroup>
-                      <Button outline color="secondary" >
-                        ⟪
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟨
-                      </Button>
-                      <Button outline color="secondary" >
-                        1
-                      </Button>
-                      <Button outline color="secondary" >
-                        2
-                      </Button>
-                      <Button outline color="secondary" >
-                        3
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟩
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟫
-                      </Button>
-                    </ButtonGroup>
-                  </ButtonToolbar>
+                  <ProfilePagination posts={createdPost} />
                 </Row>
               </TabPane>
               <TabPane tabId="2">
                 <br />
                 <Row>
-                  <Col xs="3">
-                    <Card body>
-                      <Row>
-                        <Col xs="8">
-                          <CardTitle className="text-left">카테고리</CardTitle>
-                        </Col>
-                        <Col xs="4" className="col text-right">
-                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
-                        </Col>
-                      </Row>
-                      <CardTitle tag="h5" className="text-center">
-                        제목
-                      </CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <br />
-                      <Row>
-                        <Col xs="5">
-                          <CardSubtitle tag="h6" className="mb-2 text-muted ">
-                            2020.04.13
-                          </CardSubtitle>
-                        </Col>
-                        <Col xs="7">
-                          <CardSubtitle tag="h6" className="mb-2 text-right">
-                            1/4
-                          </CardSubtitle>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Col>
-                  <Col xs="3">
-                    <Card body>
-                      <Row>
-                        <Col xs="8">
-                          <CardTitle className="text-left">카테고리</CardTitle>
-                        </Col>
-                        <Col xs="4" className="col text-right">
-                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
-                        </Col>
-                      </Row>
-                      <CardTitle tag="h5" className="text-center">
-                        제목
-                      </CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <br />
-                      <Row>
-                        <Col xs="5">
-                          <CardSubtitle tag="h6" className="mb-2 text-muted ">
-                            2020.04.13
-                          </CardSubtitle>
-                        </Col>
-                        <Col xs="7">
-                          <CardSubtitle tag="h6" className="mb-2 text-right">
-                            1/4
-                          </CardSubtitle>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Col>
-                  <Col xs="3"></Col>
-                  <Col xs="3"></Col>
+                  {slicedPosts(participatingPost, page).map((post) => (
+                    <ProfilePost postInfo={post} />
+                  ))}
                 </Row>
                 <Row>
-                  <ButtonToolbar style={{margin: '3% auto 3% auto ',}}>
-                    <ButtonGroup>
-                      <Button outline color="secondary" >
-                        ⟪
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟨
-                      </Button>
-                      <Button outline color="secondary" >
-                        1
-                      </Button>
-                      <Button outline color="secondary" >
-                        2
-                      </Button>
-                      <Button outline color="secondary" >
-                        3
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟩
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟫
-                      </Button>
-                    </ButtonGroup>
-                  </ButtonToolbar>
+                  <ProfilePagination posts={participatingPost} />
                 </Row>
               </TabPane>
               <TabPane tabId="3">
                 <br />
                 <Row>
-                  <Col xs="3">
-                    <Card body>
-                      <Row>
-                        <Col xs="8">
-                          <CardTitle className="text-left">카테고리</CardTitle>
-                        </Col>
-                        <Col xs="4" className="col text-right">
-                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
-                        </Col>
-                      </Row>
-                      <CardTitle tag="h5" className="text-center">
-                        제목
-                      </CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <br />
-                      <Row>
-                        <Col xs="5">
-                          <CardSubtitle tag="h6" className="mb-2 text-muted ">
-                            2020.04.13
-                          </CardSubtitle>
-                        </Col>
-                        <Col xs="7">
-                          <CardSubtitle tag="h6" className="mb-2 text-right">
-                            1/4
-                          </CardSubtitle>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Col>
-                  <Col xs="3">
-                    <Card body>
-                      <Row>
-                        <Col xs="8">
-                          <CardTitle className="text-left">카테고리</CardTitle>
-                        </Col>
-                        <Col xs="4" className="col text-right">
-                          <Button close onClick={(e) => { if (window.confirm('모임을 탈퇴하시겠습니까?')) this.deleteItem(e) } }></Button>
-                        </Col>
-                      </Row>
-                      <CardTitle tag="h5" className="text-center">
-                        제목
-                      </CardTitle>
-                      <CardText>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                      </CardText>
-                      <br />
-                      <Row>
-                        <Col xs="5">
-                          <CardSubtitle tag="h6" className="mb-2 text-muted ">
-                            2020.04.13
-                          </CardSubtitle>
-                        </Col>
-                        <Col xs="7">
-                          <CardSubtitle tag="h6" className="mb-2 text-right">
-                            1/4
-                          </CardSubtitle>
-                        </Col>
-                      </Row>
-                    </Card>
-                  </Col>
-                  <Col xs="3"></Col>
-                  <Col xs="3"></Col>
+                  {slicedPosts(participatingPost, page).map((post) => (
+                    <ProfilePost postInfo={post} />
+                  ))}
                 </Row>
                 <Row>
-                  <ButtonToolbar style={{margin: '3% auto 3% auto ',}}>
-                    <ButtonGroup>
-                      <Button outline color="secondary" >
-                        ⟪
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟨
-                      </Button>
-                      <Button outline color="secondary" >
-                        1
-                      </Button>
-                      <Button outline color="secondary" >
-                        2
-                      </Button>
-                      <Button outline color="secondary" >
-                        3
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟩
-                      </Button>
-                      <Button outline color="secondary" >
-                        ⟫
-                      </Button>
-                    </ButtonGroup>
-                  </ButtonToolbar>
+                  <ProfilePagination posts={participatingPost} />
                 </Row>
               </TabPane>
             </TabContent>

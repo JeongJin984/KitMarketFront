@@ -1,20 +1,18 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { wrapper } from '../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import { loadMainPostsRequest } from '../../reducer/post';
 
-import { Row, Col } from 'reactstrap';
+import { Row } from 'reactstrap';
 import PostCard from '../../components/PostCard';
 import JumbotronComponent from '../../components/JumbotronComponent';
 import AppLayout from '../../components/AppLayout';
 import ModalButton from '../../components/ModalButton';
-import Pagination from '../../components/Pagination';
+import BoardPagination from '../../components/BoardPagination';
 
 const Category = () => {
-  const router = useRouter();
   const { mainPosts } = useSelector((state) => state.post);
   return (
     <AppLayout>
@@ -26,7 +24,7 @@ const Category = () => {
       </Row>
       <ModalButton />
       <Row>
-        <Pagination />
+        <BoardPagination />
       </Row>
     </AppLayout>
   );

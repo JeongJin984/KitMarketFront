@@ -6,21 +6,16 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import { loadMainPostsRequest } from '../reducer/post';
 
-import { Row, Button, ButtonToolbar, ButtonGroup } from 'reactstrap';
+import { Row } from 'reactstrap';
 
 import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
 import AppLayout from '../components/AppLayout';
 import ModalButton from '../components/ModalButton';
-import Pagination from '../components/Pagination';
+import BoardPagination from '../components/BoardPagination';
 
 const Home = () => {
   const { mainPosts } = useSelector((state) => state.post);
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   dispatch(loadMainPostsRequest());
-  // }, []);
 
   return (
     <AppLayout>
@@ -32,7 +27,7 @@ const Home = () => {
       </Row>
       <ModalButton />
       <Row>
-        <Pagination />
+        <BoardPagination />
       </Row>
     </AppLayout>
   );
