@@ -12,7 +12,6 @@ import {
   Button,
   CardTitle,
   CardText,
-  CardSubtitle,
   Form,
   FormGroup,
   UncontrolledPopover,
@@ -29,7 +28,6 @@ const PostView = () => {
   const toggle = () => setPopoverOpen(!popoverOpen);
 
   const dispatch = useDispatch();
-  const [isClicked, setIsClicked] = useState(false);
   const { singlePost, isJoinedPost } = useSelector((state) => state.post);
   //const { username } = useSelector((state) => state.user.me);
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
@@ -47,11 +45,10 @@ const PostView = () => {
   const onClickJoin = useCallback(() => {
     const data = { id: singlePost.id, username: 'abc' };
     dispatch(joinPostRequest(data));
-    if (isJoinedPost === true) setIsClicked(true);
-  }, [singlePost, isJoinedPost]);
+  }, [singlePost]);
 
   const onClickCancle = useCallback(() => {
-    setIsClicked(false);
+    console.log('취소하기');
   }, []);
 
   return (
@@ -152,7 +149,7 @@ const PostView = () => {
                   <PopoverHeader>'작성자' 연락처</PopoverHeader>
                   <PopoverBody>카카오톡 id : asdfghjk</PopoverBody>
                 </UncontrolledPopover>
-                {isClicked ? (
+                {isJoinedPost ? (
                   <Button
                     color="secondary"
                     onClick={toggle}
@@ -196,11 +193,11 @@ const PostView = () => {
             </CardTitle>
             <hr />
             <Form style={{ height: 500 }}>
-              {singlePost.applications.map((app) => (
+              {singlePost.participants.map((participant) => (
                 <>
                   <FormGroup check>
                     <Label check>
-                      <Input type="checkbox" /> {app.content}
+                      <Input type="checkbox" /> {participant.username}
                     </Label>
                   </FormGroup>
                   <br />{' '}
