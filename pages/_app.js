@@ -1,29 +1,43 @@
 import { wrapper } from '../store'
+import axios from 'axios'
+import {Provider} from 'react-redux';
+import App from 'next/app';
+import { END } from 'redux-saga';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { CookiesProvider, withCookies } from "react-cookie"
 import { loadUserRequest } from '../reducer/user';
 
-function App({ Component, pageProps }) {
-  return (
-    <CookiesProvider>
-      <Component {...pageProps} />
-    </CookiesProvider>
-  )
+class MyApp extends App {
+	static getInitialProps = async ({Component, ctx}) => {
+
+		const state = ctx.store.getState()
+		const cookie = ctx.req.headers.cookie
+		axios.defaults.headers.Cookie = '';
+
+		if(cookie) {
+			axios.defaults.headers.Cookie = cookie
+		}
+		if(!state.user.me) {
+			ctx.store.dispatch(loadUserRequest())
+		}
+
+		return {
+			pageProps: {
+				// Call page-level getInitialProps
+				...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+				pathname: ctx.pathname,
+			}
+		};
+	}
+
+	render() {
+			const {Component, pageProps} = this.props;
+			return (
+					<Component {...pageProps} />
+			);
+	}
+
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store, req, query }) => {
-    const cookie = req ? req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
-    if (req && cookie) {
-      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-    }
-    store.dispatch(loadUserRequest());
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-    await store.sagaTask.toPromise();
-  }
-);
-
-export default wrapper.withRedux(withCookies(App))
+export default wrapper.withRedux(MyApp)

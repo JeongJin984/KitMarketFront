@@ -320,7 +320,6 @@ const dummyPosts = [
 const loadDummyPost = (data) => {
   for (let p of dummyPosts) {
     if (p.currentPage === data.page) {
-      console.log('p', data);
       return p;
     }
   }
@@ -328,6 +327,7 @@ const loadDummyPost = (data) => {
 
 function* loadPosts(action) {
   try {
+    console.log("awefawefawefawef")
     // const result = yield call(loadPostsAPI, action.data);
     const result = { data: loadDummyPost(action.data) };
     yield put({

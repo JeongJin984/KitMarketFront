@@ -26,7 +26,6 @@ app.prepare().then(() => {
     server.use(morgan('dev'));
     server.use(cookieParser());
   } else {
-    console.log('uququququququququ');
     server.set('trust proxy', 1);
     server.use(morgan('combined'));
     server.use(hpp());
@@ -41,7 +40,7 @@ app.prepare().then(() => {
   server.use('/', express.static(path.join(__dirname, 'public')));
   server.use(loadJWT(['/login', '/signup']));
 
-  server.all('*', async (req, res) => {
+  server.all('*', (req, res) => {
     handle(req, res);
   });
 

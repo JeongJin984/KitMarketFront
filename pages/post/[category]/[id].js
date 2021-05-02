@@ -31,7 +31,6 @@ const PostView = () => {
   const { singlePost, isJoinedPost } = useSelector((state) => state.post);
   //const { username } = useSelector((state) => state.user.me);
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
-  console.log(isJoinedPost);
 
   let category = '';
   if (singlePost.category === 'contest') {

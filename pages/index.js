@@ -43,6 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
+    console.log("asdfasdfasdf")
     store.dispatch(loadMainPostsRequest(data));
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();

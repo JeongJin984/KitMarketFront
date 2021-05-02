@@ -1,21 +1,15 @@
 import produce from 'immer';
 
 export const initialState = {
-  error: '',
+  error: null,
   isLoggedIn: false,
   isLogginIn: false,
   isSignedUp: false,
   isSigningUp: false,
-  me: { username: '' },
+  me: null,
   isLoadingProfile: false,
   isLoadedProfile: false,
-  profile: {
-    username: '',
-    email: '',
-    age: '',
-    createdPost: [],
-    participatingPost: [],
-  },
+  profile: null,
 };
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -91,7 +85,6 @@ const userReducer = (state = initialState, action) => {
         draft.isLogginIn = false;
         draft.isLoggedIn = true;
         draft.error = '';
-        draft.me = action.data;
         break;
 
       case LOGIN_FAILURE:
@@ -101,10 +94,17 @@ const userReducer = (state = initialState, action) => {
         draft.me = null;
         break;
 
-      case LOAD_USER_REQUEST:
+      case LOAD_USER_SUCCESS:
         draft.isLoggedIn = true;
         draft.isLogginIn = false;
         draft.me = action.data;
+        break;
+
+      case LOAD_USER_FAILURE:
+        draft.isLoggedIn = false;
+        draft.isLogginIn = false;
+        draft.error = "action.error";
+        break;
 
       case LOGOUT_REQUEST:
         draft.isLoggedIn = false;
@@ -120,7 +120,6 @@ const userReducer = (state = initialState, action) => {
       case SIGNUP_SUCCESS:
         draft.isSigningUp = false;
         draft.isSignedUp = true;
-        draft.me = action.data;
         break;
 
       case SIGNUP_FAILURE:

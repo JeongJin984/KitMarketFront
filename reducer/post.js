@@ -75,11 +75,14 @@ const postReducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_MAIN_POSTS_REQUEST:
+        console.log("qwerqwerqwer")
         draft.isLoadingPosts = true;
         draft.isLoadedPosts = false;
         break;
 
       case LOAD_MAIN_POSTS_SUCCESS:
+        
+        console.log("zxcvzxcvzxcv")
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = true;
         draft.mainPosts = action.data.data;

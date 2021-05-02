@@ -31,9 +31,6 @@ const profile = () => {
     (state) => state.user.profile
   );
   const profile = useSelector((state) => state.user.profile);
-  console.log(profile);
-  console.log('createdPost', createdPost);
-  const router = useRouter();
   const page = router.query.page || 1;
 
   const slicedPosts = useCallback((posts, page) => {

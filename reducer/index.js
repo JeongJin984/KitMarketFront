@@ -12,7 +12,6 @@ const rootReducer = (state, action) => {
         ...state,
         ...action.payload,
       };
-      if (state.user !== initialState) nextState.user = state.user;
       return nextState;
     default: {
       const combineReducer = combineReducers({

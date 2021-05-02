@@ -12,6 +12,7 @@ import {
   LOAD_REFRESH_TOKEN_REQUEST,
   LOAD_USER_REQUEST,
   LOAD_USER_FAILURE,
+  LOAD_USER_SUCCESS,
 } from '../reducer/user';
 
 import axios from 'axios';
@@ -37,7 +38,6 @@ function logOutAPI() {
 }
 
 function signUpAPI(data) {
-  console.log('asdfasdf', data);
   return axios({
     method: 'post',
     url: `${authURL}/api/signup`,
@@ -71,7 +71,7 @@ function refreshTokenAPI() {
 function loadUserAPI() {
   return axios({
     method: 'GET',
-    url: `http://localhost:8083/api/refresh`,
+    url: `http://localhost:8083/api/user`,
   })
 }
 
@@ -164,13 +164,11 @@ function* loadProfile(action) {
         ],
       },
     };
-    console.log('result:::');
     yield put({
       type: LOAD_PROFILE_SUCCESS,
       data: result.data,
     });
   } catch (error) {
-    console.log('error:::', error);
     type: LOAD_PROFILE_FAILURE;
     error: error;
   }
@@ -186,7 +184,7 @@ function* loadUser() {
   try {
     const result = yield call(loadUserAPI);
     yield put({
-      type: LOAD_USER_REQUEST,
+      type: LOAD_USER_SUCCESS,
       data: result.data
     })
   } catch (error) {

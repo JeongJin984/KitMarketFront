@@ -39,7 +39,6 @@ module.exports = function(path) {
           } else if(Date.now() >= accessTokenDecoded.exp*1000) {
             console.log("Expired");
             const result = await axios.get('http://localhost:8083/api/refresh')
-            console.log("Result:::::", result)
             cookies["Authorization"] = "BEARER" + result.data
   
             await setAxiosCookie(cookies);
