@@ -10,6 +10,8 @@ import {
   LOAD_PROFILE_SUCCESS,
   LOAD_PROFILE_FAILURE,
   LOAD_REFRESH_TOKEN_REQUEST,
+  LOAD_USER_REQUEST,
+  LOAD_USER_FAILURE,
 } from '../reducer/user';
 
 import axios from 'axios';
@@ -46,6 +48,33 @@ function signUpAPI(data) {
   });
 }
 
+function loadProfileAPI() {
+  return axios({
+    method: 'GET',
+    url: `/api/profile/user`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function refreshTokenAPI() {
+  return axios({
+    method: 'GET',
+    url: `http://localhost:8083/api/refresh`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function loadUserAPI() {
+  return axios({
+    method: 'GET',
+    url: `http://localhost:8083/api/refresh`,
+  })
+}
+
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
@@ -71,16 +100,6 @@ function* signUp(action) {
       type: SIGNUP_SUCCESS,
     });
   } catch (error) {}
-}
-
-function loadProfileAPI() {
-  return axios({
-    method: 'GET',
-    url: `/api/profile/user`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
 }
 
 function* loadProfile(action) {
@@ -157,21 +176,27 @@ function* loadProfile(action) {
   }
 }
 
-function refreshTokenAPI() {
-  return axios({
-    method: 'GET',
-    url: `http://localhost:8083/api/refresh`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
 function* loadRefreshToken(action) {
   try {
     yield call(refreshTokenAPI, action.data);
   } catch (error) {}
 }
+
+function* loadUser() {
+  try {
+    const result = yield call(loadUserAPI);
+    yield put({
+      type: LOAD_USER_REQUEST,
+      data: result.data
+    })
+  } catch (error) {
+    yield put({
+      type: LOAD_USER_FAILURE,
+      error: error
+    })
+  }
+}
+
 
 function* watchLogIn() {
   yield takeLatest(LOGIN_REQUEST, logIn);
@@ -193,6 +218,10 @@ function* watchLoadRefreshToken() {
   yield takeLatest(LOAD_REFRESH_TOKEN_REQUEST, loadRefreshToken);
 }
 
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
@@ -200,5 +229,6 @@ export default function* userSaga() {
     fork(watchSignUp),
     fork(watchLoadProfile),
     fork(watchLoadRefreshToken),
+    fork(watchLoadUser)
   ]);
 }

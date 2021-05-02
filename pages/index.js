@@ -16,14 +16,15 @@ import BoardPagination from '../components/BoardPagination';
 
 const Home = () => {
   const { mainPosts } = useSelector((state) => state.post);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   return (
     <AppLayout>
       <JumbotronComponent />
       <Row>
-        {mainPosts.map((postInfo) => (
+        { mainPosts.map((postInfo) => (
           <PostCard postInfo={postInfo} key={postInfo.id} />
-        ))}
+        )) }
       </Row>
       <ModalButton />
       <Row>

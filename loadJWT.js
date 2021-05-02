@@ -20,29 +20,35 @@ module.exports = function(path) {
       var cookies = req ? req.cookies : '';
       axios.defaults.headers.Cookie = '';
       if(req && cookies) {
-        var accessToken = cookies["Authorization"].slice(6);
-        var accessTokenDecoded = jwt_decode(accessToken);
+        var accessToken = null;
+        var accessTokenDecoded = null;
+        
+        var refreshToken = null;
+        var refreshTokenDecoded = null;
+        try {
+          accessToken = cookies["Authorization"].slice(6);
+          accessTokenDecoded = jwt_decode(accessToken);
 
-        var refreshToken = cookies["Refresh"].slice(6);
-        var refreshTokenDecoded = jwt_decode(refreshToken);
-        await setAxiosCookie(req.headers.cookie);
+          refreshToken = cookies["Refresh"].slice(6);
+          refreshTokenDecoded = jwt_decode(refreshToken);
+          await setAxiosCookie(req.headers.cookie);
 
-        console.log("refresh:::", refreshTokenDecoded)
-        console.log(Date.now())
-
-        if(Date.now() >= refreshTokenDecoded.exp*1000) {
-          console.log("EXPIRED!!!!")
+          if(Date.now() >= refreshTokenDecoded.exp*1000) {
+            console.log("EXPIRED!!!!")
+            res.redirect("/login");
+          } else if(Date.now() >= accessTokenDecoded.exp*1000) {
+            console.log("Expired");
+            const result = await axios.get('http://localhost:8083/api/refresh')
+            console.log("Result:::::", result)
+            cookies["Authorization"] = "BEARER" + result.data
+  
+            await setAxiosCookie(cookies);
+  
+            res.cookie('Authorization', cookies["Authorization"])
+            res.cookie('Refresh', cookies["Refresh"])
+          }
+        } catch (error) {
           res.redirect("/login");
-        } else if(Date.now() >= accessTokenDecoded.exp*1000) {
-          console.log("Expired");
-          const result = await axios.get('http://localhost:8083/api/refresh')
-          console.log("Result:::::", result)
-          cookies["Authorization"] = "BEARER" + result.data
-
-          await setAxiosCookie(cookies);
-
-          res.cookie('Authorization', cookies["Authorization"])
-          res.cookie('Refresh', cookies["Refresh"])
         }
       }
       next();

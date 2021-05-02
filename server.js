@@ -39,20 +39,9 @@ app.prepare().then(() => {
   }
   server.use(express.urlencoded({ extended: true }));
   server.use('/', express.static(path.join(__dirname, 'public')));
-  server.use(loadJWT(['/', '/login', '/signup']));
+  server.use(loadJWT(['/login', '/signup']));
 
-  server.get('/profile', (req, res) => {
-    app.render(req, res, '/profile', req.query);
-  });
-
-  server.all('*', (req, res) => {
-    var cookies = req ? req.cookies : '';
-    axios.defaults.headers.Cookie = '';
-    if (req && cookies) {
-      axios.defaults.headers.Cookie = cookies;
-      res.cookie('Authorization', cookies['Authorization']);
-      res.cookie('Refresh', cookies['Refresh']);
-    }
+  server.all('*', async (req, res) => {
     handle(req, res);
   });
 

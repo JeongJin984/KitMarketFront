@@ -32,6 +32,10 @@ export const LOAD_PROFILE_REQUEST = 'LOAD_PROFILE_REQUEST';
 export const LOAD_PROFILE_SUCCESS = 'LOAD_PROFILE_SUCCESS';
 export const LOAD_PROFILE_FAILURE = 'LOAD_PROFILE_FAILURE';
 
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
+
 export const LOAD_REFRESH_TOKEN_REQUEST = 'LOAD_REFRESH_TOKEN_REQUEST';
 
 export const loginRequest = (data) => {
@@ -44,6 +48,12 @@ export const loginRequest = (data) => {
 export const logoutRequest = () => {
   return {
     type: LOGOUT_REQUEST,
+  };
+};
+
+export const loadUserRequest = () => {
+  return {
+    type: LOAD_USER_REQUEST
   };
 };
 
@@ -90,6 +100,11 @@ const userReducer = (state = initialState, action) => {
         draft.error = action.error;
         draft.me = null;
         break;
+
+      case LOAD_USER_REQUEST:
+        draft.isLoggedIn = true;
+        draft.isLogginIn = false;
+        draft.me = action.data;
 
       case LOGOUT_REQUEST:
         draft.isLoggedIn = false;
