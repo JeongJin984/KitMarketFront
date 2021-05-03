@@ -48,7 +48,9 @@ const AppLayout = ({ children }) => {
 
   const toggle = () => setIsOpen(!isOpen);
   const togglebutton = () => setOpen(!dropdownOpen);
-
+  const onClickProfile = () => {
+    router.push('/profile');
+  };
   const onClickSignUp = () => {
     router.push('/signup');
   };
@@ -169,7 +171,9 @@ const AppLayout = ({ children }) => {
                           </a>
                         </DropdownToggle>
                         <DropdownMenu>
-                          <DropdownItem>내 프로필 보기</DropdownItem>
+                          <DropdownItem onClick={onClickProfile}>
+                            내 프로필 보기
+                          </DropdownItem>
                           <DropdownItem divider />
                           <DropdownItem onClick={onClickLogOut}>로그아웃</DropdownItem>
                         </DropdownMenu>

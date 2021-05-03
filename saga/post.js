@@ -14,6 +14,15 @@ import {
   JOIN_POST_REQUEST,
   JOIN_POST_SUCCESS,
   JOIN_POST_FAILURE,
+  LOAD_CREATED_POSTS_REQUEST,
+  LOAD_CREATED_POSTS_SUCCESS,
+  LOAD_CREATED_POSTS_FAILURE,
+  LOAD_PARTICIPATING_POSTS_REQUEST,
+  LOAD_PARTICIPATING_POSTS_SUCCESS,
+  LOAD_PARTICIPATING_POSTS_FAILURE,
+  LOAD_APPLICATED_POSTS_REQUEST,
+  LOAD_APPLICATED_POSTS_SUCCESS,
+  LOAD_APPLICATED_POSTS_FAILURE,
 } from '../reducer/post';
 
 // function postChatAPI(data) {
@@ -38,8 +47,8 @@ const dummyPosts = [
       {
         id: 1,
         writer: 'Account0',
-        title: 'Contest1',
-        content: "I'm Contest1",
+        title: 'Dummy',
+        content: "I'm Dummy",
         deadLine: 4,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -49,8 +58,8 @@ const dummyPosts = [
       {
         id: 2,
         writer: 'Account1',
-        title: 'Study2',
-        content: "I'm Study2",
+        title: 'Dummy2',
+        content: "I'm Dummy2",
         deadLine: 10,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -60,8 +69,8 @@ const dummyPosts = [
       {
         id: 3,
         writer: 'Account2',
-        title: 'Contest3',
-        content: "I'm Contest3",
+        title: 'Dummy3',
+        content: "I'm Dummy3",
         deadLine: 13,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 2,
@@ -71,8 +80,8 @@ const dummyPosts = [
       {
         id: 4,
         writer: 'Account3',
-        title: 'Contest4',
-        content: "I'm Contest4",
+        title: 'Dummy4',
+        content: "I'm Dummy4",
         deadLine: 21,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -82,8 +91,8 @@ const dummyPosts = [
       {
         id: 5,
         writer: 'Account0',
-        title: 'Contest5',
-        content: "I'm Contest5",
+        title: 'Dummy5',
+        content: "I'm Dummy5",
         deadLine: 24,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -93,8 +102,8 @@ const dummyPosts = [
       {
         id: 6,
         writer: 'Account0',
-        title: 'Contest6',
-        content: "I'm Contest6",
+        title: 'Dummy6',
+        content: "I'm Dummy6",
         deadLine: 27,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -104,8 +113,8 @@ const dummyPosts = [
       {
         id: 7,
         writer: 'Account0',
-        title: 'Contest7',
-        content: "I'm Contest7",
+        title: 'Dummy7',
+        content: "I'm Dummy7",
         deadLine: 28,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 5,
@@ -115,8 +124,8 @@ const dummyPosts = [
       {
         id: 8,
         writer: 'Account0',
-        title: 'Contest8',
-        content: "I'm Contest8",
+        title: 'Dummy8',
+        content: "I'm Dummy8",
         deadLine: 28,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -133,8 +142,8 @@ const dummyPosts = [
       {
         id: 9,
         writer: 'Account0',
-        title: 'Contest9',
-        content: "I'm Contest9",
+        title: 'Dummy9',
+        content: "I'm Dummy9",
         deadLine: 4,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -144,8 +153,8 @@ const dummyPosts = [
       {
         id: 10,
         writer: 'Account1',
-        title: 'Study10',
-        content: "I'm Study10",
+        title: 'Dummy10',
+        content: "I'm Dummy10",
         deadLine: 10,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -166,8 +175,8 @@ const dummyPosts = [
       {
         id: 12,
         writer: 'Account3',
-        title: 'Contest12',
-        content: "I'm Contest12",
+        title: 'Dummy2',
+        content: "I'm Dummy2",
         deadLine: 21,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -177,8 +186,8 @@ const dummyPosts = [
       {
         id: 13,
         writer: 'Account0',
-        title: 'Contest13',
-        content: "I'm Contest13",
+        title: 'Dummy3',
+        content: "I'm Dummy3",
         deadLine: 24,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -188,8 +197,8 @@ const dummyPosts = [
       {
         id: 14,
         writer: 'Account0',
-        title: 'Contest14',
-        content: "I'm Contest14",
+        title: 'Dummy4',
+        content: "I'm Dummy4",
         deadLine: 27,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -199,8 +208,8 @@ const dummyPosts = [
       {
         id: 15,
         writer: 'Account0',
-        title: 'Contest15',
-        content: "I'm Contest15",
+        title: 'Dummy5',
+        content: "I'm Dummy5",
         deadLine: 28,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 5,
@@ -210,8 +219,8 @@ const dummyPosts = [
       {
         id: 16,
         writer: 'Account0',
-        title: 'Contest16',
-        content: "I'm Contest16",
+        title: 'Dummy6',
+        content: "I'm Dummy6",
         deadLine: 28,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -228,8 +237,8 @@ const dummyPosts = [
       {
         id: 17,
         writer: 'Account0',
-        title: 'Contest17',
-        content: "I'm Contest17",
+        title: 'Dummy7',
+        content: "I'm Dummy7",
         deadLine: 4,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -239,8 +248,8 @@ const dummyPosts = [
       {
         id: 18,
         writer: 'Account1',
-        title: 'Study18',
-        content: "I'm Study18",
+        title: 'Dummy18',
+        content: "I'm Dummy18",
         deadLine: 10,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -250,8 +259,8 @@ const dummyPosts = [
       {
         id: 19,
         writer: 'Account2',
-        title: 'Contest19',
-        content: "I'm Contest19",
+        title: 'Dummy9',
+        content: "I'm Dummy9",
         deadLine: 13,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 2,
@@ -261,8 +270,8 @@ const dummyPosts = [
       {
         id: 20,
         writer: 'Account3',
-        title: 'Contest20',
-        content: "I'm Contest20",
+        title: 'Dummy20',
+        content: "I'm Dummy20",
         deadLine: 21,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -272,8 +281,8 @@ const dummyPosts = [
       {
         id: 21,
         writer: 'Account0',
-        title: 'Contest21',
-        content: "I'm Contest21",
+        title: 'Dummy21',
+        content: "I'm Dummy21",
         deadLine: 24,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -283,8 +292,8 @@ const dummyPosts = [
       {
         id: 22,
         writer: 'Account0',
-        title: 'Contest22',
-        content: "I'm Contest22",
+        title: 'Dummy22',
+        content: "I'm Dummy22",
         deadLine: 27,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 4,
@@ -294,8 +303,8 @@ const dummyPosts = [
       {
         id: 23,
         writer: 'Account0',
-        title: 'Contest23',
-        content: "I'm Contest23",
+        title: 'Dummy23',
+        content: "I'm Dummy23",
         deadLine: 28,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 5,
@@ -305,8 +314,8 @@ const dummyPosts = [
       {
         id: 24,
         writer: 'Account0',
-        title: 'Contest24',
-        content: "I'm Contest24",
+        title: 'Dummy24',
+        content: "I'm Dummy24",
         deadLine: 28,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
@@ -327,7 +336,7 @@ const loadDummyPost = (data) => {
 
 function* loadPosts(action) {
   try {
-    console.log("awefawefawefawef")
+    console.log('awefawefawefawef');
     // const result = yield call(loadPostsAPI, action.data);
     const result = { data: loadDummyPost(action.data) };
     yield put({
@@ -359,8 +368,8 @@ function* loadPost(action) {
       data: {
         id: 9,
         writer: 'Account0',
-        title: 'Study0',
-        content: "I'm Study0",
+        title: 'Dummy0',
+        content: "I'm Dummy00",
         deadLine: 21,
         createdAt: '2021-04-10T15:05:44.373372',
         maxNum: 3,
@@ -466,6 +475,150 @@ function* joinPost(action) {
   }
 }
 
+function loadCreatedPostsAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `/api/my?username=${data.username}?offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* loadCreatedPosts(action) {
+  try {
+    const result = {
+      data: {
+        size: 8,
+        currentPage: 0,
+        maxPage: 1,
+        data: [
+          {
+            id: 10,
+            category: 'study',
+            title: 'Study0',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'Study0',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+        ],
+      },
+    };
+    //const result = yield call(loadCreatedPostsAPI, action.data);
+    yield put({
+      type: LOAD_CREATED_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_CREATED_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
+function loadParticipatingPostsAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `/api/participant?username=${data.username}?offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* loadParticipatingPosts(action) {
+  try {
+    const result = {
+      data: {
+        size: 8,
+        currentPage: 0,
+        maxPage: 1,
+        data: [
+          {
+            id: 10,
+            category: 'study',
+            title: 'participant0',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'participant0',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+        ],
+      },
+    };
+    //const result = yield call(loadParticipatingPostsAPI, action.data);
+    yield put({
+      type: LOAD_PARTICIPATING_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_PARTICIPATING_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
+function loadApplicatedPostsAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `/api/application?username=${data.username}?offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* loadApplicatedPosts(action) {
+  try {
+    const result = {
+      data: {
+        size: 8,
+        currentPage: 0,
+        maxPage: 1,
+        data: [
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+        ],
+      },
+    };
+    //const result = yield call(loadApplicatedPostsAPI, action.data);
+    yield put({
+      type: LOAD_APPLICATED_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_APPLICATED_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
 // function* postChat(action) {
 //   try {
 //     //		yield call(postChatAPI, action.data)
@@ -497,6 +650,18 @@ function* watchJoinPost() {
   yield takeLatest(JOIN_POST_REQUEST, joinPost);
 }
 
+function* watchLoadCreatePosts() {
+  yield takeLatest(LOAD_CREATED_POSTS_REQUEST, loadCreatedPosts);
+}
+
+function* watchLoadParticipatingPosts() {
+  yield takeLatest(LOAD_PARTICIPATING_POSTS_REQUEST, loadParticipatingPosts);
+}
+
+function* watchLoadApplicatedPosts() {
+  yield takeLatest(LOAD_APPLICATED_POSTS_REQUEST, loadApplicatedPosts);
+}
+
 // function* watchPostChat() {
 //   yield takeLatest(ADD_POST_REQUEST, postChat);
 // }
@@ -507,5 +672,8 @@ export default function* chattingSaga() {
     fork(watchLoadPost),
     fork(watchAddPost),
     fork(watchJoinPost),
+    fork(watchLoadCreatePosts),
+    fork(watchLoadParticipatingPosts),
+    fork(watchLoadApplicatedPosts),
   ]);
 }

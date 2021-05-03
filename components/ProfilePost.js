@@ -11,12 +11,13 @@ import {
 } from 'reactstrap';
 
 const ProfilePost = ({ postInfo }) => {
+  const { id, category, title, writer, createdAt } = postInfo;
   return (
     <Col xs="3">
       <Card body>
         <Row>
           <Col xs="8">
-            <CardTitle className="text-left">카테고리</CardTitle>
+            <CardTitle className="text-left">{category}</CardTitle>
           </Col>
           <Col xs="4" className="col text-right">
             <Button
@@ -29,19 +30,14 @@ const ProfilePost = ({ postInfo }) => {
           </Col>
         </Row>
         <CardTitle tag="h5" className="text-center">
-          제목
+          {title}
         </CardTitle>
-        <CardText>내용</CardText>
+        <CardText>{writer}</CardText>
         <br />
         <Row>
           <Col xs="5">
             <CardSubtitle tag="h6" className="mb-2 text-muted ">
-              2020.04.13
-            </CardSubtitle>
-          </Col>
-          <Col xs="7">
-            <CardSubtitle tag="h6" className="mb-2 text-right">
-              1/4
+              {createdAt.slice(0, 10)}
             </CardSubtitle>
           </Col>
         </Row>

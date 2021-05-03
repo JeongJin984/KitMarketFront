@@ -1,9 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import { loadProfileRequest } from '../reducer/user';
+import {
+  loadCreatedPostsRequest,
+  loadParticipatingPostsRequest,
+  loadApplicatedPostsRequest,
+} from '../reducer/post';
 import {
   Card,
   CardBody,
@@ -27,11 +32,13 @@ import { useRouter } from 'next/router';
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');
-  const { username, email, age, createdPost, participatingPost } = useSelector(
-    (state) => state.user.profile
-  );
   const profile = useSelector((state) => state.user.profile);
+  const { createdPosts, participatingPosts, applicatedPosts } = useSelector(
+    (state) => state.post
+  );
+  const router = useRouter();
   const page = router.query.page || 1;
+  const tab = router.query.tab || '';
 
   const slicedPosts = useCallback((posts, page) => {
     const sliceNum = page * 4;
@@ -42,11 +49,19 @@ const profile = () => {
     (tab) => {
       if (activeTab !== tab) {
         setActiveTab(tab);
-        router.push('/profile');
+        if (tab === '1') router.push('/profile');
+        else if (tab === '2') router.push('/profile?tab=participating');
+        else if (tab === '3') router.push('/profile?tab=applicated');
       }
     },
     [activeTab]
   );
+
+  useEffect(() => {
+    if (tab === 'participating') setActiveTab('2');
+    else if (tab === 'applicated') setActiveTab('3');
+    else setActiveTab('1');
+  }, []);
 
   return (
     <AppLayout>
@@ -76,7 +91,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">{username}</CardText>
+                  <CardText tag="h5">username</CardText>
                 </Col>
               </Row>
               <hr />
@@ -88,7 +103,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">{email}</CardText>
+                  <CardText tag="h5">email</CardText>
                 </Col>
               </Row>
               <hr />
@@ -184,34 +199,34 @@ const profile = () => {
               <TabPane tabId="1">
                 <br />
                 <Row>
-                  {slicedPosts(createdPost, page).map((post) => (
+                  {slicedPosts(createdPosts.data, page).map((post) => (
                     <ProfilePost postInfo={post} />
                   ))}
                 </Row>
                 <Row>
-                  <ProfilePagination posts={createdPost} />
+                  <ProfilePagination posts={createdPosts} />
                 </Row>
               </TabPane>
               <TabPane tabId="2">
                 <br />
                 <Row>
-                  {slicedPosts(participatingPost, page).map((post) => (
+                  {slicedPosts(participatingPosts.data, page).map((post) => (
                     <ProfilePost postInfo={post} />
                   ))}
                 </Row>
                 <Row>
-                  <ProfilePagination posts={participatingPost} />
+                  <ProfilePagination posts={participatingPosts} />
                 </Row>
               </TabPane>
               <TabPane tabId="3">
                 <br />
                 <Row>
-                  {slicedPosts(participatingPost, page).map((post) => (
+                  {slicedPosts(applicatedPosts.data, page).map((post) => (
                     <ProfilePost postInfo={post} />
                   ))}
                 </Row>
                 <Row>
-                  <ProfilePagination posts={participatingPost} />
+                  <ProfilePagination posts={applicatedPosts} />
                 </Row>
               </TabPane>
             </TabContent>
@@ -229,7 +244,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
+    const tab = query.tab || 'created';
+    const page = query.page - 1 || 0;
+    console.log('tab', tab, page);
+    const data = { page };
     store.dispatch(loadProfileRequest());
+    if (tab === 'created') store.dispatch(loadCreatedPostsRequest(data));
+    else if (tab === 'participating')
+      store.dispatch(loadParticipatingPostsRequest(data));
+    else if (tab === 'applicated')
+      store.dispatch(loadApplicatedPostsRequest(data));
+
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
   }
