@@ -1,15 +1,17 @@
 import { all, fork, takeLatest, put, call } from 'redux-saga/effects';
 import {
   LOGIN_REQUEST,
-  LOGOUT_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
   SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   LOAD_PROFILE_REQUEST,
   LOAD_PROFILE_SUCCESS,
   LOAD_PROFILE_FAILURE,
-  LOAD_REFRESH_TOKEN_REQUEST,
   LOAD_USER_REQUEST,
   LOAD_USER_FAILURE,
   LOAD_USER_SUCCESS,
@@ -33,7 +35,7 @@ function logInAPI(data) {
 function logOutAPI() {
   return axios({
     methos: 'post',
-    url: '/api/logout',
+    url: `${authURL}/api/logout`,
   });
 }
 
@@ -52,16 +54,6 @@ function loadProfileAPI() {
   return axios({
     method: 'GET',
     url: `/api/profile/user`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
-function refreshTokenAPI() {
-  return axios({
-    method: 'GET',
-    url: `http://localhost:8083/api/refresh`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -89,8 +81,18 @@ function* logIn(action) {
   }
 }
 
-function* logOut(action) {
-  const result = yield call(logOutAPI);
+function* logOut() {
+  try {
+    console.log("asdfasdfasdf")
+    yield call(logOutAPI);
+    yield put({
+      type: LOGOUT_SUCCESS
+    })
+  } catch(error) {
+    yield put({
+      type: LOGOUT_FAILURE
+    })
+  }
 }
 
 function* signUp(action) {
@@ -173,13 +175,6 @@ function* loadProfile(action) {
     error: error;
   }
 }
-
-function* loadRefreshToken(action) {
-  try {
-    yield call(refreshTokenAPI, action.data);
-  } catch (error) {}
-}
-
 function* loadUser() {
   try {
     const result = yield call(loadUserAPI);
@@ -194,7 +189,6 @@ function* loadUser() {
     })
   }
 }
-
 
 function* watchLogIn() {
   yield takeLatest(LOGIN_REQUEST, logIn);
@@ -212,10 +206,6 @@ function* watchLoadProfile() {
   yield takeLatest(LOAD_PROFILE_REQUEST, loadProfile);
 }
 
-function* watchLoadRefreshToken() {
-  yield takeLatest(LOAD_REFRESH_TOKEN_REQUEST, loadRefreshToken);
-}
-
 function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
@@ -226,7 +216,6 @@ export default function* userSaga() {
     fork(watchLogout),
     fork(watchSignUp),
     fork(watchLoadProfile),
-    fork(watchLoadRefreshToken),
     fork(watchLoadUser)
   ]);
 }

@@ -1,8 +1,6 @@
 import { wrapper } from '../store'
 import axios from 'axios'
-import {Provider} from 'react-redux';
 import App from 'next/app';
-import { END } from 'redux-saga';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -12,7 +10,7 @@ class MyApp extends App {
 	static getInitialProps = async ({Component, ctx}) => {
 
 		const state = ctx.store.getState()
-		const cookie = ctx.req.headers.cookie
+		const cookie = ctx.req ? ctx.req.headers.cookie : '';
 		axios.defaults.headers.Cookie = '';
 
 		if(cookie) {

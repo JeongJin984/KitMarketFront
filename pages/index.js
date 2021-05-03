@@ -39,11 +39,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const page = query.page - 1 || 0;
     const data = { category: 'postList', page };
     const cookie = req ? req.headers.cookie : '';
+    console.log("cookie", cookie)
     axios.defaults.headers.Cookie = '';
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-    console.log("asdfasdfasdf")
     store.dispatch(loadMainPostsRequest(data));
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
