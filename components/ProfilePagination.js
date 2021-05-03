@@ -4,49 +4,50 @@ import Pagination from './Pagination';
 
 const ProfilePagination = ({ posts }) => {
   const router = useRouter();
-  const currentPage = router.query.page - 1 || 0;
+  const { tab } = router.query;
+  const { currentPage, maxPage } = posts;
   const pageSetNum = Math.floor(currentPage / 5);
-  const length = posts.length;
-  const maxPage =
-    length % 4 === 0 ? Math.floor(length / 4) : Math.floor(length / 4) + 1;
 
   const pages = Array(maxPage)
     .fill()
     .map((page, i) => i + 1);
 
-  const slicedPages = (pages) => {
-    return pages.slice(pageSetNum * 5, pageSetNum * 5 + 5);
-  };
+  const currentPageSet = pages.slice(5 * pageSetNum, 5 * pageSetNum + 5);
 
+  const routeTab = (page) => {
+    tab
+      ? router.push(`/profile?tab=${tab}&page=${page}`)
+      : router.push(`/profile?page=${page}`);
+  };
   const onClickPage = useCallback((page) => {
-    router.push(`/profile?page=${page}`);
+    routeTab(page);
   }, []);
 
   const onClickNext = useCallback(() => {
     const nextPageNum = (pageSetNum + 1) * 5 + 1;
     if (maxPage >= nextPageNum) {
-      router.push(`/profile?page=${nextPageNum}`);
+      routeTab(nextPageNum);
     }
   }, [pageSetNum, maxPage]);
 
   const onClickPrev = useCallback(() => {
-    const prevPageNum = (pageSetNum - 1) * 5 + 1;
+    const prevPageNum = pageSetNum * 5;
     if (prevPageNum >= 1) {
-      router.push(`/profile?page=${prevPageNum}`);
+      routeTab(prevPageNum);
     }
   }, [pageSetNum]);
 
   const onClickNextEnd = useCallback(() => {
-    router.push(`/profile?page=${maxPage}`);
+    routeTab(maxPage);
   }, [maxPage]);
 
   const onClickPrevEnd = useCallback(() => {
-    router.push(`/profile?page=1`);
+    routeTab(1);
   }, []);
 
   return (
     <Pagination
-      pages={slicedPages(pages)}
+      pages={currentPageSet}
       currentPage={currentPage}
       onClickPage={onClickPage}
       onClickNext={onClickNext}
