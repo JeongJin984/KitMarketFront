@@ -6,15 +6,6 @@ const initialState = {
   isLoadingPost: false,
   isLoadedPost: false,
   singlePost: {
-    id: '',
-    writer: '',
-    title: '',
-    content: '',
-    deadLine: '',
-    createdAt: '',
-    maxNum: '',
-    curNum: '',
-    category: '',
     applications: [],
     participants: [],
   },
@@ -24,6 +15,15 @@ const initialState = {
   isPosted: false,
   isJoiningPost: false,
   isJoinedPost: false,
+  createdPosts: {
+    data: [],
+  },
+  participatingPosts: {
+    data: [],
+  },
+  applicatedPosts: {
+    data: [],
+  },
   error: '',
 };
 
@@ -42,6 +42,21 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const JOIN_POST_REQUEST = 'JOIN_POST_REQUEST';
 export const JOIN_POST_SUCCESS = 'JOIN_POST_SUCCESS';
 export const JOIN_POST_FAILURE = 'JOIN_POST_FAILURE';
+
+export const LOAD_CREATED_POSTS_REQUEST = 'LOAD_CREATED_POSTS_REQUEST';
+export const LOAD_CREATED_POSTS_SUCCESS = 'LOAD_CREATED_POSTS_SUCCESS';
+export const LOAD_CREATED_POSTS_FAILURE = 'LOAD_CREATED_POSTs_FAILURE';
+
+export const LOAD_PARTICIPATING_POSTS_REQUEST =
+  'LOAD_PARTICIPATING_POSTS_REQUEST';
+export const LOAD_PARTICIPATING_POSTS_SUCCESS =
+  'LOAD_PARTICIPATING_POSTS_SUCCESS';
+export const LOAD_PARTICIPATING_POSTS_FAILURE =
+  'LOAD_PARTICIPATING_POSTS_FAILURE';
+
+export const LOAD_APPLICATED_POSTS_REQUEST = 'LOAD_APPLICATED_POSTS_REQUEST';
+export const LOAD_APPLICATED_POSTS_SUCCESS = 'LOAD_APPLICATED_POSTS_SUCCESS';
+export const LOAD_APPLICATED_POSTS_FAILURE = 'LOAD_APPLICATED_POSTS_FAILURE';
 
 export const loadMainPostsRequest = (data) => {
   return {
@@ -71,18 +86,38 @@ export const joinPostRequest = (data) => {
   };
 };
 
+export const loadCreatedPostsRequest = (data) => {
+  return {
+    type: LOAD_CREATED_POSTS_REQUEST,
+    data,
+  };
+};
+
+export const loadParticipatingPostsRequest = (data) => {
+  return {
+    type: LOAD_PARTICIPATING_POSTS_REQUEST,
+    data,
+  };
+};
+
+export const loadApplicatedPostsRequest = (data) => {
+  return {
+    type: LOAD_APPLICATED_POSTS_REQUEST,
+    data,
+  };
+};
+
 const postReducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_MAIN_POSTS_REQUEST:
-        console.log("qwerqwerqwer")
+        console.log('qwerqwerqwer');
         draft.isLoadingPosts = true;
         draft.isLoadedPosts = false;
         break;
 
       case LOAD_MAIN_POSTS_SUCCESS:
-        
-        console.log("zxcvzxcvzxcv")
+        console.log('zxcvzxcvzxcv');
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = true;
         draft.mainPosts = action.data.data;
@@ -148,6 +183,63 @@ const postReducer = (state = initialState, action) => {
       case JOIN_POST_FAILURE:
         draft.isJoiningPost = false;
         draft.isJoinedPost = false;
+        draft.error = action.error;
+        break;
+
+      case LOAD_CREATED_POSTS_REQUEST:
+        draft.isLoadingPosts = true;
+        draft.isLoadedPosts = false;
+        draft.error = '';
+        break;
+
+      case LOAD_CREATED_POSTS_SUCCESS:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = true;
+        draft.createdPosts = action.data;
+        draft.error = '';
+        break;
+
+      case LOAD_CREATED_POSTS_FAILURE:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = false;
+        draft.error = action.error;
+        break;
+
+      case LOAD_PARTICIPATING_POSTS_REQUEST:
+        draft.isLoadingPosts = true;
+        draft.isLoadedPosts = false;
+        draft.error = '';
+        break;
+
+      case LOAD_PARTICIPATING_POSTS_SUCCESS:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = true;
+        draft.participatingPosts = action.data;
+        draft.error = '';
+        break;
+
+      case LOAD_PARTICIPATING_POSTS_FAILURE:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = false;
+        draft.error = action.error;
+        break;
+
+      case LOAD_APPLICATED_POSTS_REQUEST:
+        draft.isLoadingPosts = true;
+        draft.isLoadedPosts = false;
+        draft.error = '';
+        break;
+
+      case LOAD_APPLICATED_POSTS_SUCCESS:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = true;
+        draft.applicatedPosts = action.data;
+        draft.error = '';
+        break;
+
+      case LOAD_APPLICATED_POSTS_FAILURE:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = false;
         draft.error = action.error;
         break;
 
