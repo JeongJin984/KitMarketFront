@@ -46,8 +46,9 @@ export const logoutRequest = () => {
 };
 
 export const loadUserRequest = () => {
+  console.log('load');
   return {
-    type: LOAD_USER_REQUEST
+    type: LOAD_USER_REQUEST,
   };
 };
 
@@ -94,6 +95,12 @@ const userReducer = (state = initialState, action) => {
         draft.me = null;
         break;
 
+      case LOAD_USER_REQUEST:
+        draft.isLoggedIn = false;
+        draft.isLoggingIn = true;
+        draft.error = '';
+        break;
+
       case LOAD_USER_SUCCESS:
         draft.isLoggedIn = true;
         draft.isLogginIn = false;
@@ -103,7 +110,7 @@ const userReducer = (state = initialState, action) => {
       case LOAD_USER_FAILURE:
         draft.isLoggedIn = false;
         draft.isLogginIn = false;
-        draft.error = "action.error";
+        draft.error = 'action.error';
         break;
 
       case LOGOUT_REQUEST:
