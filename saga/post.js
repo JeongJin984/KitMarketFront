@@ -14,6 +14,9 @@ import {
   JOIN_POST_REQUEST,
   JOIN_POST_SUCCESS,
   JOIN_POST_FAILURE,
+  CANCEL_JOIN_REQUEST,
+  CANCEL_JOIN_SUCCESS,
+  CANCEL_JOIN_FAILURE,
   LOAD_CREATED_POSTS_REQUEST,
   LOAD_CREATED_POSTS_SUCCESS,
   LOAD_CREATED_POSTS_FAILURE,
@@ -475,6 +478,34 @@ function* joinPost(action) {
   }
 }
 
+function cancelJoinAPI(data) {
+  return axios({
+    method: 'DELETE',
+    url: `/api/cancle?postId=${data.postId}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: { username: data.username },
+  });
+}
+
+function* cancelJoin(action) {
+  try {
+    //const result = yield call(cancelJoinAPI, action.data);
+    console.log('canceljoin');
+    const result = { data: { username: 'user' } };
+    yield put({
+      type: CANCEL_JOIN_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: CANCEL_JOIN_FAILURE,
+      error,
+    });
+  }
+}
+
 function loadCreatedPostsAPI(data) {
   return axios({
     method: 'GET',
@@ -535,6 +566,7 @@ function loadParticipatingPostsAPI(data) {
 
 function* loadParticipatingPosts(action) {
   try {
+    console.log('participat');
     const result = {
       data: {
         size: 8,
@@ -583,12 +615,55 @@ function loadApplicatedPostsAPI(data) {
 
 function* loadApplicatedPosts(action) {
   try {
+    console.log('appl');
     const result = {
       data: {
         size: 8,
-        currentPage: 0,
-        maxPage: 1,
+        currentPage: 1,
+        maxPage: 2,
         data: [
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
+          {
+            id: 10,
+            category: 'study',
+            title: 'application',
+            writer: 'user',
+            createdAt: '2021-05-02T23:22:00.452893',
+          },
           {
             id: 10,
             category: 'study',
@@ -650,6 +725,10 @@ function* watchJoinPost() {
   yield takeLatest(JOIN_POST_REQUEST, joinPost);
 }
 
+function* watchCancleJoin() {
+  yield takeLatest(CANCEL_JOIN_REQUEST, cancelJoin);
+}
+
 function* watchLoadCreatePosts() {
   yield takeLatest(LOAD_CREATED_POSTS_REQUEST, loadCreatedPosts);
 }
@@ -672,6 +751,7 @@ export default function* chattingSaga() {
     fork(watchLoadPost),
     fork(watchAddPost),
     fork(watchJoinPost),
+    fork(watchCancleJoin),
     fork(watchLoadCreatePosts),
     fork(watchLoadParticipatingPosts),
     fork(watchLoadApplicatedPosts),
