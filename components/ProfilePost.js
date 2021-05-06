@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Row,
@@ -9,9 +10,12 @@ import {
   CardSubtitle,
   Button,
 } from 'reactstrap';
+import { cancelJoinRequest } from '../reducer/post';
 
-const ProfilePost = ({ postInfo }) => {
+const ProfilePost = ({ postInfo, tab }) => {
   const { id, category, title, writer, createdAt } = postInfo;
+  const dispatch = useDispatch();
+  const { isCancelledJoin } = useSelector((state) => state.post);
   return (
     <Col xs="3">
       <Card body>
@@ -20,13 +24,20 @@ const ProfilePost = ({ postInfo }) => {
             <CardTitle className="text-left">{category}</CardTitle>
           </Col>
           <Col xs="4" className="col text-right">
-            <Button
-              close
-              onClick={(e) => {
-                if (window.confirm('모임을 탈퇴하시겠습니까?'))
-                  this.deleteItem(e);
-              }}
-            ></Button>
+            {tab === 'applicated' ? (
+              <Button
+                close
+                onClick={(e) => {
+                  if (confirm('신청을 취소하시겠습니까?'))
+                    dispatch(cancelJoinRequest({ postId: id }));
+                  if (isCancelledJoin) {
+                    alert('취소되었습니다.');
+                  }
+                }}
+              ></Button>
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
         <CardTitle tag="h5" className="text-center">

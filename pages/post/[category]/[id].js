@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadPostRequest, joinPostRequest } from '../../../reducer/post';
+import {
+  loadPostRequest,
+  joinPostRequest,
+  cancelJoinRequest,
+} from '../../../reducer/post';
 import styled from 'styled-components';
 import {
   Row,
@@ -29,7 +33,8 @@ const PostView = () => {
 
   const dispatch = useDispatch();
   const { singlePost, isJoinedPost } = useSelector((state) => state.post);
-  //const { username } = useSelector((state) => state.user.me);
+  // const { username } = useSelector((state) => state.user.me);
+  const username = 'user';
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
 
   let category = '';
@@ -42,13 +47,14 @@ const PostView = () => {
   }
 
   const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, username: 'abc' };
+    const data = { id: singlePost.id, username };
     dispatch(joinPostRequest(data));
-  }, [singlePost]);
+  }, [singlePost, username]);
 
   const onClickCancle = useCallback(() => {
     console.log('취소하기');
-  }, []);
+    dispatch(cancelJoinRequest({ postId: siglePost.id, username }));
+  }, [singlePost, username]);
 
   return (
     <AppLayout>

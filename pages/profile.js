@@ -37,13 +37,7 @@ const profile = () => {
     (state) => state.post
   );
   const router = useRouter();
-  const page = router.query.page || 1;
   const tab = router.query.tab || '';
-
-  const slicedPosts = useCallback((posts, page) => {
-    const sliceNum = page * 4;
-    return posts.slice(sliceNum - 4, sliceNum);
-  }, []);
 
   const toggle = useCallback(
     (tab) => {
@@ -199,8 +193,8 @@ const profile = () => {
               <TabPane tabId="1">
                 <br />
                 <Row>
-                  {slicedPosts(createdPosts.data, page).map((post) => (
-                    <ProfilePost postInfo={post} />
+                  {createdPosts.data.map((post) => (
+                    <ProfilePost postInfo={post} tab={tab} />
                   ))}
                 </Row>
                 <Row>
@@ -210,8 +204,8 @@ const profile = () => {
               <TabPane tabId="2">
                 <br />
                 <Row>
-                  {slicedPosts(participatingPosts.data, page).map((post) => (
-                    <ProfilePost postInfo={post} />
+                  {participatingPosts.data.map((post) => (
+                    <ProfilePost postInfo={post} tab={tab} />
                   ))}
                 </Row>
                 <Row>
@@ -221,8 +215,8 @@ const profile = () => {
               <TabPane tabId="3">
                 <br />
                 <Row>
-                  {slicedPosts(applicatedPosts.data, page).map((post) => (
-                    <ProfilePost postInfo={post} />
+                  {applicatedPosts.data.map((post) => (
+                    <ProfilePost postInfo={post} tab={tab} />
                   ))}
                 </Row>
                 <Row>
@@ -246,8 +240,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
     const tab = query.tab || 'created';
     const page = query.page - 1 || 0;
-    console.log('tab', tab, page);
-    const data = { page };
+    const state = store.getState();
+    // const { username } = state.user.me;
+    const username = 'user';
+    const data = { page, username };
     store.dispatch(loadProfileRequest());
     if (tab === 'created') store.dispatch(loadCreatedPostsRequest(data));
     else if (tab === 'participating')
