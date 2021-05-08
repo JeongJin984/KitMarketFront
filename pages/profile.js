@@ -188,6 +188,16 @@ const profile = () => {
                   신청 대기 중
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: activeTab === '4' })}
+                  onClick={() => {
+                    toggle('4');
+                  }}
+                >
+                  마감된 모임 현황
+                </NavLink>
+              </NavItem>
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
@@ -213,6 +223,17 @@ const profile = () => {
                 </Row>
               </TabPane>
               <TabPane tabId="3">
+                <br />
+                <Row>
+                  {applicatedPosts.data.map((post) => (
+                    <ProfilePost postInfo={post} tab={tab} />
+                  ))}
+                </Row>
+                <Row>
+                  <ProfilePagination posts={applicatedPosts} />
+                </Row>
+              </TabPane>
+              <TabPane tabId="4">
                 <br />
                 <Row>
                   {applicatedPosts.data.map((post) => (

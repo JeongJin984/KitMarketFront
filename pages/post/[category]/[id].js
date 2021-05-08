@@ -93,7 +93,15 @@ const PostView = () => {
               </Col>
             </Row>
             <hr />
-            <br />
+            <Row>
+              <Col xs = "11"></Col>
+              <Badge style={{textAlign:'right'}}href="#" color="light">
+                수정
+              </Badge>
+              <Badge href="#" color="light">
+                삭제
+              </Badge>
+            </Row>
             <Card
               body
               outline
@@ -118,7 +126,11 @@ const PostView = () => {
                 </Col>
               </Row>
             </Card>
-            <br />
+            <FormGroup check>
+              <Label check>
+                <Input type="checkbox" /> 마감하시겠습니까?
+              </Label>
+            </FormGroup>
             <hr />
             <Row>
               <Col xs="9">
