@@ -47,13 +47,13 @@ const PostView = () => {
   }
 
   const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, username };
+    const data = { id: singlePost.id, content: 'content', username };
     dispatch(joinPostRequest(data));
   }, [singlePost, username]);
 
   const onClickCancle = useCallback(() => {
     console.log('취소하기');
-    dispatch(cancelJoinRequest({ postId: siglePost.id, username }));
+    dispatch(cancelJoinRequest({ postId: singlePost.id, username }));
   }, [singlePost, username]);
 
   return (
@@ -198,11 +198,11 @@ const PostView = () => {
             </CardTitle>
             <hr />
             <Form style={{ height: 500 }}>
-              {singlePost.participants.map((participant) => (
+              {singlePost.applications.map((application) => (
                 <>
                   <FormGroup check>
                     <Label check>
-                      <Input type="checkbox" /> {participant.username}
+                      <Input type="checkbox" /> {application.content}
                     </Label>
                   </FormGroup>
                   <br />{' '}

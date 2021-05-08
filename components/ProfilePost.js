@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -16,6 +16,18 @@ const ProfilePost = ({ postInfo, tab }) => {
   const { id, category, title, writer, createdAt } = postInfo;
   const dispatch = useDispatch();
   const { isCancelledJoin } = useSelector((state) => state.post);
+
+  const onClickCancel = useCallback(() => {
+    if (confirm('신청을 취소하시겠습니까?')) {
+      dispatch(cancelJoinRequest({ postId: id }));
+      if (isCancelledJoin) {
+        alert('취소되었습니다.');
+      } else {
+        alert('실패하였습니다.');
+      }
+    }
+  }, [postInfo]);
+
   return (
     <Col xs="3">
       <Card body>
@@ -25,16 +37,7 @@ const ProfilePost = ({ postInfo, tab }) => {
           </Col>
           <Col xs="4" className="col text-right">
             {tab === 'applicated' ? (
-              <Button
-                close
-                onClick={(e) => {
-                  if (confirm('신청을 취소하시겠습니까?'))
-                    dispatch(cancelJoinRequest({ postId: id }));
-                  if (isCancelledJoin) {
-                    alert('취소되었습니다.');
-                  }
-                }}
-              ></Button>
+              <Button close onClick={onClickCancel}></Button>
             ) : (
               <></>
             )}
