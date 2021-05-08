@@ -465,7 +465,7 @@ function joinPostAPI(data) {
 function* joinPost(action) {
   try {
     //const result = yield call(joinPostAPI, action.data);
-    const result = { data: { username: 'user' } };
+    const result = { data: { content: 'content', username: 'username' } };
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
@@ -619,7 +619,7 @@ function* loadApplicatedPosts(action) {
     const result = {
       data: {
         size: 8,
-        currentPage: 1,
+        currentPage: 0,
         maxPage: 2,
         data: [
           {

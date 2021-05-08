@@ -190,7 +190,7 @@ const postReducer = (state = initialState, action) => {
       case JOIN_POST_SUCCESS:
         draft.isJoiningPost = false;
         draft.isJoinedPost = true;
-        draft.singlePost.participants.push(action.data);
+        draft.singlePost.applications.push(action.data);
         draft.error = '';
         break;
 
@@ -209,6 +209,8 @@ const postReducer = (state = initialState, action) => {
       case CANCEL_JOIN_SUCCESS:
         draft.isCancellingJoin = false;
         draft.isCancelledJoin = true;
+        draft.isJoinedPost = false;
+        draft.singlePost.applications.pop();
         draft.error = '';
         break;
 
