@@ -28,19 +28,6 @@ import {
   LOAD_APPLICATED_POSTS_FAILURE,
 } from '../reducer/post';
 
-// function postChatAPI(data) {
-// 	return axios.post('/chat/', data)
-// }
-function loadPostsAPI(data) {
-  return axios({
-    method: 'GET',
-    url: `/api/${data.category}?offset=${data.page}`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
 const dummyPosts = [
   {
     size: 8,
@@ -329,7 +316,179 @@ const dummyPosts = [
   },
 ];
 
-const loadDummyPost = (data) => {
+const dummyPost = {
+  data: {
+    id: 9,
+    writer: 'Account0',
+    title: 'Dummy0',
+    content: "I'm Dummy00",
+    deadLine: 21,
+    createdAt: '2021-04-10T15:05:44.373372',
+    maxNum: 3,
+    curNum: 0,
+    category: 'study',
+    participants: [
+      {
+        username: 'participant1',
+        email: 'partEmail1',
+        age: 2,
+      },
+      {
+        username: 'participant0',
+        email: 'partEmail0',
+        age: 1,
+      },
+      {
+        username: 'participant2',
+        email: 'partEmail2',
+        age: 3,
+      },
+    ],
+    applications: [
+      {
+        id: 1,
+        username: 'user1',
+        chatDate: null,
+      },
+      {
+        id: 2,
+        username: 'user2',
+        chatDate: null,
+      },
+      {
+        id: 3,
+        username: 'user3',
+        chatDate: null,
+      },
+    ],
+  },
+};
+
+const participatingPosts = {
+  data: {
+    size: 8,
+    currentPage: 0,
+    maxPage: 1,
+    data: [
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+    ],
+  },
+};
+
+const applicatedPosts = {
+  data: {
+    size: 8,
+    currentPage: 0,
+    maxPage: 2,
+    data: [
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'application',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+    ],
+  },
+};
+
+const createdPosts = {
+  data: {
+    size: 8,
+    currentPage: 0,
+    maxPage: 1,
+    data: [
+      {
+        id: 10,
+        category: 'study',
+        title: 'Study0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'Study0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+    ],
+  },
+};
+
+function loadPostsAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `/api/${data.category}?offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+const loadDummyPosts = (data) => {
   for (let p of dummyPosts) {
     if (p.currentPage === data.page) {
       return p;
@@ -341,7 +500,7 @@ function* loadPosts(action) {
   try {
     console.log('awefawefawefawef');
     // const result = yield call(loadPostsAPI, action.data);
-    const result = { data: loadDummyPost(action.data) };
+    const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -367,53 +526,7 @@ function loadPostAPI(data) {
 function* loadPost(action) {
   try {
     //const result = yield call(loadPostAPI, action.data);
-    const result = {
-      data: {
-        id: 9,
-        writer: 'Account0',
-        title: 'Dummy0',
-        content: "I'm Dummy00",
-        deadLine: 21,
-        createdAt: '2021-04-10T15:05:44.373372',
-        maxNum: 3,
-        curNum: 0,
-        category: 'study',
-        participants: [
-          {
-            username: 'participant1',
-            email: 'partEmail1',
-            age: 2,
-          },
-          {
-            username: 'participant0',
-            email: 'partEmail0',
-            age: 1,
-          },
-          {
-            username: 'participant2',
-            email: 'partEmail2',
-            age: 3,
-          },
-        ],
-        applications: [
-          {
-            id: 1,
-            content: '댓글 1입니다.',
-            chatDate: null,
-          },
-          {
-            id: 2,
-            content: '댓글 2입니다.',
-            chatDate: null,
-          },
-          {
-            id: 3,
-            content: '댓글 3입니다.',
-            chatDate: null,
-          },
-        ],
-      },
-    };
+    const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -465,7 +578,7 @@ function joinPostAPI(data) {
 function* joinPost(action) {
   try {
     //const result = yield call(joinPostAPI, action.data);
-    const result = { data: { content: 'content', username: 'username' } };
+    const result = { data: { username: 'username' } };
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
@@ -492,7 +605,6 @@ function cancelJoinAPI(data) {
 function* cancelJoin(action) {
   try {
     //const result = yield call(cancelJoinAPI, action.data);
-    console.log('canceljoin');
     const result = { data: { username: 'user' } };
     yield put({
       type: CANCEL_JOIN_SUCCESS,
@@ -518,29 +630,7 @@ function loadCreatedPostsAPI(data) {
 
 function* loadCreatedPosts(action) {
   try {
-    const result = {
-      data: {
-        size: 8,
-        currentPage: 0,
-        maxPage: 1,
-        data: [
-          {
-            id: 10,
-            category: 'study',
-            title: 'Study0',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'Study0',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-        ],
-      },
-    };
+    const result = createdPosts;
     //const result = yield call(loadCreatedPostsAPI, action.data);
     yield put({
       type: LOAD_CREATED_POSTS_SUCCESS,
@@ -566,30 +656,7 @@ function loadParticipatingPostsAPI(data) {
 
 function* loadParticipatingPosts(action) {
   try {
-    console.log('participat');
-    const result = {
-      data: {
-        size: 8,
-        currentPage: 0,
-        maxPage: 1,
-        data: [
-          {
-            id: 10,
-            category: 'study',
-            title: 'participant0',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'participant0',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-        ],
-      },
-    };
+    const result = participatingPosts;
     //const result = yield call(loadParticipatingPostsAPI, action.data);
     yield put({
       type: LOAD_PARTICIPATING_POSTS_SUCCESS,
@@ -615,72 +682,7 @@ function loadApplicatedPostsAPI(data) {
 
 function* loadApplicatedPosts(action) {
   try {
-    console.log('appl');
-    const result = {
-      data: {
-        size: 8,
-        currentPage: 0,
-        maxPage: 2,
-        data: [
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-          {
-            id: 10,
-            category: 'study',
-            title: 'application',
-            writer: 'user',
-            createdAt: '2021-05-02T23:22:00.452893',
-          },
-        ],
-      },
-    };
+    const result = applicatedPosts;
     //const result = yield call(loadApplicatedPostsAPI, action.data);
     yield put({
       type: LOAD_APPLICATED_POSTS_SUCCESS,
