@@ -567,11 +567,11 @@ function* addPost(action) {
 function joinPostAPI(data) {
   return axios({
     method: 'POST',
-    url: `/api/join`,
+    url: `/api/app/join?postId=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
-    data: { username: data.username, postId: data.id },
+    data: { username: data.username },
   });
 }
 
@@ -594,7 +594,7 @@ function* joinPost(action) {
 function cancelJoinAPI(data) {
   return axios({
     method: 'DELETE',
-    url: `/api/cancle?postId=${data.postId}`,
+    url: `/api/app/cancle?postId=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -605,10 +605,8 @@ function cancelJoinAPI(data) {
 function* cancelJoin(action) {
   try {
     //const result = yield call(cancelJoinAPI, action.data);
-    const result = { data: { username: 'user' } };
     yield put({
       type: CANCEL_JOIN_SUCCESS,
-      data: result.data,
     });
   } catch (error) {
     yield put({
