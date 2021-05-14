@@ -1,13 +1,9 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import {
-  loadPostRequest,
-  joinPostRequest,
-  cancelJoinRequest,
-} from '../../../reducer/post';
+import { loadPostRequest } from '../../../reducer/post';
 import styled from 'styled-components';
 import {
   Row,
@@ -26,15 +22,12 @@ import {
   Input,
 } from 'reactstrap';
 import AppLayout from '../../../components/AppLayout';
+import JoinButton from '../../../components/JoinButton';
 
 const PostView = () => {
-  const [popoverOpen, setPopoverOpen] = useState(false);
-  const toggle = () => setPopoverOpen(!popoverOpen);
-
-  const dispatch = useDispatch();
-  const { singlePost, isJoinedPost } = useSelector((state) => state.post);
+  const { singlePost } = useSelector((state) => state.post);
   // const { username } = useSelector((state) => state.user.me);
-  const username = 'user';
+  const username = 'Account1';
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
 
   let category = '';
@@ -45,16 +38,6 @@ const PostView = () => {
   } else if (singlePost.category === 'carPool') {
     category = '카풀/택시';
   }
-
-  const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, content: 'content', username };
-    dispatch(joinPostRequest(data));
-  }, [singlePost, username]);
-
-  const onClickCancle = useCallback(() => {
-    console.log('취소하기');
-    dispatch(cancelJoinRequest({ postId: singlePost.id, username }));
-  }, [singlePost, username]);
 
   return (
     <AppLayout>
@@ -94,8 +77,8 @@ const PostView = () => {
             </Row>
             <hr />
             <Row>
-              <Col xs = "11"></Col>
-              <Badge style={{textAlign:'right'}}href="#" color="light">
+              <Col xs="11"></Col>
+              <Badge style={{ textAlign: 'right' }} href="#" color="light">
                 수정
               </Badge>
               <Badge href="#" color="light">
@@ -146,7 +129,6 @@ const PostView = () => {
                   id="Popover1"
                   outline
                   color="secondary"
-                  onClick={toggle}
                   style={{
                     width: '90px',
                     height: '90px',
@@ -166,39 +148,7 @@ const PostView = () => {
                   <PopoverHeader>'작성자' 연락처</PopoverHeader>
                   <PopoverBody>카카오톡 id : asdfghjk</PopoverBody>
                 </UncontrolledPopover>
-                {isJoinedPost ? (
-                  <Button
-                    color="secondary"
-                    onClick={toggle}
-                    style={{
-                      marginLeft: '-120%',
-                      width: '90px',
-                      height: '90px',
-                      borderRadius: '75%',
-                      textAlign: 'center',
-                      margin: '0',
-                    }}
-                    onClick={onClickCancle}
-                  >
-                    취소하기
-                  </Button>
-                ) : (
-                  <Button
-                    color="secondary"
-                    onClick={toggle}
-                    style={{
-                      marginLeft: '-120%',
-                      width: '90px',
-                      height: '90px',
-                      borderRadius: '75%',
-                      textAlign: 'center',
-                      margin: '0',
-                    }}
-                    onClick={onClickJoin}
-                  >
-                    함께하기
-                  </Button>
-                )}
+                <JoinButton singlePost={singlePost} username={username} />
               </Col>
             </Row>
           </Card>
@@ -214,7 +164,7 @@ const PostView = () => {
                 <>
                   <FormGroup check>
                     <Label check>
-                      <Input type="checkbox" /> {application.content}
+                      <Input type="checkbox" /> {application.username}
                     </Label>
                   </FormGroup>
                   <br />{' '}
