@@ -47,12 +47,16 @@ const PostView = () => {
   }
 
   const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, content: 'content', username };
+    console.log('함게하기');
+    const data = { id: singlePost.id, content: "content", username };
+    console.log(data);
     dispatch(joinPostRequest(data));
   }, [singlePost, username]);
 
   const onClickCancle = useCallback(() => {
     console.log('취소하기');
+    console.log(singlePost.id);
+    console.log(username);
     dispatch(cancelJoinRequest({ postId: singlePost.id, username }));
   }, [singlePost, username]);
 

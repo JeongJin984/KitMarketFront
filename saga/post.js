@@ -495,12 +495,12 @@ const loadDummyPosts = (data) => {
     }
   }
 };
-
+//됨
 function* loadPosts(action) {
   try {
     console.log('awefawefawefawef');
-    // const result = yield call(loadPostsAPI, action.data);
-    const result = { data: loadDummyPosts(action.data) };
+    const result = yield call(loadPostsAPI, action.data);
+    //const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -512,7 +512,7 @@ function* loadPosts(action) {
     });
   }
 }
-
+//됨
 function loadPostAPI(data) {
   return axios({
     method: 'GET',
@@ -525,8 +525,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    //const result = yield call(loadPostAPI, action.data);
-    const result = dummyPost;
+    const result = yield call(loadPostAPI, action.data);
+    //const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -538,7 +538,7 @@ function* loadPost(action) {
     });
   }
 }
-
+//저장 카테고리별로 되도록 바꾸기
 function addPostAPI(data) {
   return axios({
     method: 'POST',
@@ -552,7 +552,7 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
-    //const result = yield call(addPostAPI, action.data);
+    const result = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
     });
@@ -575,10 +575,12 @@ function joinPostAPI(data) {
   });
 }
 
+// 됨
 function* joinPost(action) {
   try {
-    //const result = yield call(joinPostAPI, action.data);
-    const result = { data: { username: 'username' } };
+    //console.log(action.data);
+    const result = yield call(joinPostAPI, action.data);
+    //const result = { data: { username: 'username' } };
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
@@ -594,7 +596,7 @@ function* joinPost(action) {
 function cancelJoinAPI(data) {
   return axios({
     method: 'DELETE',
-    url: `/api/app/cancle?postId=${data.id}`,
+    url: `/api/app/cancle?postId=${data.postId}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -602,9 +604,11 @@ function cancelJoinAPI(data) {
   });
 }
 
+//됨
 function* cancelJoin(action) {
   try {
-    //const result = yield call(cancelJoinAPI, action.data);
+    //console.log(action.data);
+    const result = yield call(cancelJoinAPI, action.data);
     yield put({
       type: CANCEL_JOIN_SUCCESS,
     });
@@ -619,13 +623,13 @@ function* cancelJoin(action) {
 function loadCreatedPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/my?username=${data.username}?offset=${data.page}`,
+    url: `/api/post/my?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
   });
 }
-
+//됨
 function* loadCreatedPosts(action) {
   try {
     const result = createdPosts;
@@ -645,13 +649,13 @@ function* loadCreatedPosts(action) {
 function loadParticipatingPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/participant?username=${data.username}?offset=${data.page}`,
+    url: `/api/post/participants?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
   });
 }
-
+//됨
 function* loadParticipatingPosts(action) {
   try {
     const result = participatingPosts;
@@ -671,17 +675,17 @@ function* loadParticipatingPosts(action) {
 function loadApplicatedPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/application?username=${data.username}?offset=${data.page}`,
+    url: `/api/post/application?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
   });
 }
-
+// 신청중인 모임들
+//됨
 function* loadApplicatedPosts(action) {
   try {
-    const result = applicatedPosts;
-    //const result = yield call(loadApplicatedPostsAPI, action.data);
+    const result = yield call(loadApplicatedPostsAPI, action.data);
     yield put({
       type: LOAD_APPLICATED_POSTS_SUCCESS,
       data: result.data,
