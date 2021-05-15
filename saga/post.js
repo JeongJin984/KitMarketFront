@@ -538,6 +538,7 @@ function* loadPost(action) {
     });
   }
 }
+
 //저장 카테고리별로 되도록 바꾸기
 function addPostAPI(data) {
   return axios({
@@ -571,18 +572,16 @@ function joinPostAPI(data) {
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
-    data: { username: data.username },
+    data: { username: data.username, content: data.content },
   });
 }
 
 // 됨
 function* joinPost(action) {
   try {
-<<<<<<< HEAD
-    //console.log(action.data);
+    console.log(action.data);
     const result = yield call(joinPostAPI, action.data);
     //const result = { data: { username: 'username' } };
-
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
@@ -598,7 +597,7 @@ function* joinPost(action) {
 function cancelJoinAPI(data) {
   return axios({
     method: 'DELETE',
-    url: `/api/app/cancle?postId=${data.postId}`,
+    url: `/api/app/cancle?postId=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -609,7 +608,7 @@ function cancelJoinAPI(data) {
 //됨
 function* cancelJoin(action) {
   try {
-    //console.log(action.data);
+    console.log(action.data);
     const result = yield call(cancelJoinAPI, action.data);
     yield put({
       type: CANCEL_JOIN_SUCCESS,
@@ -634,8 +633,8 @@ function loadCreatedPostsAPI(data) {
 //됨
 function* loadCreatedPosts(action) {
   try {
-    const result = createdPosts;
-    //const result = yield call(loadCreatedPostsAPI, action.data);
+    //const result = createdPosts;
+    const result = yield call(loadCreatedPostsAPI, action.data);
     yield put({
       type: LOAD_CREATED_POSTS_SUCCESS,
       data: result.data,
@@ -660,8 +659,8 @@ function loadParticipatingPostsAPI(data) {
 //됨
 function* loadParticipatingPosts(action) {
   try {
-    const result = participatingPosts;
-    //const result = yield call(loadParticipatingPostsAPI, action.data);
+    //const result = participatingPosts;
+    const result = yield call(loadParticipatingPostsAPI, action.data);
     yield put({
       type: LOAD_PARTICIPATING_POSTS_SUCCESS,
       data: result.data,

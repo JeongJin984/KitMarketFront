@@ -31,7 +31,7 @@ import JoinButton from '../../../components/JoinButton';
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   // const { username } = useSelector((state) => state.user.me);
-  const username = 'Account1';
+  const username = 'admin';
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
   const [modal, setModal] = useState(false);
 
@@ -45,21 +45,6 @@ const PostView = () => {
   } else if (singlePost.category === 'carPool') {
     category = '카풀/택시';
   }
-
-
-  const onClickJoin = useCallback(() => {
-    console.log('함게하기');
-    const data = { id: singlePost.id, content: "content", username };
-    console.log(data);
-    dispatch(joinPostRequest(data));
-  }, [singlePost, username]);
-
-  const onClickCancle = useCallback(() => {
-    console.log('취소하기');
-    console.log(singlePost.id);
-    console.log(username);
-    dispatch(cancelJoinRequest({ postId: singlePost.id, username }));
-  }, [singlePost, username]);
 
 
   return (
@@ -200,7 +185,7 @@ const PostView = () => {
                 <Col xs = "9">
                   <FormGroup check>
                     <Label check>
-                      <Input type="checkbox" /> 함께하고싶습니당~!
+                      <Input type="checkbox" /> {application.content}
                     </Label>
                   </FormGroup>
                 </Col>

@@ -12,7 +12,7 @@ const JoinButton = ({ singlePost, username }) => {
   const toggle = () => setPopoverOpen(!popoverOpen);
 
   const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, username };
+    const data = { id: singlePost.id, content: "더미입니다.", username };
     dispatch(joinPostRequest(data));
   }, [singlePost, username]);
 
