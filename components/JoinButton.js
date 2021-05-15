@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { joinPostRequest, cancelJoinRequest } from '../reducer/post';
-import { Button } from 'reactstrap';
+import { Button} from 'reactstrap';
 
 const JoinButton = ({ singlePost, username }) => {
   const { writer, applications } = singlePost;
