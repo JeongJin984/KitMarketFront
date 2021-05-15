@@ -578,9 +578,11 @@ function joinPostAPI(data) {
 // 됨
 function* joinPost(action) {
   try {
+<<<<<<< HEAD
     //console.log(action.data);
     const result = yield call(joinPostAPI, action.data);
     //const result = { data: { username: 'username' } };
+
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
