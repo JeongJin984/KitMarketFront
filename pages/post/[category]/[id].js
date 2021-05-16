@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
@@ -20,18 +20,13 @@ import {
   Badge,
   Label,
   Input,
-  Modal, 
-  ModalHeader, 
-  ModalBody, 
-  ModalFooter,
 } from 'reactstrap';
 import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
-  // const { username } = useSelector((state) => state.user.me);
-  const username = 'Account1';
+  const { username } = useSelector((state) => state.user.me);
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
   const [modal, setModal] = useState(false);
 
@@ -46,21 +41,9 @@ const PostView = () => {
     category = '카풀/택시';
   }
 
-
-  const onClickJoin = useCallback(() => {
-    console.log('함게하기');
-    const data = { id: singlePost.id, content: "content", username };
-    console.log(data);
-    dispatch(joinPostRequest(data));
-  }, [singlePost, username]);
-
-  const onClickCancle = useCallback(() => {
-    console.log('취소하기');
-    console.log(singlePost.id);
-    console.log(username);
-    dispatch(cancelJoinRequest({ postId: singlePost.id, username }));
-  }, [singlePost, username]);
-
+  const UsernameLabel = styled(Label)`
+    margin-left: auto;
+  `;
 
   return (
     <AppLayout>
@@ -164,16 +147,6 @@ const PostView = () => {
                 >
                   연락하기
                 </Button>
-                  <Modal isOpen={modal} toggle={toggle}>
-                    <ModalHeader toggle={toggle}>한마디 남기기</ModalHeader>
-                    <ModalBody>
-                    <Input type="textarea" name="text" id="comments" placeholder="함께하고 싶어요~"/>
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button outline color="secondary" onClick={toggle}>취소</Button>{' '}
-                      <Button type="submit" color="secondary" onClick={toggle}>완료</Button>
-                    </ModalFooter>
-                  </Modal>
                 <UncontrolledPopover
                   trigger="legacy"
                   placement="bottom"
@@ -182,7 +155,7 @@ const PostView = () => {
                   <PopoverHeader>'작성자' 연락처</PopoverHeader>
                   <PopoverBody>카카오톡 id : asdfghjk</PopoverBody>
                 </UncontrolledPopover>
-                <JoinButton singlePost={singlePost} username={username} onClick={toggle} />
+                <JoinButton singlePost={singlePost} username={username} />
               </Col>
             </Row>
           </Card>
@@ -196,19 +169,16 @@ const PostView = () => {
             <Form style={{ height: 500 }}>
               {singlePost.applications.map((application) => (
                 <>
-                <Row>
-                <Col xs = "9">
-                  <FormGroup check>
-                    <Label check>
-                      <Input type="checkbox" /> 함께하고싶습니당~!
-                    </Label>
-                  </FormGroup>
-                </Col>
-                <Col xs = "3">
-                  <Label>{application.username}</Label>
-                </Col>
-                </Row>
-                <br />{' '}
+                  <Row>
+                    <Col xs="9">
+                      <FormGroup check>
+                        <Input type="checkbox" />
+                        {application.content}
+                      </FormGroup>
+                    </Col>
+                    <UsernameLabel>{application.username}</UsernameLabel>
+                  </Row>
+                  <br />{' '}
                 </>
               ))}
             </Form>
