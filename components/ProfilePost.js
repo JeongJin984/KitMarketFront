@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useRouter } from 'next/router';
 import {
   Row,
   Col,
@@ -15,7 +15,12 @@ import { cancelJoinRequest } from '../reducer/post';
 const ProfilePost = ({ postInfo, tab }) => {
   const { id, category, title, writer, createdAt } = postInfo;
   const dispatch = useDispatch();
+  const router = useRouter();
   const { isCancelledJoin } = useSelector((state) => state.post);
+
+  const onClickPost = () => {
+    router.push(`/post/${postInfo.category}/${postInfo.id}`);
+  };
 
   const onClickCancel = useCallback(() => {
     if (confirm('신청을 취소하시겠습니까?')) {
@@ -30,16 +35,14 @@ const ProfilePost = ({ postInfo, tab }) => {
 
   return (
     <Col xs="3">
-      <Card body>
+      <Card body onClick={onClickPost}>
         <Row>
           <Col xs="8">
             <CardTitle className="text-left">{category}</CardTitle>
           </Col>
           <Col xs="4" className="col text-right">
-            {tab === 'applicated' ? (
+            {tab === 'applicated' && (
               <Button close onClick={onClickCancel}></Button>
-            ) : (
-              <></>
             )}
           </Col>
         </Row>
