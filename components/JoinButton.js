@@ -1,34 +1,60 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { joinPostRequest, cancelJoinRequest } from '../reducer/post';
-import { Button} from 'reactstrap';
+import {
+  Button,
+  Input,
+  Form,
+  Modal,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+} from 'reactstrap';
 
 const JoinButton = ({ singlePost, username }) => {
   const { writer, applications } = singlePost;
+  const [comment, setComment] = useState('');
   const [isJoined, setIsJoined] = useState(false);
-  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const { isJoinedPost, isCancelledJoin } = useSelector((state) => state.post);
 
-  const toggle = () => setPopoverOpen(!popoverOpen);
+  const modalToggle = () => setModal(!modal);
 
-  const onClickJoin = useCallback(() => {
-    const data = { id: singlePost.id, username };
-    dispatch(joinPostRequest(data));
-  }, [singlePost, username]);
+  const onClickJoin = useCallback(
+    (e) => {
+      e.preventDefault();
+      const data = { id: singlePost.id, username, content: comment };
+      dispatch(joinPostRequest(data));
+      if (isJoinedPost) {
+        modalToggle();
+      }
+    },
+    [singlePost, username, isJoinedPost]
+  );
 
   const onClickCancel = useCallback(() => {
     dispatch(cancelJoinRequest({ id: singlePost.id, username }));
   }, [singlePost, username]);
 
+  const onChangeComment = useCallback((e) => {
+    setComment(e.target.value);
+  }, []);
+
   useEffect(() => {
     setIsJoined(applications.some((a) => a.username === username));
   }, [applications, username]);
+
+  useEffect(() => {
+    if (isJoinedPost || isCancelledJoin) {
+      location.reload();
+    }
+  }, [isJoinedPost, isCancelledJoin]);
 
   if (isJoined) {
     return (
       <Button
         color="secondary"
-        onClick={toggle}
         style={{
           marginLeft: '-120%',
           width: '90px',
@@ -46,7 +72,6 @@ const JoinButton = ({ singlePost, username }) => {
     return (
       <Button
         color="secondary"
-        onClick={toggle}
         style={{
           marginLeft: '-120%',
           width: '90px',
@@ -61,21 +86,45 @@ const JoinButton = ({ singlePost, username }) => {
     );
   } else {
     return (
-      <Button
-        color="secondary"
-        onClick={toggle}
-        style={{
-          marginLeft: '-120%',
-          width: '90px',
-          height: '90px',
-          borderRadius: '75%',
-          textAlign: 'center',
-          margin: '0',
-        }}
-        onClick={onClickJoin}
-      >
-        함께하기
-      </Button>
+      <>
+        <Button
+          color="secondary"
+          style={{
+            marginLeft: '-120%',
+            width: '90px',
+            height: '90px',
+            borderRadius: '75%',
+            textAlign: 'center',
+            margin: '0',
+          }}
+          onClick={modalToggle}
+        >
+          함께하기
+        </Button>
+        <Modal isOpen={modal} toggle={modalToggle}>
+          <Form onSubmit={onClickJoin}>
+            <ModalHeader toggle={modalToggle}>한마디 남기기</ModalHeader>
+            <ModalBody>
+              <Input
+                type="textarea"
+                name="text"
+                id="comments"
+                placeholder="함께하고 싶어요~"
+                onChange={onChangeComment}
+                required
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button outline color="secondary" onClick={modalToggle}>
+                취소
+              </Button>{' '}
+              <Button type="submit" color="secondary">
+                완료
+              </Button>
+            </ModalFooter>
+          </Form>
+        </Modal>
+      </>
     );
   }
 };
