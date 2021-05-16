@@ -30,7 +30,7 @@ const JoinButton = ({ singlePost, username }) => {
         modalToggle();
       }
     },
-    [singlePost, username, isJoinedPost]
+    [singlePost, username, isJoinedPost, comment]
   );
 
   const onClickCancel = useCallback(() => {

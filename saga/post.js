@@ -528,8 +528,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    // const result = yield call(loadPostAPI, action.data);
-    const result = dummyPost;
+    const result = yield call(loadPostAPI, action.data);
+    //const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -556,6 +556,7 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
+    console.log(action.data.category)
     const result = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
