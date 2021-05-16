@@ -348,16 +348,19 @@ const dummyPost = {
       {
         id: 1,
         username: 'user1',
+        content: 'content1',
         chatDate: null,
       },
       {
         id: 2,
         username: 'user2',
+        content: 'content2',
         chatDate: null,
       },
       {
         id: 3,
         username: 'user3',
+        content: 'content3',
         chatDate: null,
       },
     ],
@@ -525,8 +528,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    const result = yield call(loadPostAPI, action.data);
-    //const result = dummyPost;
+    // const result = yield call(loadPostAPI, action.data);
+    const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -542,7 +545,7 @@ function* loadPost(action) {
 function addPostAPI(data) {
   return axios({
     method: 'POST',
-    url: `/api/post`,
+    url: `/api/${data.category}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -578,7 +581,6 @@ function joinPostAPI(data) {
 // 됨
 function* joinPost(action) {
   try {
-<<<<<<< HEAD
     //console.log(action.data);
     const result = yield call(joinPostAPI, action.data);
     //const result = { data: { username: 'username' } };
