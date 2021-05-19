@@ -19,12 +19,14 @@ import {
 
 import axios from 'axios';
 
-const { frontURL, authURL } = require('../config/config');
+const { frontURL, backURL } = require('../config/config');
+
+const defaultURL = backURL + "/user-service";
 
 function logInAPI(data) {
   return axios({
     method: 'post',
-    url: `${authURL}/api/login?rememberMe=${data.rememberMe}`,
+    url: `${defaultURL}/login`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -35,14 +37,14 @@ function logInAPI(data) {
 function logOutAPI() {
   return axios({
     methos: 'post',
-    url: `${authURL}/api/logout`,
+    url: `${defaultURL}/logout`,
   });
 }
 
 function signUpAPI(data) {
   return axios({
     method: 'post',
-    url: `${authURL}/api/signup`,
+    url: `${defaultURL}/signup`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -53,7 +55,7 @@ function signUpAPI(data) {
 function loadProfileAPI() {
   return axios({
     method: 'GET',
-    url: `/api/profile/user`,
+    url: `${defaultURL}/user`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -63,7 +65,7 @@ function loadProfileAPI() {
 function loadUserAPI() {
   return axios({
     method: 'GET',
-    url: `http://localhost:8083/api/user`,
+    url: `${defaultURL}/user`,
   })
 }
 
@@ -106,66 +108,7 @@ function* signUp(action) {
 
 function* loadProfile(action) {
   try {
-    //const result = yield call(loadProfileAPI);
-    const result = {
-      data: {
-        username: 'user1',
-        email: 'a@b.com',
-        age: 3,
-        createdPost: [
-          {
-            title: 'created',
-            content: 'content',
-            createdAt: '2020-04-13',
-            maxNum: '3',
-            curNum: '1',
-            category: 'Study',
-          },
-          {
-            title: 'abc',
-            content: 'content',
-            createdAt: '2020-04-13',
-            maxNum: '3',
-            curNum: '1',
-            category: 'Study',
-          },
-          {
-            title: 'abc',
-            content: 'content',
-            createdAt: '2020-04-13',
-            maxNum: '3',
-            curNum: '1',
-            category: 'Study',
-          },
-          {
-            title: 'abc',
-            content: 'content',
-            createdAt: '2020-04-13',
-            maxNum: '3',
-            curNum: '1',
-            category: 'Study',
-          },
-          {
-            title: 'abc',
-            content: 'content',
-            createdAt: '2020-04-13',
-            maxNum: '3',
-            curNum: '1',
-            category: 'Study',
-          },
-        ],
-        participatingPost: [
-          {
-            title: 'participating',
-            content: 'content',
-            createdAt: '2020-04-13',
-            maxNum: '3',
-            curNum: '1',
-            category: 'Study',
-          },
-        ],
-      },
-    };
+    const result = yield call(loadProfileAPI);
     yield put({
       type: LOAD_PROFILE_SUCCESS,
       data: result.data,
