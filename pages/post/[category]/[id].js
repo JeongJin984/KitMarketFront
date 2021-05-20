@@ -27,8 +27,8 @@ import JoinButton from '../../../components/JoinButton';
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
-  const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
   const [modal, setModal] = useState(false);
+  const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
 
   const toggle = () => setModal(!modal);
 
@@ -126,7 +126,7 @@ const PostView = () => {
                 <br />
                 <br />
                 <br />
-                <Badge href="#" color="light">
+                <Badge href="javascript:history.back()" color="light">
                   이전으로
                 </Badge>
               </Col>
