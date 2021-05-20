@@ -1,6 +1,5 @@
 const axios = require("axios");
 const jwt_decode = require("jwt-decode");
-
 const setAxiosCookie = (str) => {
   axios.defaults.headers.Cookie = str;
 }
@@ -38,9 +37,8 @@ module.exports = function(path) {
             res.redirect("/login");
           } else if(Date.now() >= accessTokenDecoded.exp*1000) {
             console.log("Expired");
-            const result = await axios.get('http://localhost:8083/api/refresh')
-            cookies["Authorization"] = "BEARER" + result.data
-  
+            const result = await axios.get('http://localhost:8000/user-service/refresh')
+            cookies["Authorization"] = "BEARER" + result.data          
             await setAxiosCookie(cookies);
   
             res.cookie('Authorization', cookies["Authorization"])

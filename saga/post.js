@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
+import { backURL } from '../config/config'
 import {
   LOAD_MAIN_POSTS_REQUEST,
   LOAD_MAIN_POSTS_SUCCESS,
@@ -27,6 +28,8 @@ import {
   LOAD_APPLICATED_POSTS_SUCCESS,
   LOAD_APPLICATED_POSTS_FAILURE,
 } from '../reducer/post';
+
+const defaultURL = backURL + "/post-service"
 
 const dummyPosts = [
   {
@@ -484,7 +487,7 @@ const createdPosts = {
 function loadPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/${data.category}?offset=${data.page}`,
+    url: `${defaultURL}/api/${data.category}?offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -519,7 +522,7 @@ function* loadPosts(action) {
 function loadPostAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/${data.category}?id=${data.id}`,
+    url: `${defaultURL}/api/${data.category}?id=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -528,8 +531,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    // const result = yield call(loadPostAPI, action.data);
-    const result = dummyPost;
+    const result = yield call(loadPostAPI, action.data);
+    //const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -546,7 +549,7 @@ function* loadPost(action) {
 function addPostAPI(data) {
   return axios({
     method: 'POST',
-    url: `/api/${data.category}`,
+    url: `${defaultURL}/api/${data.category}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -556,6 +559,7 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
+    console.log(action.data.category)
     const result = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
@@ -571,7 +575,7 @@ function* addPost(action) {
 function joinPostAPI(data) {
   return axios({
     method: 'POST',
-    url: `/api/app/join?postId=${data.id}`,
+    url: `${defaultURL}/api/app/join?postId=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -600,7 +604,7 @@ function* joinPost(action) {
 function cancelJoinAPI(data) {
   return axios({
     method: 'DELETE',
-    url: `/api/app/cancle?postId=${data.id}`,
+    url: `${defaultURL}/api/app/cancle?postId=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -627,7 +631,7 @@ function* cancelJoin(action) {
 function loadCreatedPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/post/my?username=${data.username}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/my?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -653,7 +657,7 @@ function* loadCreatedPosts(action) {
 function loadParticipatingPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/post/participants?username=${data.username}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/participants?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -679,7 +683,7 @@ function* loadParticipatingPosts(action) {
 function loadApplicatedPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `/api/post/application?username=${data.username}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/application?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
