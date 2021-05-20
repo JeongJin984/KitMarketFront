@@ -24,18 +24,16 @@ const ProfilePagination = ({ posts }) => {
   }, []);
 
   const onClickNext = useCallback(() => {
-    const nextPageNum = (pageSetNum + 1) * 5 + 1;
-    if (maxPage >= nextPageNum) {
-      routeTab(nextPageNum);
+    if (currentPage + 1 < maxPage) {
+      routeCategory(currentPage + 2);
     }
-  }, [pageSetNum, maxPage]);
+  }, [currentPage, maxPage]);
 
   const onClickPrev = useCallback(() => {
-    const prevPageNum = pageSetNum * 5;
-    if (prevPageNum >= 1) {
-      routeTab(prevPageNum);
+    if (currentPage - 1 >= 0) {
+      routeCategory(currentPage);
     }
-  }, [pageSetNum]);
+  }, [currentPage]);
 
   const onClickNextEnd = useCallback(() => {
     routeTab(maxPage);
