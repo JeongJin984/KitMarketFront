@@ -27,6 +27,8 @@ const initialState = {
   applicatedPosts: {
     data: [],
   },
+  isDeletingPost: false,
+  isDeletedPost: false,
   error: '',
 };
 
@@ -64,6 +66,10 @@ export const LOAD_PARTICIPATING_POSTS_FAILURE =
 export const LOAD_APPLICATED_POSTS_REQUEST = 'LOAD_APPLICATED_POSTS_REQUEST';
 export const LOAD_APPLICATED_POSTS_SUCCESS = 'LOAD_APPLICATED_POSTS_SUCCESS';
 export const LOAD_APPLICATED_POSTS_FAILURE = 'LOAD_APPLICATED_POSTS_FAILURE';
+
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 
 export const loadMainPostsRequest = (data) => {
   return {
@@ -117,6 +123,13 @@ export const loadParticipatingPostsRequest = (data) => {
 export const loadApplicatedPostsRequest = (data) => {
   return {
     type: LOAD_APPLICATED_POSTS_REQUEST,
+    data,
+  };
+};
+
+export const deletePostRequest = (data) => {
+  return {
+    type: DELETE_POST_REQUEST,
     data,
   };
 };
@@ -274,6 +287,24 @@ const postReducer = (state = initialState, action) => {
       case LOAD_APPLICATED_POSTS_FAILURE:
         draft.isLoadingPosts = false;
         draft.isLoadedPosts = false;
+        draft.error = action.error;
+        break;
+
+      case DELETE_POST_REQUEST:
+        draft.isDeletingPost = true;
+        draft.isDeletedPost = false;
+        draft.error = '';
+        break;
+
+      case DELETE_POST_SUCCESS:
+        draft.isDeletingPost = false;
+        draft.isDeletedPost = true;
+        draft.error = '';
+        break;
+
+      case DELETE_POST_FAILURE:
+        draft.isDeletingPost = false;
+        draft.isDeletedPost = false;
         draft.error = action.error;
         break;
 

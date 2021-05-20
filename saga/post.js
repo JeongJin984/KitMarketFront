@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
-import { backURL } from '../config/config'
+import { backURL } from '../config/config';
 import {
   LOAD_MAIN_POSTS_REQUEST,
   LOAD_MAIN_POSTS_SUCCESS,
@@ -27,9 +27,12 @@ import {
   LOAD_APPLICATED_POSTS_REQUEST,
   LOAD_APPLICATED_POSTS_SUCCESS,
   LOAD_APPLICATED_POSTS_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE,
 } from '../reducer/post';
 
-const defaultURL = backURL + "/post-service"
+const defaultURL = backURL + '/post-service';
 
 const dummyPosts = [
   {
@@ -506,7 +509,7 @@ function* loadPosts(action) {
   try {
     console.log('awefawefawefawef');
     const result = yield call(loadPostsAPI, action.data);
-    //const result = { data: loadDummyPosts(action.data) };
+    // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -559,8 +562,8 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
-    console.log(action.data.category)
-    const result = yield call(addPostAPI, action.data);
+    console.log(action.data.category);
+    yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
     });
@@ -616,7 +619,7 @@ function cancelJoinAPI(data) {
 function* cancelJoin(action) {
   try {
     console.log(action.data);
-    const result = yield call(cancelJoinAPI, action.data);
+    yield call(cancelJoinAPI, action.data);
     yield put({
       type: CANCEL_JOIN_SUCCESS,
     });
@@ -706,6 +709,30 @@ function* loadApplicatedPosts(action) {
   }
 }
 
+function deletePostAPI(data) {
+  return axios({
+    method: 'DELETE',
+    url: `${defaultURL}/api/post/${data.id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* deletePost(action) {
+  try {
+    yield call(deletePostAPI, action.data);
+    yield put({
+      type: DELETE_POST_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      type: DELETE_POST_FAILURE,
+      error,
+    });
+  }
+}
+
 // function* postChat(action) {
 //   try {
 //     //		yield call(postChatAPI, action.data)
@@ -753,9 +780,9 @@ function* watchLoadApplicatedPosts() {
   yield takeLatest(LOAD_APPLICATED_POSTS_REQUEST, loadApplicatedPosts);
 }
 
-// function* watchPostChat() {
-//   yield takeLatest(ADD_POST_REQUEST, postChat);
-// }
+function* watchDeletePost() {
+  yield takeLatest(DELETE_POST_REQUEST, deletePost);
+}
 
 export default function* chattingSaga() {
   yield all([
@@ -767,5 +794,6 @@ export default function* chattingSaga() {
     fork(watchLoadCreatePosts),
     fork(watchLoadParticipatingPosts),
     fork(watchLoadApplicatedPosts),
+    fork(watchDeletePost),
   ]);
 }
