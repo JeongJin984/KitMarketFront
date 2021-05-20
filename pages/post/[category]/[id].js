@@ -83,13 +83,11 @@ const PostView = () => {
             </Row>
             <hr />
             <Row>
-              <Col xs="11"></Col>
-              <Badge style={{ textAlign: 'right' }} href="#" color="light">
-                수정
-              </Badge>
-              <Badge href="#" color="light">
-                삭제
-              </Badge>
+              <Col xs="10"></Col>
+              <Col xs="2">
+              <Button color="#00FFFFFF" size="sm" style={{marginLeft:"30%"}}>수정</Button>{' '}
+              <Button color="#00FFFFFF" size="sm" style={{marginRight:"-20%"}}>삭제</Button>{' '}
+              </Col>
             </Row>
             <Card
               body
@@ -121,9 +119,7 @@ const PostView = () => {
                 <br />
                 <br />
                 <br />
-                <Badge href="javascript:history.back()" color="light">
-                  이전으로
-                </Badge>
+                <Button color="#00FFFFFF" size="sm" style={{}}>이전으로</Button>{' '}
               </Col>
               <Col xs="3">
                 <Button
