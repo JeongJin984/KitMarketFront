@@ -165,7 +165,7 @@ const profile = () => {
                     toggle('1');
                   }}
                 >
-                  만든 모임 현황
+                  내가 만든 모임
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -175,7 +175,7 @@ const profile = () => {
                     toggle('2');
                   }}
                 >
-                  모임 신청 현황
+                  참가 중인 모임
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -195,7 +195,7 @@ const profile = () => {
                     toggle('4');
                   }}
                 >
-                  마감된 모임 현황
+                  마감된 모임
                 </NavLink>
               </NavItem>
             </Nav>

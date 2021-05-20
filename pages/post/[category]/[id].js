@@ -115,11 +115,6 @@ const PostView = () => {
                 </Col>
               </Row>
             </Card>
-            <FormGroup check>
-              <Label check>
-                <Input type="checkbox" /> 마감하시겠습니까?
-              </Label>
-            </FormGroup>
             <hr />
             <Row>
               <Col xs="9">
