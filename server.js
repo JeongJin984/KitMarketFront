@@ -38,7 +38,7 @@ app.prepare().then(() => {
   }
   server.use(express.urlencoded({ extended: true }));
   server.use('/', express.static(path.join(__dirname, 'public')));
-  // server.use(loadJWT(['/login', '/signup']));
+  server.use(loadJWT(['/login', '/signup']));
 
   server.all('*', (req, res) => {
     handle(req, res);
