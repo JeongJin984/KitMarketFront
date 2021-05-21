@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadPostRequest } from '../../../reducer/post';
+import { deletePostRequest, loadPostRequest } from '../../../reducer/post';
 import styled from 'styled-components';
 import {
   Row,
@@ -17,17 +17,18 @@ import {
   UncontrolledPopover,
   PopoverHeader,
   PopoverBody,
-  Badge,
   Label,
   Input,
 } from 'reactstrap';
 import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
+import UpdatePostButton from '../../../components/UpdatePostModal';
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
   const [modal, setModal] = useState(false);
+  const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
 
   const toggle = () => setModal(!modal);
@@ -40,6 +41,12 @@ const PostView = () => {
   } else if (singlePost.category === 'carPool') {
     category = '카풀/택시';
   }
+
+  const onClickDelete = useCallback(() => {
+    if (confirm('게시물을 삭제 하시겠습니까?')) {
+      dispatch(deletePostRequest({ id: singlePost.id }));
+    }
+  }, [singlePost]);
 
   const UsernameLabel = styled(Label)`
     margin-left: auto;
@@ -82,12 +89,13 @@ const PostView = () => {
               </Col>
             </Row>
             <hr />
-            <Row>
-              <Col xs="10"></Col>
-              <Col xs="2">
-              <Button color="#00FFFFFF" size="sm" style={{marginLeft:"30%"}}>수정</Button>{' '}
-              <Button color="#00FFFFFF" size="sm" style={{marginRight:"-20%"}}>삭제</Button>{' '}
-              </Col>
+            <Row style={{ display: 'flex' }}>
+              <div style={{ marginLeft: 'auto' }}>
+                <UpdatePostButton />
+                <Button color="#00FFFFFF" size="sm" onClick={onClickDelete}>
+                  삭제
+                </Button>
+              </div>
             </Row>
             <Card
               body
@@ -119,7 +127,9 @@ const PostView = () => {
                 <br />
                 <br />
                 <br />
-                <Button color="#00FFFFFF" size="sm" style={{}}>이전으로</Button>{' '}
+                <Button color="#00FFFFFF" size="sm" style={{}}>
+                  이전으로
+                </Button>{' '}
               </Col>
               <Col xs="3">
                 <Button
