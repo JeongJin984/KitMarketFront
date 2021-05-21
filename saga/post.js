@@ -538,7 +538,7 @@ function loadPostAPI(data) {
 function* loadPost(action) {
   try {
     const result = yield call(loadPostAPI, action.data);
-    //const result = dummyPost;
+    // const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -594,7 +594,7 @@ function* joinPost(action) {
   try {
     console.log(action.data);
     const result = yield call(joinPostAPI, action.data);
-    //const result = { data: { username: 'username' } };
+    // const result = { data: { username: 'username' } };
     yield put({
       type: JOIN_POST_SUCCESS,
       data: result.data,
@@ -646,7 +646,7 @@ function loadCreatedPostsAPI(data) {
 //됨
 function* loadCreatedPosts(action) {
   try {
-    //const result = createdPosts;
+    // const result = createdPosts;
     const result = yield call(loadCreatedPostsAPI, action.data);
     yield put({
       type: LOAD_CREATED_POSTS_SUCCESS,
@@ -672,7 +672,7 @@ function loadParticipatingPostsAPI(data) {
 //됨
 function* loadParticipatingPosts(action) {
   try {
-    //const result = participatingPosts;
+    // const result = participatingPosts;
     const result = yield call(loadParticipatingPostsAPI, action.data);
     yield put({
       type: LOAD_PARTICIPATING_POSTS_SUCCESS,

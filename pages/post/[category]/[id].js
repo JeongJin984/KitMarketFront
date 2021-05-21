@@ -27,6 +27,7 @@ import UpdatePostButton from '../../../components/UpdatePostModal';
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
+  // const {username} = 1;
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
