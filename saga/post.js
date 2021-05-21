@@ -30,6 +30,9 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
 } from '../reducer/post';
 
 const defaultURL = backURL + '/post-service';
@@ -733,20 +736,30 @@ function* deletePost(action) {
   }
 }
 
-// function* postChat(action) {
-//   try {
-//     //		yield call(postChatAPI, action.data)
-//     yield put({
-//       type: ADD_POST_SUCCESS,
-//       data: action.data,
-//     });
-//   } catch (error) {
-//     yield put({
-//       type: ADD_POST_FAILURE,
-//       error: error,
-//     });
-//   }
-// }
+function updatePostAPI(data) {
+  return axios({
+    method: 'PUT',
+    url: `${defaultURL}/api/${data.category}/${data.id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: { writer, title, content, deadLine, maxNum, curNum, category },
+  });
+}
+
+function* updatePost(action) {
+  try {
+    yield call(updatePostAPI, action.data);
+    yield put({
+      type: UPDATE_POST_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      type: UPDATE_POST_FAILURE,
+      error,
+    });
+  }
+}
 
 function* watchLoadPosts() {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadPosts);
@@ -784,6 +797,10 @@ function* watchDeletePost() {
   yield takeLatest(DELETE_POST_REQUEST, deletePost);
 }
 
+function* watchUpdatePost() {
+  yield takeLatest(UPDATE_POST_REQUEST, updatePost);
+}
+
 export default function* chattingSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -795,5 +812,6 @@ export default function* chattingSaga() {
     fork(watchLoadParticipatingPosts),
     fork(watchLoadApplicatedPosts),
     fork(watchDeletePost),
+    fork(watchUpdatePost),
   ]);
 }
