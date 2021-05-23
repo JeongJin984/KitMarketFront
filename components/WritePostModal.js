@@ -6,7 +6,7 @@ import { addPostRequest } from '../reducer/post';
 import { Button, Modal } from 'reactstrap';
 import WritePostForm from './WritePostForm';
 
-const ModalButton = () => {
+const WritePostModal = () => {
   const initialInputs = {
     title: '',
     content: '',
@@ -139,4 +139,4 @@ const ModalButton = () => {
   );
 };
 
-export default ModalButton;
+export default WritePostModal;

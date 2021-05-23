@@ -9,7 +9,7 @@ import { Row } from 'reactstrap';
 import PostCard from '../../components/PostCard';
 import JumbotronComponent from '../../components/JumbotronComponent';
 import AppLayout from '../../components/AppLayout';
-import ModalButton from '../../components/ModalButton';
+import WritePostModal from '../../components/WritePostModal';
 import BoardPagination from '../../components/BoardPagination';
 
 const Category = () => {
@@ -22,7 +22,7 @@ const Category = () => {
           <PostCard postInfo={postInfo} key={postInfo.id} />
         ))}
       </Row>
-      <ModalButton />
+      <WritePostModal />
       <Row>
         <BoardPagination />
       </Row>
