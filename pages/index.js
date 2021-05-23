@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <AppLayout>
       <JumbotronComponent />
-      {!isLoggedIn ? (
+      {isLoggedIn ? (
         <>
           <Row>
             {mainPosts.map((postInfo) => (
