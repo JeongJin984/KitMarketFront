@@ -36,7 +36,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRequest } from '../reducer/user';
 import Cookie from 'universal-cookie';
-import axios from 'axios'
+import axios from 'axios';
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
@@ -60,8 +60,8 @@ const AppLayout = ({ children }) => {
   };
 
   const onClickLogOut = () => {
-    dispatch(logoutRequest())
-  }
+    dispatch(logoutRequest());
+  };
 
   return (
     <div>
@@ -90,66 +90,129 @@ const AppLayout = ({ children }) => {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                   <NavStyle>
-                    <Nav
-                      className="mr-auto"
-                      style={{ marginLeft: '-6%' }}
-                      navbar
-                    >
-                      <NavItem>
-                        <Link
-                          href={{
-                            pathname: '/board/contest',
-                          }}
-                        >
-                          공모전　　
-                        </Link>
-                      </NavItem>
-                      <NavItem>
-                        <Link
-                          href={{
-                            pathname: '/helloworld',
-                          }}
-                        >
-                          조별과제　　
-                        </Link>
-                      </NavItem>
-                      <NavItem>
-                        <Link
-                          href={{
-                            pathname: '/helloworld',
-                          }}
-                        >
-                          OTT　　
-                        </Link>
-                      </NavItem>
-                      <NavItem>
-                        <Link
-                          href={{
-                            pathname: '/board/study',
-                          }}
-                        >
-                          스터디　　
-                        </Link>
-                      </NavItem>
-                      <NavItem>
-                        <Link
-                          href={{
-                            pathname: '/helloworld',
-                          }}
-                        >
-                          공동구매　　
-                        </Link>
-                      </NavItem>
-                      <NavItem>
-                        <Link
-                          href={{
-                            pathname: '/board/carPool',
-                          }}
-                        >
-                          카풀/택시　　
-                        </Link>
-                      </NavItem>
-                    </Nav>
+                    {isLoggedIn ? (
+                      <Nav
+                        className="mr-auto"
+                        style={{ marginLeft: '-6%' }}
+                        navbar
+                      >
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/contest',
+                            }}
+                          >
+                            공모전　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/helloworld',
+                            }}
+                          >
+                            조별과제　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/helloworld',
+                            }}
+                          >
+                            OTT　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/study',
+                            }}
+                          >
+                            스터디　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/helloworld',
+                            }}
+                          >
+                            공동구매　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/carPool',
+                            }}
+                          >
+                            카풀/택시　　
+                          </Link>
+                        </NavItem>
+                      </Nav>
+                    ) : (
+                      <Nav
+                        className="mr-auto"
+                        style={{ marginLeft: '-6%' }}
+                        navbar
+                      >
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            공모전　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            조별과제　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            OTT　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            스터디　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            공동구매　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            카풀/택시　　
+                          </Link>
+                        </NavItem>
+                      </Nav>
+                    )}
                   </NavStyle>
                   {isLoggedIn ? (
                     <Nav className="ml-auto" navbar>
@@ -175,7 +238,9 @@ const AppLayout = ({ children }) => {
                             내 프로필 보기
                           </DropdownItem>
                           <DropdownItem divider />
-                          <DropdownItem onClick={onClickLogOut}>로그아웃</DropdownItem>
+                          <DropdownItem onClick={onClickLogOut}>
+                            로그아웃
+                          </DropdownItem>
                         </DropdownMenu>
                       </ButtonDropdown>
                     </Nav>
