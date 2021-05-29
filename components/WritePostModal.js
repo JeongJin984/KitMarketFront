@@ -22,6 +22,7 @@ const WritePostModal = () => {
   };
   const { isPosted } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
+  // const { username } = 1;
   const [modal, setModal] = useState(false);
   const [inputs, setInputs] = useState(initialInputs);
 

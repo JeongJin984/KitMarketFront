@@ -150,6 +150,15 @@ const AppLayout = ({ children }) => {
                             카풀/택시　　
                           </Link>
                         </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/carPool',
+                            }}
+                          >
+                            마감　　
+                          </Link>
+                        </NavItem>
                       </Nav>
                     ) : (
                       <Nav
@@ -209,6 +218,15 @@ const AppLayout = ({ children }) => {
                             }}
                           >
                             카풀/택시　　
+                          </Link>
+                        </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/carPool',
+                            }}
+                          >
+                            마감　　
                           </Link>
                         </NavItem>
                       </Nav>
