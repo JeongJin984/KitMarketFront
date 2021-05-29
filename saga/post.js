@@ -33,6 +33,9 @@ import {
   UPDATE_POST_REQUEST,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
+  OPERATE_POST_REQUEST,
+  OPERATE_POST_SUCCESS,
+  OPERATE_POST_FAILURE,
 } from '../reducer/post';
 
 const defaultURL = backURL + '/post-service';
@@ -761,6 +764,30 @@ function* updatePost(action) {
   }
 }
 
+function operatePostAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/api/post/operating?id=${data.id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* operatePost(action) {
+  try {
+    yield call(operatePostAPI, action.data);
+    yield put({
+      type: OPERATE_POST_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      type: OPERATE_POST_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadPosts);
 }
@@ -801,6 +828,10 @@ function* watchUpdatePost() {
   yield takeLatest(UPDATE_POST_REQUEST, updatePost);
 }
 
+function* watchOperatePost() {
+  yield takeLatest(OPERATE_POST_REQUEST, operatePost);
+}
+
 export default function* chattingSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -813,5 +844,6 @@ export default function* chattingSaga() {
     fork(watchLoadApplicatedPosts),
     fork(watchDeletePost),
     fork(watchUpdatePost),
+    fork(watchOperatePost),
   ]);
 }

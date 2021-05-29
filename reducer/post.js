@@ -31,6 +31,8 @@ const initialState = {
   isDeletedPost: false,
   isUpdatingPost: false,
   isUpdatedPost: false,
+  isOperatingPost: false,
+  isOperatedPost: false,
   error: '',
 };
 
@@ -76,6 +78,10 @@ export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
 export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
 export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
+
+export const OPERATE_POST_REQUEST = 'OPERATE_POST_REQUEST';
+export const OPERATE_POST_SUCCESS = 'OPERATE_POST_SUCCESS';
+export const OPERATE_POST_FAILURE = 'OPERATE_POST_FAILURE';
 
 export const loadMainPostsRequest = (data) => {
   return {
@@ -143,6 +149,13 @@ export const deletePostRequest = (data) => {
 export const updatePostRequest = (data) => {
   return {
     type: UPDATE_POST_REQUEST,
+    data,
+  };
+};
+
+export const operatePostRequest = (data) => {
+  return {
+    type: OPERATE_POST_REQUEST,
     data,
   };
 };
@@ -336,6 +349,24 @@ const postReducer = (state = initialState, action) => {
       case UPDATE_POST_FAILURE:
         draft.isUpdatingPost = false;
         draft.isUpdatedPost = false;
+        draft.error = action.error;
+        break;
+
+      case OPERATE_POST_REQUEST:
+        draft.isOperatingPost = true;
+        draft.isOperatedPost = false;
+        draft.error = '';
+        break;
+
+      case OPERATE_POST_SUCCESS:
+        draft.isOperatingPost = false;
+        draft.isOperatedPost = true;
+        draft.error = '';
+        break;
+
+      case OPERATE_POST_FAILURE:
+        draft.isOperatingPost = false;
+        draft.isOperatedPost = false;
         draft.error = action.error;
         break;
 
