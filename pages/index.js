@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadMainPostsRequest, loadPostingListRequest } from '../reducer/post';
+import { loadMainPostsRequest, searchPostsRequest } from '../reducer/post';
 
 import { Row, Input, Button, Fade } from 'reactstrap';
 
@@ -32,16 +32,23 @@ const Home = () => {
   return (
     <AppLayout>
       <JumbotronComponent />
-      <Input style={{ width: 'min-content' }} type="select" name="select">
+      <Input
+        style={{ width: 'min-content', marginLeft: 'auto' }}
+        type="select"
+        name="select"
+      >
         <option onClick={() => router.push('/')}>전체</option>
-        <option onClick={() => router.push('/?status=postingList')}>
-          구인중인 모임
+        <option onClick={() => router.push('/?status=POSTING')}>
+          모집중인 모임
         </option>
-        <option onClick={() => router.push('/?status=closedList')}>
-          종료된 모임
+        <option onClick={() => router.push('/?status=OPERATING')}>
+          모집 종료된 모임
+        </option>
+        <option onClick={() => router.push('/?status=CLOSED')}>
+          활동 종료된 모임
         </option>
       </Input>
-      {!isLoggedIn ? (
+      {isLoggedIn ? (
         <>
           <Row>
             {mainPosts.map((postInfo) => (
@@ -211,20 +218,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store, req, query }) => {
     const page = query.page - 1 || 0;
     const status = query.status;
+    const { select, search } = query;
     const cookie = req ? req.headers.cookie : '';
-    console.log('cookie', cookie);
+    const data = { category: 'postList', status, page };
     axios.defaults.headers.Cookie = '';
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-    if (status === 'postingList') {
-      store.dispatch(loadPostingListRequest({ page }));
-      // } else if (store.getState().user.me) {
-      //   store.dispatch(loadMainPostsRequest({ category: 'postList', page }));
-      // }
+    console.log(search);
+    if (search) {
+      store.dispatch(searchPostsRequest({ select, search, page }));
     } else {
-      store.dispatch(loadMainPostsRequest({ category: 'postList', page }));
+      store.dispatch(loadMainPostsRequest(data));
     }
+
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
   }
