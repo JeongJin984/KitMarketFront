@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { wrapper } from '../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadMainPostsRequest } from '../../reducer/post';
 
 import { Row } from 'reactstrap';
 import PostCard from '../../components/PostCard';
@@ -11,6 +10,7 @@ import JumbotronComponent from '../../components/JumbotronComponent';
 import AppLayout from '../../components/AppLayout';
 import WritePostModal from '../../components/WritePostModal';
 import BoardPagination from '../../components/BoardPagination';
+import {loadMainPostsRequest} from "../../data/event/postEvent";
 
 const Category = () => {
   const { mainPosts } = useSelector((state) => state.post);

@@ -15,12 +15,11 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_FAILURE,
   LOAD_USER_SUCCESS,
-} from '../reducer/user';
+} from '../data/eventName/userEventName';
 
 import axios from 'axios';
 
 const { frontURL, backURL } = require('../config/config');
-
 const defaultURL = backURL + "/user-service";
 
 function logInAPI(data) {

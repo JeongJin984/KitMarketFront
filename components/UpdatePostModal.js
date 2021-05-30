@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { updatePostRequest } from '../reducer/post';
+
 import { Button, Modal } from 'reactstrap';
 import UpdatePostForm from './UpdatePostForm';
+import {updatePostRequest} from "../data/event/postEvent";
 
 const UpdatePostButton = () => {
   const { isUpdatedPost } = useSelector((state) => state.post);

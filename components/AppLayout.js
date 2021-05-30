@@ -34,9 +34,9 @@ import {
   ButtonDropdown,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutRequest } from '../reducer/user';
 import Cookie from 'universal-cookie';
 import axios from 'axios';
+import {logoutRequest} from "../data/event/userEvent";
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
@@ -44,7 +44,6 @@ const AppLayout = ({ children }) => {
   const router = useRouter();
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  var cookie = new Cookie();
 
   const toggle = () => setIsOpen(!isOpen);
   const togglebutton = () => setOpen(!dropdownOpen);

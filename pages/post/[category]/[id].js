@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { deletePostRequest, loadPostRequest } from '../../../reducer/post';
 import styled from 'styled-components';
 import {
   Row,
@@ -23,6 +22,7 @@ import {
 import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
 import UpdatePostModal from '../../../components/UpdatePostModal';
+import {deletePostRequest, loadPostRequest} from "../../../data/event/postEvent";
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);

@@ -1,4 +1,38 @@
 import produce from 'immer';
+import {
+  ADD_POST_FAILURE,
+  ADD_POST_REQUEST,
+  ADD_POST_SUCCESS,
+  CANCEL_JOIN_FAILURE,
+  CANCEL_JOIN_REQUEST,
+  CANCEL_JOIN_SUCCESS,
+  DELETE_POST_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  JOIN_POST_FAILURE,
+  JOIN_POST_REQUEST,
+  JOIN_POST_SUCCESS,
+  LOAD_APPLICATED_POSTS_FAILURE,
+  LOAD_APPLICATED_POSTS_REQUEST,
+  LOAD_APPLICATED_POSTS_SUCCESS,
+  LOAD_CREATED_POSTS_FAILURE,
+  LOAD_CREATED_POSTS_REQUEST,
+  LOAD_CREATED_POSTS_SUCCESS,
+  LOAD_MAIN_POSTS_FAILURE,
+  LOAD_MAIN_POSTS_REQUEST,
+  LOAD_MAIN_POSTS_SUCCESS,
+  LOAD_PARTICIPATING_POSTS_FAILURE,
+  LOAD_PARTICIPATING_POSTS_REQUEST,
+  LOAD_PARTICIPATING_POSTS_SUCCESS,
+  LOAD_POST_FAILURE,
+  LOAD_POST_REQUEST,
+  LOAD_POST_SUCCESS, OPERATE_POST_FAILURE,
+  OPERATE_POST_REQUEST,
+  OPERATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS
+} from "../data/eventName/postEventName";
 
 const initialState = {
   isLoadingPosts: false,
@@ -34,130 +68,6 @@ const initialState = {
   isOperatingPost: false,
   isOperatedPost: false,
   error: '',
-};
-
-export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
-export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
-export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
-
-export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
-export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
-export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
-
-export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
-export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
-
-export const JOIN_POST_REQUEST = 'JOIN_POST_REQUEST';
-export const JOIN_POST_SUCCESS = 'JOIN_POST_SUCCESS';
-export const JOIN_POST_FAILURE = 'JOIN_POST_FAILURE';
-
-export const CANCEL_JOIN_REQUEST = 'CANCEL_JOIN_REQUEST';
-export const CANCEL_JOIN_SUCCESS = 'CANCEL_JOIN_SUCCESS';
-export const CANCEL_JOIN_FAILURE = 'CANCEL_JOIN_FAILURE';
-
-export const LOAD_CREATED_POSTS_REQUEST = 'LOAD_CREATED_POSTS_REQUEST';
-export const LOAD_CREATED_POSTS_SUCCESS = 'LOAD_CREATED_POSTS_SUCCESS';
-export const LOAD_CREATED_POSTS_FAILURE = 'LOAD_CREATED_POSTs_FAILURE';
-
-export const LOAD_PARTICIPATING_POSTS_REQUEST =
-  'LOAD_PARTICIPATING_POSTS_REQUEST';
-export const LOAD_PARTICIPATING_POSTS_SUCCESS =
-  'LOAD_PARTICIPATING_POSTS_SUCCESS';
-export const LOAD_PARTICIPATING_POSTS_FAILURE =
-  'LOAD_PARTICIPATING_POSTS_FAILURE';
-
-export const LOAD_APPLICATED_POSTS_REQUEST = 'LOAD_APPLICATED_POSTS_REQUEST';
-export const LOAD_APPLICATED_POSTS_SUCCESS = 'LOAD_APPLICATED_POSTS_SUCCESS';
-export const LOAD_APPLICATED_POSTS_FAILURE = 'LOAD_APPLICATED_POSTS_FAILURE';
-
-export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
-export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
-export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
-
-export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
-export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
-export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
-
-export const OPERATE_POST_REQUEST = 'OPERATE_POST_REQUEST';
-export const OPERATE_POST_SUCCESS = 'OPERATE_POST_SUCCESS';
-export const OPERATE_POST_FAILURE = 'OPERATE_POST_FAILURE';
-
-export const loadMainPostsRequest = (data) => {
-  return {
-    type: LOAD_MAIN_POSTS_REQUEST,
-    data,
-  };
-};
-
-export const loadPostRequest = (data) => {
-  return {
-    type: LOAD_POST_REQUEST,
-    data,
-  };
-};
-
-export const addPostRequest = (data) => {
-  return {
-    type: ADD_POST_REQUEST,
-    data,
-  };
-};
-
-export const joinPostRequest = (data) => {
-  return {
-    type: JOIN_POST_REQUEST,
-    data,
-  };
-};
-
-export const cancelJoinRequest = (data) => {
-  return {
-    type: CANCEL_JOIN_REQUEST,
-    data,
-  };
-};
-
-export const loadCreatedPostsRequest = (data) => {
-  return {
-    type: LOAD_CREATED_POSTS_REQUEST,
-    data,
-  };
-};
-
-export const loadParticipatingPostsRequest = (data) => {
-  return {
-    type: LOAD_PARTICIPATING_POSTS_REQUEST,
-    data,
-  };
-};
-
-export const loadApplicatedPostsRequest = (data) => {
-  return {
-    type: LOAD_APPLICATED_POSTS_REQUEST,
-    data,
-  };
-};
-
-export const deletePostRequest = (data) => {
-  return {
-    type: DELETE_POST_REQUEST,
-    data,
-  };
-};
-
-export const updatePostRequest = (data) => {
-  return {
-    type: UPDATE_POST_REQUEST,
-    data,
-  };
-};
-
-export const operatePostRequest = (data) => {
-  return {
-    type: OPERATE_POST_REQUEST,
-    data,
-  };
 };
 
 const postReducer = (state = initialState, action) => {

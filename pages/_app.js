@@ -3,8 +3,8 @@ import axios from 'axios';
 import App from 'next/app';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {loadUserRequest} from "../data/event/userEvent";
 
-import { loadUserRequest } from '../reducer/user';
 
 class MyApp extends App {
   static getInitialProps = async ({ Component, ctx }) => {

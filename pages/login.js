@@ -14,8 +14,8 @@ import {
 } from 'reactstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { loginRequest } from '../reducer/user';
 import { useRouter } from 'next/router';
+import {loginRequest} from "../data/event/userEvent";
 
 const Login = () => {
   const [username, setUsername] = useState('');
