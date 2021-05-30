@@ -107,24 +107,6 @@ const AppLayout = ({ children }) => {
                         <NavItem>
                           <Link
                             href={{
-                              pathname: '/helloworld',
-                            }}
-                          >
-                            조별과제　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/helloworld',
-                            }}
-                          >
-                            OTT　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
                               pathname: '/board/study',
                             }}
                           >
@@ -137,7 +119,7 @@ const AppLayout = ({ children }) => {
                               pathname: '/helloworld',
                             }}
                           >
-                            공동구매　　
+                            미니프로젝트　　
                           </Link>
                         </NavItem>
                         <NavItem>
@@ -180,24 +162,6 @@ const AppLayout = ({ children }) => {
                               pathname: '/login',
                             }}
                           >
-                            조별과제　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/login',
-                            }}
-                          >
-                            OTT　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/login',
-                            }}
-                          >
                             스터디　　
                           </Link>
                         </NavItem>
@@ -207,7 +171,7 @@ const AppLayout = ({ children }) => {
                               pathname: '/login',
                             }}
                           >
-                            공동구매　　
+                            미니프로젝트　　
                           </Link>
                         </NavItem>
                         <NavItem>

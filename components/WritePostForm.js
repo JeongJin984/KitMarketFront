@@ -24,10 +24,8 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
           <Col xs="3">
             <Input type="select" name="category" onChange={onChange}>
               <option value="contest">공모전</option>
-              <option value="project">조별과제</option>
-              <option>OTT</option>
               <option value="study">스터디</option>
-              <option>공동구매</option>
+              <option value="project">미니프로젝트</option>
               <option value="carPool">카풀/택시</option>
             </Input>
           </Col>
@@ -39,11 +37,8 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
             {category == 'study' && (
               <label style={{ fontWeight: 'bold' }}>분야</label>
             )}
-            {category == 'carPool' && (
-              <label style={{ fontWeight: 'bold' }}>요금</label>
-            )}
             {inputs.category == 'project' && (
-              <label style={{ fontWeight: 'bold' }}>과목</label>
+              <label style={{ fontWeight: 'bold' }}>기간</label>
             )}
           </Col>
           <Col xs="3">
@@ -155,6 +150,65 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               </Col>
             </Row>
             <br />
+            <Row>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>출발시간</label>
+              </Col>
+              <Col xs="2">
+                <Input type="select" name="ampm" onChange={onChange} required>
+                  <option value="">선택</option>
+                  <option>AM</option>
+                  <option>PM</option>
+                </Input>
+              </Col>
+              <Col xs="2" style={{ marginRight: '-3%' }}>
+                <Input
+                  name="hours"
+                  type="number"
+                  min="0"
+                  max="11"
+                  onChange={onChange}
+                  placeholder=""
+                />
+              </Col>
+              <Col xs="1" style={{ marginRight: '-3%' }}>
+                <label>시</label>
+              </Col>
+              <Col xs="2" style={{ marginRight: '-3%' }}>
+                <Input
+                  name="minutes"
+                  min="0"
+                  max="59"
+                  onChange={onChange}
+                  placeholder=""
+                />
+              </Col>
+              <Col xs="1" style={{ marginRight: '-3%' }}>
+                <label>분</label>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>성별</label>
+              </Col>
+              <Col xs="3">
+                <Input type="select" name="gender" onChange={onChange}>
+                  <option value="MALE">남성</option>
+                  <option value="FEMALE">여성</option>
+                  <option value="NONE">상관 없음</option>
+                </Input>
+              </Col>
+              <Col xs="1"></Col>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>요금</label>
+              </Col>
+              <Col xs="3">
+                <Input name="fare" placeholder="" />
+              </Col>
+            </Row>
+            <br />
+            <br />
           </div>
         )}
         {inputs.category == 'project' && (
@@ -163,15 +217,8 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>주제</label>
               </Col>
-              <Col xs="3">
+              <Col xs="10">
                 <Input name="topic" placeholder="" />
-              </Col>
-              <Col xs="1"></Col>
-              <Col xs="2">
-                <label style={{ fontWeight: 'bold' }}>필요한 역할</label>
-              </Col>
-              <Col xs="3">
-                <Input name="role" placeholder="" />
               </Col>
             </Row>
             <br />
