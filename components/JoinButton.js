@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { joinPostRequest, cancelJoinRequest } from '../reducer/post';
+import {
+  joinPostRequest,
+  cancelJoinRequest,
+  operatePostRequest,
+} from '../reducer/post';
 import {
   Button,
   Input,
@@ -17,7 +21,9 @@ const JoinButton = ({ singlePost, username }) => {
   const [isJoined, setIsJoined] = useState(false);
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-  const { isJoinedPost, isCancelledJoin } = useSelector((state) => state.post);
+  const { isJoinedPost, isCancelledJoin, isOperatedPost } = useSelector(
+    (state) => state.post
+  );
 
   const modalToggle = () => setModal(!modal);
 
@@ -36,6 +42,12 @@ const JoinButton = ({ singlePost, username }) => {
   const onClickCancel = useCallback(() => {
     dispatch(cancelJoinRequest({ id: singlePost.id, username }));
   }, [singlePost, username]);
+
+  const onClickOperating = useCallback(() => {
+    if (confirm('게시물을 마감 하시겠습니까?')) {
+      dispatch(operatePostRequest({ id: singlePost.id }));
+    }
+  }, [singlePost]);
 
   const onChangeComment = useCallback((e) => {
     setComment(e.target.value);
@@ -80,6 +92,7 @@ const JoinButton = ({ singlePost, username }) => {
           textAlign: 'center',
           margin: '0',
         }}
+        onClick={onClickOperating}
       >
         마감하기
       </Button>
