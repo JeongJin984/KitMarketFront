@@ -17,38 +17,44 @@ const BoardPagination = () => {
   const pageSetNum = Math.floor(currentPage / 10);
   const currentPageSet = pages.slice(10 * pageSetNum, 10 * pageSetNum + 10);
 
-  const { category } = router.query;
-
-  const routeCategory = (page) =>
-    category
-      ? router.push(`/board/${category}?page=${page}`)
-      : router.push(`/?page=${page}`);
+  const { category, status, select, search } = router.query;
+  const route = (page) => {
+    if (category) {
+      router.push(`/board/${category}?page=${page}`);
+    } else if (status) {
+      router.push(`/?status=${status}&page=${page}`);
+    } else if (select) {
+      router.push(`/?select=${select}&search=${search}&page=${page}`);
+    } else {
+      router.push(`/?page=${page}`);
+    }
+  };
 
   const onClickPage = useCallback(
     (num) => {
-      routeCategory(num);
+      route(num);
     },
-    [category]
+    [router.query]
   );
 
   const onClickNext = useCallback(() => {
     if (currentPage + 1 < maxPage) {
-      routeCategory(currentPage + 2);
+      route(currentPage + 2);
     }
   }, [currentPage, maxPage]);
 
   const onClickPrev = useCallback(() => {
     if (currentPage - 1 >= 0) {
-      routeCategory(currentPage);
+      route(currentPage);
     }
   }, [currentPage]);
 
   const onClickNextEnd = useCallback(() => {
-    routeCategory(maxPage);
+    route(maxPage);
   }, [maxPage]);
 
   const onClickPrevEnd = useCallback(() => {
-    routeCategory(1);
+    route(1);
   }, []);
 
   return (
