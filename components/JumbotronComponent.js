@@ -42,14 +42,16 @@ const JumbotronComponent = () => {
           <p className="lead" style={{ textAlign: 'center'}} >필요한 분야의 인원을 구해보세요</p>
           <br />
           <InputGroup size="lg" style={{position:'absolute', marginBottom:'-30%'}}>
-            <Input style={{borderRadius: '100px', height:70}} />
+            <Input style={{borderRadius: '100px', height:70, background:"transparent", border:"none"}} />
             <Input type="text" placeholder="Search.."
               style={{ 
                 position:'absolute', 
-                border: 'none',
+                // border: 'none',
                 width:'80%',
-                height:'100%', 
-                background: 'transparent',
+                // height:'100%',
+                // borderRadius: '100px',
+                 height:70,
+                // background: 'transparent',
                 marginLeft:'20%',
                 zIndex:3,
                 }} />
@@ -58,7 +60,7 @@ const JumbotronComponent = () => {
               position :'absolute',
               width:'20%',
               height:'100%',
-              borderRadius:'100px',
+              // borderRadius:'100px',
               zIndex: 3 }}
              name="select" id="exampleSelect">
               <option>제목</option>

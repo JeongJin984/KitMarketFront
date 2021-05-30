@@ -150,6 +150,15 @@ const AppLayout = ({ children }) => {
                             카풀/택시　　
                           </Link>
                         </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/carPool',
+                            }}
+                          >
+                            마감　　
+                          </Link>
+                        </NavItem>
                       </Nav>
                     ) : (
                       <Nav
@@ -211,6 +220,15 @@ const AppLayout = ({ children }) => {
                             카풀/택시　　
                           </Link>
                         </NavItem>
+                        <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/carPool',
+                            }}
+                          >
+                            마감　　
+                          </Link>
+                        </NavItem>
                       </Nav>
                     )}
                   </NavStyle>
@@ -265,6 +283,51 @@ const AppLayout = ({ children }) => {
             </Col>
           </Row>
         </Col>
+      </Row>
+      <Row style={{ backgroundColor: '#F2F2F2' }}>
+        <Col xs="1"></Col>
+        <Col xs="2">
+        <img
+          resizemode={'cover'}
+          style={{ width: '60%' , height: '60%', marginTop:"10%", marginLeft:"20%"}}
+          src="/images/knilogo.png"
+          alt="KnI"
+        />   
+        </Col>
+        <Col xs="2">
+        <br />
+        <div className="mb-1 text-muted ">남정진(팀장)</div> 
+        <div className="mb-1 text-muted ">아키텍쳐 구축</div>
+        <div className="mb-1 text-muted ">로그인 인증/ 구현</div>
+        <div className="mb-1 text-muted ">skawjdwls@gmail.com</div>
+        <br />
+        </Col>
+        <Col xs="2">
+        <br />
+        <div className="mb-1 text-muted ">박기남</div> 
+        <div className="mb-1 text-muted ">API 개발</div>
+        <div className="mb-1 text-muted ">qkrwnlska@gmail.com</div>
+        </Col>
+        <Col xs="2">
+        <br />
+        <div className="mb-1 text-muted ">추헌재</div> 
+        <div className="mb-1 text-muted ">FrontEnd 개발</div>
+        <div className="mb-1 text-muted ">cngjswo@gmail.com</div>
+        </Col>
+        <Col xs="2">
+        <br />
+        <div className="mb-1 text-muted ">배지원</div> 
+        <div className="mb-1 text-muted ">UI/UX 개발</div>
+        <div className="mb-1 text-muted ">1gbae53@gmail.com</div>
+        </Col>
+        <Col xs="1"></Col>
+      </Row>
+      <Row style={{ backgroundColor: '#F2F2F2' }}>
+        <Col xs="4"></Col>
+        <Col xs="4">
+          <div className="mb-1 text-muted text-center">금오공과대학교 컴퓨터공학과 창의설계프로젝트 SAT</div>
+        </Col>
+        <Col xs="4"></Col>
       </Row>
     </div>
   );

@@ -24,7 +24,7 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
           <Col xs="3">
             <Input type="select" name="category" onChange={onChange}>
               <option value="contest">공모전</option>
-              <option>조별과제</option>
+              <option value="project">조별과제</option>
               <option>OTT</option>
               <option value="study">스터디</option>
               <option>공동구매</option>
@@ -41,6 +41,9 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
             )}
             {category == 'carPool' && (
               <label style={{ fontWeight: 'bold' }}>요금</label>
+            )}
+            {inputs.category == 'project' && (
+              <label style={{ fontWeight: 'bold' }}>과목</label>
             )}
           </Col>
           <Col xs="3">
@@ -67,6 +70,9 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
             {category == 'carPool' && (
               <Input name="fare" onChange={onChange} placeholder="" />
             )}
+            {inputs.category == 'project' && (
+              <Input name="subject" placeholder="" />
+            )}
           </Col>
         </Row>
         <br />
@@ -76,13 +82,14 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>주최기관</label>
               </Col>
-              <Col xs="4">
+              <Col xs="3">
                 <Input
                   name="hostOrganization"
                   onChange={onChange}
                   placeholder=""
                 />
               </Col>
+              <Col xs="1"></Col>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>참가대상</label>
               </Col>
@@ -116,13 +123,14 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>지역</label>
               </Col>
-              <Col xs="4">
+              <Col xs="3">
                 <Input name="region" onChange={onChange} placeholder="" />
               </Col>
+              <Col xs="1"></Col>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>기간</label>
               </Col>
-              <Col xs="4">
+              <Col xs="3">
                 <Input name="duration" onChange={onChange} placeholder="" />
               </Col>
             </Row>
@@ -135,14 +143,35 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>출발지</label>
               </Col>
-              <Col xs="4">
+              <Col xs="3">
                 <Input name="departure" onChange={onChange} placeholder="" />
               </Col>
+              <Col xs="1"></Col>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>도착지</label>
               </Col>
-              <Col xs="4">
+              <Col xs="3">
                 <Input name="destination" onChange={onChange} placeholder="" />
+              </Col>
+            </Row>
+            <br />
+          </div>
+        )}
+        {inputs.category == 'project' && (
+          <div>
+            <Row>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>주제</label>
+              </Col>
+              <Col xs="3">
+                <Input name="topic" placeholder="" />
+              </Col>
+              <Col xs="1"></Col>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>필요한 역할</label>
+              </Col>
+              <Col xs="3">
+                <Input name="role" placeholder="" />
               </Col>
             </Row>
             <br />
