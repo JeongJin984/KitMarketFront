@@ -83,6 +83,10 @@ export const OPERATE_POST_REQUEST = 'OPERATE_POST_REQUEST';
 export const OPERATE_POST_SUCCESS = 'OPERATE_POST_SUCCESS';
 export const OPERATE_POST_FAILURE = 'OPERATE_POST_FAILURE';
 
+export const LOAD_POSTING_LIST_REQUEST = 'LOAD_POSTING_LIST_REQUEST';
+export const LOAD_POSTING_LIST_SUCCESS = 'LOAD_POSTING_LIST_SUCCESS';
+export const LOAD_POSTING_LIST_FAILURE = 'LOAD_POSTING_LIST_FAILURE';
+
 export const loadMainPostsRequest = (data) => {
   return {
     type: LOAD_MAIN_POSTS_REQUEST,
@@ -160,6 +164,13 @@ export const operatePostRequest = (data) => {
   };
 };
 
+export const loadPostingListRequest = (data) => {
+  return {
+    type: LOAD_POSTING_LIST_REQUEST,
+    data,
+  };
+};
+
 const postReducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
@@ -167,6 +178,7 @@ const postReducer = (state = initialState, action) => {
         console.log('qwerqwerqwer');
         draft.isLoadingPosts = true;
         draft.isLoadedPosts = false;
+        draft.error = '';
         break;
 
       case LOAD_MAIN_POSTS_SUCCESS:
@@ -367,6 +379,28 @@ const postReducer = (state = initialState, action) => {
       case OPERATE_POST_FAILURE:
         draft.isOperatingPost = false;
         draft.isOperatedPost = false;
+        draft.error = action.error;
+        break;
+
+      case LOAD_POSTING_LIST_REQUEST:
+        draft.isLoadingPosts = true;
+        draft.isLoadedPosts = false;
+        draft.error = '';
+        break;
+
+      case LOAD_POSTING_LIST_SUCCESS:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = true;
+        draft.mainPosts = action.data.data;
+        draft.meta.size = action.data.size;
+        draft.meta.currentPage = action.data.currentPage;
+        draft.meta.maxPage = action.data.maxPage;
+        draft.error = '';
+        break;
+
+      case LOAD_POSTING_LIST_FAILURE:
+        draft.isLoadingPosts = false;
+        draft.isLoadedPosts = false;
         draft.error = action.error;
         break;
 

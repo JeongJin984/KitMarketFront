@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadMainPostsRequest } from '../reducer/post';
+import { loadMainPostsRequest, loadPostingListRequest } from '../reducer/post';
 
-import { Row, Col, Button, Fade } from 'reactstrap';
+import { Row, Input, Button, Fade } from 'reactstrap';
 
 import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
@@ -17,6 +17,7 @@ import BoardPagination from '../components/BoardPagination';
 const Home = () => {
   const { mainPosts } = useSelector((state) => state.post);
   const { isLoggedIn } = useSelector((state) => state.user);
+  const router = useRouter();
   const [fadeIn, setFadeIn] = useState(true);
   const [fadeIn1, setFadeIn1] = useState(true);
   const [fadeIn2, setFadeIn2] = useState(true);
@@ -31,7 +32,16 @@ const Home = () => {
   return (
     <AppLayout>
       <JumbotronComponent />
-      {isLoggedIn ? (
+      <Input style={{ width: 'min-content' }} type="select" name="select">
+        <option onClick={() => router.push('/')}>전체</option>
+        <option onClick={() => router.push('/?status=postingList')}>
+          구인중인 모임
+        </option>
+        <option onClick={() => router.push('/?status=closedList')}>
+          종료된 모임
+        </option>
+      </Input>
+      {!isLoggedIn ? (
         <>
           <Row>
             {mainPosts.map((postInfo) => (
@@ -200,14 +210,21 @@ const Home = () => {
 export const getServerSideProps = wrapper.getServerSideProps(
   async ({ store, req, query }) => {
     const page = query.page - 1 || 0;
-    const data = { category: 'postList', page };
+    const status = query.status;
     const cookie = req ? req.headers.cookie : '';
     console.log('cookie', cookie);
     axios.defaults.headers.Cookie = '';
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-    store.dispatch(loadMainPostsRequest(data));
+    if (status === 'postingList') {
+      store.dispatch(loadPostingListRequest({ page }));
+      // } else if (store.getState().user.me) {
+      //   store.dispatch(loadMainPostsRequest({ category: 'postList', page }));
+      // }
+    } else {
+      store.dispatch(loadMainPostsRequest({ category: 'postList', page }));
+    }
     store.dispatch(END); // Request가 끝날 때 까지 기다려줌
     await store.sagaTask.toPromise();
   }
