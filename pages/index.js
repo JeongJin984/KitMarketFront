@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadMainPostsRequest, searchPostsRequest } from '../reducer/post';
 
 import { Row, Input, Button, Fade } from 'reactstrap';
 
@@ -13,6 +12,7 @@ import JumbotronComponent from '../components/JumbotronComponent';
 import AppLayout from '../components/AppLayout';
 import WritePostModal from '../components/WritePostModal';
 import BoardPagination from '../components/BoardPagination';
+import { loadMainPostsRequest } from '../data/event/postEvent';
 
 const Home = () => {
   const { mainPosts } = useSelector((state) => state.post);

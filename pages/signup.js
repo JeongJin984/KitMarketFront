@@ -15,11 +15,11 @@ import {
 } from 'reactstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpRequest } from '../reducer/user';
 import { useRouter } from 'next/router';
 
 import { useCookies } from "react-cookie"
 import axios from 'axios';
+import {signUpRequest} from "../data/event/userEvent";
 
 const signUp = () => {
 

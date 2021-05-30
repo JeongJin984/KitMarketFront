@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { addPostRequest } from '../reducer/post';
 
 import { Button, Modal } from 'reactstrap';
 import WritePostForm from './WritePostForm';
+import {addPostRequest} from "../data/event/postEvent";
 
 const WritePostModal = () => {
   const initialInputs = {

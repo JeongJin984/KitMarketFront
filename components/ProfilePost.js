@@ -10,7 +10,7 @@ import {
   CardSubtitle,
   Button,
 } from 'reactstrap';
-import { cancelJoinRequest } from '../reducer/post';
+import {cancelJoinRequest} from "../data/event/postEvent";
 
 const ProfilePost = ({ postInfo, tab }) => {
   const { id, category, title, writer, createdAt } = postInfo;

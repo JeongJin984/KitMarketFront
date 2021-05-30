@@ -3,12 +3,6 @@ import { useSelector } from 'react-redux';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import { loadProfileRequest } from '../reducer/user';
-import {
-  loadCreatedPostsRequest,
-  loadParticipatingPostsRequest,
-  loadApplicatedPostsRequest,
-} from '../reducer/post';
 import {
   Card,
   CardBody,
@@ -29,6 +23,12 @@ import classnames from 'classnames';
 import ProfilePost from '../components/ProfilePost';
 import ProfilePagination from '../components/ProfilePagination';
 import { useRouter } from 'next/router';
+import {loadProfileRequest} from "../data/event/userEvent";
+import {
+  loadApplicatedPostsRequest,
+  loadCreatedPostsRequest,
+  loadParticipatingPostsRequest
+} from "../data/event/postEvent";
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');

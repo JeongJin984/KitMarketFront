@@ -15,11 +15,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_FAILURE,
   LOAD_USER_SUCCESS,
-} from '../reducer/user';
-
+} from '../data/eventName/userEventName';
 import axios from 'axios';
-
-const { frontURL, backURL } = require('../config/config');
+import { frontURL, backURL } from '../config/config';
 
 const defaultURL = backURL + "/user-service";
 

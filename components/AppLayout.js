@@ -34,9 +34,9 @@ import {
   ButtonDropdown,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutRequest } from '../reducer/user';
 import Cookie from 'universal-cookie';
 import axios from 'axios';
+import {logoutRequest} from "../data/event/userEvent";
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
@@ -44,7 +44,6 @@ const AppLayout = ({ children }) => {
   const router = useRouter();
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  var cookie = new Cookie();
 
   const toggle = () => setIsOpen(!isOpen);
   const togglebutton = () => setOpen(!dropdownOpen);
@@ -108,24 +107,6 @@ const AppLayout = ({ children }) => {
                         <NavItem>
                           <Link
                             href={{
-                              pathname: '/helloworld',
-                            }}
-                          >
-                            조별과제　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/helloworld',
-                            }}
-                          >
-                            OTT　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
                               pathname: '/board/study',
                             }}
                           >
@@ -138,7 +119,7 @@ const AppLayout = ({ children }) => {
                               pathname: '/helloworld',
                             }}
                           >
-                            공동구매　　
+                            미니프로젝트　　
                           </Link>
                         </NavItem>
                         <NavItem>
@@ -181,24 +162,6 @@ const AppLayout = ({ children }) => {
                               pathname: '/login',
                             }}
                           >
-                            조별과제　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/login',
-                            }}
-                          >
-                            OTT　　
-                          </Link>
-                        </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/login',
-                            }}
-                          >
                             스터디　　
                           </Link>
                         </NavItem>
@@ -208,7 +171,7 @@ const AppLayout = ({ children }) => {
                               pathname: '/login',
                             }}
                           >
-                            공동구매　　
+                            미니프로젝트　　
                           </Link>
                         </NavItem>
                         <NavItem>

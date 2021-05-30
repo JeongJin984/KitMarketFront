@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  joinPostRequest,
-  cancelJoinRequest,
-  operatePostRequest,
-} from '../reducer/post';
-import {
   Button,
   Input,
   Form,
@@ -14,6 +9,7 @@ import {
   ModalFooter,
   ModalBody,
 } from 'reactstrap';
+import { cancelJoinRequest, joinPostRequest } from '../data/event/postEvent';
 
 const JoinButton = ({ singlePost, username }) => {
   const { writer, applications } = singlePost;
