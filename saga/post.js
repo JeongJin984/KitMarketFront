@@ -36,9 +36,6 @@ import {
   OPERATE_POST_REQUEST,
   OPERATE_POST_SUCCESS,
   OPERATE_POST_FAILURE,
-  LOAD_POSTING_LIST_REQUEST,
-  LOAD_POSTING_LIST_SUCCESS,
-  LOAD_POSTING_LIST_FAILURE,
 } from '../reducer/post';
 
 const defaultURL = backURL + '/post-service';
@@ -499,7 +496,7 @@ const createdPosts = {
 function loadPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/${data.category}?offset=${data.page}`,
+    url: `${defaultURL}/api/${data.category}?status=${data.status}offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -516,9 +513,8 @@ const loadDummyPosts = (data) => {
 //됨
 function* loadPosts(action) {
   try {
-    console.log('awefawefawefawef');
-    // const result = yield call(loadPostsAPI, action.data);
-    const result = { data: loadDummyPosts(action.data) };
+    const result = yield call(loadPostsAPI, action.data);
+    // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -543,8 +539,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    // const result = yield call(loadPostAPI, action.data);
-    const result = dummyPost;
+    const result = yield call(loadPostAPI, action.data);
+    // const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -745,7 +741,7 @@ function* deletePost(action) {
 function updatePostAPI(data) {
   return axios({
     method: 'PUT',
-    url: `${defaultURL}/api/${data.category}/${data.id}`,
+    url: `${defaultURL}/api/${data.category}?id=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -786,32 +782,6 @@ function* operatePost(action) {
   } catch (error) {
     yield put({
       type: OPERATE_POST_FAILURE,
-      error,
-    });
-  }
-}
-
-function loadPostingListAPI(data) {
-  return axios({
-    method: 'GET',
-    url: `${defaultURL}/api/post/postingList?offset=${data.page}`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
-function* loadPostingList(action) {
-  try {
-    const result = yield call(loadPostingListAPI, action.data);
-    // const result = { data: loadDummyPosts(action.data) };
-    yield put({
-      type: LOAD_POSTING_LIST_SUCCESS,
-      data: result.data,
-    });
-  } catch (error) {
-    yield put({
-      type: LOAD_POSTING_LIST_FAILURE,
       error,
     });
   }
@@ -861,10 +831,6 @@ function* watchOperatePost() {
   yield takeLatest(OPERATE_POST_REQUEST, operatePost);
 }
 
-function* watchLoadPostingList() {
-  yield takeLatest(LOAD_POSTING_LIST_REQUEST, loadPostingList);
-}
-
 export default function* chattingSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -878,6 +844,5 @@ export default function* chattingSaga() {
     fork(watchDeletePost),
     fork(watchUpdatePost),
     fork(watchOperatePost),
-    fork(watchLoadPostingList),
   ]);
 }
