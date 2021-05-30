@@ -22,12 +22,11 @@ import {
 } from 'reactstrap';
 import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
-import UpdatePostButton from '../../../components/UpdatePostModal';
+import UpdatePostModal from '../../../components/UpdatePostModal';
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
-  // const {username} = 1;
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
@@ -92,7 +91,7 @@ const PostView = () => {
             <hr />
             <Row style={{ display: 'flex' }}>
               <div style={{ marginLeft: 'auto' }}>
-                <UpdatePostButton />
+                <UpdatePostModal />
                 <Button color="#00FFFFFF" size="sm" onClick={onClickDelete}>
                   삭제
                 </Button>
