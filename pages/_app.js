@@ -14,7 +14,10 @@ class MyApp extends App {
     if (cookie) {
       axios.defaults.headers.Cookie = cookie;
     }
-    if (!state.user.me && !ctx.pathname === '/login') {
+    if (
+      !state.user.me &&
+      (!ctx.pathname === '/login' || !ctx.pathname === '/signup')
+    ) {
       ctx.store.dispatch(loadUserRequest());
     }
 
