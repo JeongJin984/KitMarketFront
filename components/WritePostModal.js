@@ -19,6 +19,16 @@ const WritePostModal = () => {
     ampm: '',
     hours: '',
     minutes: '',
+    contestCategory: 'report',
+    subject: 'english',
+    fare: '',
+    hostOrganization: '',
+    qualification: 'highSchool',
+    homepage: '',
+    region: '',
+    duration: '',
+    departure: '',
+    destination: '',
   };
   const { isPosted } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
@@ -71,6 +81,16 @@ const WritePostModal = () => {
         ampm,
         hours,
         minutes,
+        contestCategory,
+        subject,
+        fare,
+        hostOrganization,
+        qualification,
+        homepage,
+        region,
+        duration,
+        departure,
+        destination,
       } = inputs;
       const ampmHours = ampm === 'PM' ? parseInt(hours) + 12 : hours;
       const deadLine = `${year}-${month < 10 ? `0${month}` : month}-${
@@ -79,7 +99,7 @@ const WritePostModal = () => {
         minutes < 10 ? `0${minutes}` : minutes
       }:00`;
       const deadLineDate = new Date(deadLine);
-      const data = {
+      let data = {
         writer: username,
         title,
         content,
@@ -88,6 +108,29 @@ const WritePostModal = () => {
         curNum: maxNum - needNum,
         category,
       };
+      if (category === 'contest') {
+        data = {
+          ...data,
+          contestCategory,
+          hostOrganization,
+          qualification,
+          homepage,
+        };
+      } else if (category === 'study') {
+        data = {
+          ...data,
+          subject,
+          region,
+          duration,
+        };
+      } else if (category === 'carPool') {
+        data = {
+          ...data,
+          fare,
+          departure,
+          destination,
+        };
+      }
       console.log(data);
 
       if (

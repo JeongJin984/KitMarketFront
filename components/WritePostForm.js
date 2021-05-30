@@ -12,6 +12,7 @@ import {
 } from 'reactstrap';
 
 const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
+  const { category, maxNum } = inputs;
   return (
     <Form onSubmit={handleSubmit}>
       <ModalHeader toggle={toggle}>게시글 작성</ModalHeader>
@@ -32,59 +33,64 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
           </Col>
           <Col xs="1"></Col>
           <Col xs="2">
-            {inputs.category == 'contest' && (
+            {category == 'contest' && (
               <label style={{ fontWeight: 'bold' }}>분야</label>
             )}
-            {inputs.category == 'study' && (
+            {category == 'study' && (
               <label style={{ fontWeight: 'bold' }}>분야</label>
             )}
-            {inputs.category == 'carPool' && (
+            {category == 'carPool' && (
               <label style={{ fontWeight: 'bold' }}>요금</label>
             )}
           </Col>
           <Col xs="3">
-            {inputs.category == 'contest' && (
+            {category == 'contest' && (
               <Input type="select" name="contestCategory" onChange={onChange}>
-                <option>리포트</option>
-                <option>아이디어</option>
-                <option>디자인</option>
-                <option>캐릭터</option>
-                <option>문화</option>
-                <option>UCC</option>
-                <option>대외활동</option>
+                <option value="report">리포트</option>
+                <option value="idea">아이디어</option>
+                <option value="design">디자인</option>
+                <option value="character">캐릭터</option>
+                <option value="CULTURE">문화</option>
+                <option value="UCC">UCC</option>
+                <option value="EXTERNAL_ACTIVITY">대외활동</option>
                 <option>기타</option>
               </Input>
             )}
-            {inputs.category == 'study' && (
+            {category == 'study' && (
               <Input type="select" name="subject" onChange={onChange}>
-                <option>언어</option>
-                <option>공무원/공기업</option>
-                <option>자격증</option>
-                <option>기타</option>
+                <option value="ENGLISH">언어</option>
+                <option value="NCS">공무원/공기업</option>
+                <option value="CERTIFICATE">자격증</option>
+                <option value="NONE">기타</option>
               </Input>
             )}
-            {inputs.category == 'carPool' && (
-              <Input name="fare" placeholder="" />
+            {category == 'carPool' && (
+              <Input name="fare" onChange={onChange} placeholder="" />
             )}
           </Col>
         </Row>
         <br />
-        {inputs.category == 'contest' && (
+        {category == 'contest' && (
           <div>
             <Row>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>주최기관</label>
               </Col>
               <Col xs="4">
-                <Input name="hostOrganization" placeholder="" />
+                <Input
+                  name="hostOrganization"
+                  onChange={onChange}
+                  placeholder=""
+                />
               </Col>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>참가대상</label>
               </Col>
               <Col xs="3">
                 <Input type="select" name="qualification" onChange={onChange}>
-                  <option>고등학생</option>
-                  <option>대학생</option>
+                  <option value="HIGHSCHOOL">고등학생</option>
+                  <option value="COLLEGE">대학생</option>
+                  <option value="NONE">기타</option>
                 </Input>
               </Col>
             </Row>
@@ -104,39 +110,39 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
             <br />
           </div>
         )}
-        {inputs.category == 'study' && (
+        {category == 'study' && (
           <div>
             <Row>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>지역</label>
               </Col>
               <Col xs="4">
-                <Input name="region" placeholder="" />
+                <Input name="region" onChange={onChange} placeholder="" />
               </Col>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>기간</label>
               </Col>
               <Col xs="4">
-                <Input name="duration" placeholder="" />
+                <Input name="duration" onChange={onChange} placeholder="" />
               </Col>
             </Row>
             <br />
           </div>
         )}
-        {inputs.category == 'carPool' && (
+        {category == 'carPool' && (
           <div>
             <Row>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>출발지</label>
               </Col>
               <Col xs="4">
-                <Input name="departure" placeholder="" />
+                <Input name="departure" onChange={onChange} placeholder="" />
               </Col>
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>도착지</label>
               </Col>
               <Col xs="4">
-                <Input name="destination" placeholder="" />
+                <Input name="destination" onChange={onChange} placeholder="" />
               </Col>
             </Row>
             <br />
@@ -174,7 +180,7 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
                   name="needNum"
                   type="number"
                   min="1"
-                  max={inputs.maxNum - 1}
+                  max={maxNum - 1}
                   onChange={onChange}
                   placeholder=""
                 />
