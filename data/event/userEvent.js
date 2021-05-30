@@ -1,35 +1,41 @@
-import {LOAD_PROFILE_REQUEST, LOAD_USER_REQUEST, LOGIN_REQUEST, LOGOUT_REQUEST, SIGNUP_REQUEST} from "../../reducer/user";
+import {
+  LOAD_PROFILE_REQUEST,
+  LOAD_USER_REQUEST,
+  LOGIN_REQUEST,
+  LOGOUT_REQUEST,
+  SIGNUP_REQUEST,
+} from '../eventName/userEventName';
 
 export const loginRequest = (data) => {
-    return {
-        type: LOGIN_REQUEST,
-        data,
-    };
+  return {
+    type: LOGIN_REQUEST,
+    data,
+  };
 };
 
 export const logoutRequest = () => {
-    return {
-        type: LOGOUT_REQUEST,
-    };
+  return {
+    type: LOGOUT_REQUEST,
+  };
 };
 
 export const loadUserRequest = () => {
-    console.log('load');
-    return {
-        type: LOAD_USER_REQUEST,
-    };
+  console.log('load');
+  return {
+    type: LOAD_USER_REQUEST,
+  };
 };
 
 export const signUpRequest = (data) => {
-    return {
-        type: SIGNUP_REQUEST,
-        data,
-    };
+  return {
+    type: SIGNUP_REQUEST,
+    data,
+  };
 };
 
 export const loadProfileRequest = (data) => {
-    return {
-        type: LOAD_PROFILE_REQUEST,
-        data,
-    };
+  return {
+    type: LOAD_PROFILE_REQUEST,
+    data,
+  };
 };

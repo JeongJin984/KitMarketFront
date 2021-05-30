@@ -13,9 +13,9 @@ import {
 const JumbotronComponent = () => {
   const [select, setSelect] = useState('title');
   const [input, setInput] = useState('');
-  const { category } = router.query;
-
   const router = useRouter();
+
+  const { category } = router.query;
 
   const onChangeInput = useCallback((e) => {
     setInput(e.target.value);
