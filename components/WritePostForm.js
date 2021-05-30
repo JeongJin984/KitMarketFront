@@ -49,10 +49,10 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
           <Col xs="3">
             {category == 'contest' && (
               <Input type="select" name="contestCategory" onChange={onChange}>
-                <option value="report">리포트</option>
-                <option value="idea">아이디어</option>
-                <option value="design">디자인</option>
-                <option value="character">캐릭터</option>
+                <option value="REPORT">리포트</option>
+                <option value="IDEA">아이디어</option>
+                <option value="DESIGN">디자인</option>
+                <option value="CHARACTER">캐릭터</option>
                 <option value="CULTURE">문화</option>
                 <option value="UCC">UCC</option>
                 <option value="EXTERNAL_ACTIVITY">대외활동</option>

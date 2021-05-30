@@ -19,11 +19,11 @@ const WritePostModal = () => {
     ampm: '',
     hours: '',
     minutes: '',
-    contestCategory: 'report',
-    subject: 'english',
+    contestCategory: 'REPORT',
+    subject: 'ENGLISH',
     fare: '',
     hostOrganization: '',
-    qualification: 'highSchool',
+    qualification: 'HIGHSCHOOL',
     homepage: '',
     region: '',
     duration: '',
@@ -31,8 +31,8 @@ const WritePostModal = () => {
     destination: '',
   };
   const { isPosted } = useSelector((state) => state.post);
-  const { username } = useSelector((state) => state.user.me);
-  // const { username } = 1;
+  // const { username } = useSelector((state) => state.user.me);
+  const { username } = 1;
   const [modal, setModal] = useState(false);
   const [inputs, setInputs] = useState(initialInputs);
 
