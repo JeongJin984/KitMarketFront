@@ -4,7 +4,6 @@ import userSaga from './user';
 import postSaga from './post';
 
 import axios from 'axios';
-const { backURL } = require('../config/config');
 
 axios.defaults.withCredentials = true;
 

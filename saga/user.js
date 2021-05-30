@@ -16,10 +16,9 @@ import {
   LOAD_USER_FAILURE,
   LOAD_USER_SUCCESS,
 } from '../data/eventName/userEventName';
-
 import axios from 'axios';
+import { frontURL, backURL } from '../config/config';
 
-const { frontURL, backURL } = require('../config/config');
 const defaultURL = backURL + "/user-service";
 
 function logInAPI(data) {

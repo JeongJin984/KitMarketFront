@@ -5,7 +5,6 @@ import App from 'next/app';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {loadUserRequest} from "../data/event/userEvent";
 
-
 class MyApp extends App {
   static getInitialProps = async ({ Component, ctx }) => {
     const state = ctx.store.getState();
