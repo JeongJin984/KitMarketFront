@@ -18,6 +18,8 @@ const initialState = {
   isJoinedPost: false,
   isCancellingJoin: false,
   isCancelledJoin: false,
+  isPermittingJoin: false,
+  isPermittedJoin: false,
   createdPosts: {
     data: [],
   },
@@ -55,6 +57,10 @@ export const JOIN_POST_FAILURE = 'JOIN_POST_FAILURE';
 export const CANCEL_JOIN_REQUEST = 'CANCEL_JOIN_REQUEST';
 export const CANCEL_JOIN_SUCCESS = 'CANCEL_JOIN_SUCCESS';
 export const CANCEL_JOIN_FAILURE = 'CANCEL_JOIN_FAILURE';
+
+export const PERMIT_JOIN_REQUEST = 'PERMIT_JOIN_REQUEST';
+export const PERMIT_JOIN_SUCCESS = 'PERMIT_JOIN_SUCCESS';
+export const PERMIT_JOIN_FAILURE = 'PERMIT_JOIN_FAILURE';
 
 export const LOAD_CREATED_POSTS_REQUEST = 'LOAD_CREATED_POSTS_REQUEST';
 export const LOAD_CREATED_POSTS_SUCCESS = 'LOAD_CREATED_POSTS_SUCCESS';
@@ -114,6 +120,13 @@ export const joinPostRequest = (data) => {
 export const cancelJoinRequest = (data) => {
   return {
     type: CANCEL_JOIN_REQUEST,
+    data,
+  };
+};
+
+export const permitJoinRequest = (data) => {
+  return {
+    type: PERMIT_JOIN_REQUEST,
     data,
   };
 };
@@ -257,7 +270,25 @@ const postReducer = (state = initialState, action) => {
       case CANCEL_JOIN_FAILURE:
         draft.isCancellingJoin = false;
         draft.isCancelledJoin = false;
+        draft.error = action.error;
+        break;
+
+      case PERMIT_JOIN_REQUEST:
+        draft.isPermittingJoin = true;
+        draft.isPermittedJoin = false;
         draft.error = '';
+        break;
+
+      case PERMIT_JOIN_SUCCESS:
+        draft.isPermittingJoin = false;
+        draft.isPermittedJoin = true;
+        draft.error = '';
+        break;
+
+      case PERMIT_JOIN_FAILURE:
+        draft.isPermittingJoin = false;
+        draft.isPermittedJoin = false;
+        draft.error = action.error;
         break;
 
       case LOAD_CREATED_POSTS_REQUEST:

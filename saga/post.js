@@ -18,6 +18,9 @@ import {
   CANCEL_JOIN_REQUEST,
   CANCEL_JOIN_SUCCESS,
   CANCEL_JOIN_FAILURE,
+  PERMIT_JOIN_REQUEST,
+  PERMIT_JOIN_SUCCESS,
+  PERMIT_JOIN_FAILURE,
   LOAD_CREATED_POSTS_REQUEST,
   LOAD_CREATED_POSTS_SUCCESS,
   LOAD_CREATED_POSTS_FAILURE,
@@ -339,6 +342,7 @@ const dummyPost = {
     maxNum: 3,
     curNum: 0,
     category: 'study',
+    status: 'POSTING',
     participants: [
       {
         username: 'participant1',
@@ -513,8 +517,8 @@ const loadDummyPosts = (data) => {
 //됨
 function* loadPosts(action) {
   try {
-    const result = yield call(loadPostsAPI, action.data);
-    // const result = { data: loadDummyPosts(action.data) };
+    // const result = yield call(loadPostsAPI, action.data);
+    const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -539,8 +543,8 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    const result = yield call(loadPostAPI, action.data);
-    // const result = dummyPost;
+    // const result = yield call(loadPostAPI, action.data);
+    const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -631,6 +635,32 @@ function* cancelJoin(action) {
   } catch (error) {
     yield put({
       type: CANCEL_JOIN_FAILURE,
+      error,
+    });
+  }
+}
+
+function permitJoinAPI(data) {
+  return axios({
+    method: 'POST',
+    url: `${defaultURL}/api/app/permit`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: { appId: data.id, hostName: data.username },
+  });
+}
+
+function* permitJoin(action) {
+  try {
+    console.log(action.data);
+    yield call(permitJoinAPI, action.data);
+    yield put({
+      type: PERMIT_JOIN_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      type: PERMIT_JOIN_FAILURE,
       error,
     });
   }
@@ -803,8 +833,12 @@ function* watchJoinPost() {
   yield takeLatest(JOIN_POST_REQUEST, joinPost);
 }
 
-function* watchCancleJoin() {
+function* watchCancelJoin() {
   yield takeLatest(CANCEL_JOIN_REQUEST, cancelJoin);
+}
+
+function* watchPermitJoin() {
+  yield takeLatest(PERMIT_JOIN_REQUEST, permitJoin);
 }
 
 function* watchLoadCreatePosts() {
@@ -837,7 +871,8 @@ export default function* chattingSaga() {
     fork(watchLoadPost),
     fork(watchAddPost),
     fork(watchJoinPost),
-    fork(watchCancleJoin),
+    fork(watchCancelJoin),
+    fork(watchPermitJoin),
     fork(watchLoadCreatePosts),
     fork(watchLoadParticipatingPosts),
     fork(watchLoadApplicatedPosts),
