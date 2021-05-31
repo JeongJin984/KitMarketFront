@@ -11,6 +11,7 @@ import {
   LOAD_POST_REQUEST,
   OPERATE_POST_REQUEST,
   UPDATE_POST_REQUEST,
+  SEARCH_POSTS_REQUEST,
 } from '../eventName/postEventName';
 
 export const loadMainPostsRequest = (data) => {
@@ -93,6 +94,13 @@ export const updatePostRequest = (data) => {
 export const operatePostRequest = (data) => {
   return {
     type: OPERATE_POST_REQUEST,
+    data,
+  };
+};
+
+export const searchPostsRequest = (data) => {
+  return {
+    type: SEARCH_POSTS_REQUEST,
     data,
   };
 };

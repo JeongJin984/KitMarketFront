@@ -39,6 +39,9 @@ import {
   OPERATE_POST_REQUEST,
   OPERATE_POST_SUCCESS,
   OPERATE_POST_FAILURE,
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_SUCCESS,
+  SEARCH_POSTS_FAILURE,
 } from '../data/eventName/postEventName';
 
 const defaultURL = backURL + '/post-service';
@@ -371,6 +374,33 @@ function* operatePost(action) {
   }
 }
 
+function searchPostsAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/api/post/search?${data.select}=${data.input}&offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* searchPosts(action) {
+  try {
+    // yield call(searchPostsAPI, action.data);
+    const result = { data: loadDummyPosts(action.data) };
+    yield put({
+      type: SEARCH_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: SEARCH_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadPosts);
 }
@@ -419,6 +449,10 @@ function* watchOperatePost() {
   yield takeLatest(OPERATE_POST_REQUEST, operatePost);
 }
 
+function* watchSearchPosts() {
+  yield takeLatest(SEARCH_POSTS_REQUEST, searchPosts);
+}
+
 export default function* chattingSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -433,5 +467,6 @@ export default function* chattingSaga() {
     fork(watchDeletePost),
     fork(watchUpdatePost),
     fork(watchOperatePost),
+    fork(watchSearchPosts),
   ]);
 }

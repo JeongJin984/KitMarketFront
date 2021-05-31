@@ -36,6 +36,9 @@ import {
   UPDATE_POST_FAILURE,
   UPDATE_POST_REQUEST,
   UPDATE_POST_SUCCESS,
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_SUCCESS,
+  SEARCH_POSTS_FAILURE,
 } from '../data/eventName/postEventName';
 
 const initialState = {
@@ -302,6 +305,28 @@ const postReducer = (state = initialState, action) => {
       case OPERATE_POST_FAILURE:
         draft.isOperatingPost = false;
         draft.isOperatedPost = false;
+        draft.error = action.error;
+        break;
+
+      case SEARCH_POSTS_REQUEST:
+        draft.isSearchingPost = true;
+        draft.isSearchedPost = false;
+        draft.error = '';
+        break;
+
+      case SEARCH_POSTS_SUCCESS:
+        draft.isSearchingPost = false;
+        draft.isSearchedPost = true;
+        draft.mainPosts = action.data.data;
+        draft.meta.size = action.data.size;
+        draft.meta.currentPage = action.data.currentPage;
+        draft.meta.maxPage = action.data.maxPage;
+        draft.error = '';
+        break;
+
+      case SEARCH_POSTS_FAILURE:
+        draft.isSearchingPost = false;
+        draft.isSearchedPost = false;
         draft.error = action.error;
         break;
 
