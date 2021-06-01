@@ -36,9 +36,9 @@ import {
   UPDATE_POST_REQUEST,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
-  OPERATE_POST_REQUEST,
-  OPERATE_POST_SUCCESS,
-  OPERATE_POST_FAILURE,
+  CLOSE_POST_REQUEST,
+  CLOSE_POST_SUCCESS,
+  CLOSE_POST_FAILURE,
   SEARCH_POSTS_REQUEST,
   SEARCH_POSTS_SUCCESS,
   SEARCH_POSTS_FAILURE,
@@ -351,25 +351,25 @@ function* updatePost(action) {
   }
 }
 
-function operatePostAPI(data) {
+function closePostAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/post/operating?id=${data.id}`,
+    url: `${defaultURL}/api/post/closed?id=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
   });
 }
 
-function* operatePost(action) {
+function* closePost(action) {
   try {
-    yield call(operatePostAPI, action.data);
+    yield call(closePostAPI, action.data);
     yield put({
-      type: OPERATE_POST_SUCCESS,
+      type: CLOSE_POST_SUCCESS,
     });
   } catch (error) {
     yield put({
-      type: OPERATE_POST_FAILURE,
+      type: CLOSE_POST_FAILURE,
       error,
     });
   }
@@ -446,8 +446,8 @@ function* watchUpdatePost() {
   yield takeLatest(UPDATE_POST_REQUEST, updatePost);
 }
 
-function* watchOperatePost() {
-  yield takeLatest(OPERATE_POST_REQUEST, operatePost);
+function* watchClosePost() {
+  yield takeLatest(CLOSE_POST_REQUEST, closePost);
 }
 
 function* watchSearchPosts() {
@@ -467,7 +467,7 @@ export default function* chattingSaga() {
     fork(watchLoadApplicatedPosts),
     fork(watchDeletePost),
     fork(watchUpdatePost),
-    fork(watchOperatePost),
+    fork(watchClosePost),
     fork(watchSearchPosts),
   ]);
 }

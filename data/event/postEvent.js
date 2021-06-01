@@ -9,7 +9,7 @@ import {
   LOAD_MAIN_POSTS_REQUEST,
   LOAD_PARTICIPATING_POSTS_REQUEST,
   LOAD_POST_REQUEST,
-  OPERATE_POST_REQUEST,
+  CLOSE_POST_REQUEST,
   UPDATE_POST_REQUEST,
   SEARCH_POSTS_REQUEST,
 } from '../eventName/postEventName';
@@ -91,9 +91,9 @@ export const updatePostRequest = (data) => {
   };
 };
 
-export const operatePostRequest = (data) => {
+export const closePostRequest = (data) => {
   return {
-    type: OPERATE_POST_REQUEST,
+    type: CLOSE_POST_REQUEST,
     data,
   };
 };

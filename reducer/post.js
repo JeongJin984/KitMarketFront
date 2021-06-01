@@ -30,12 +30,12 @@ import {
   LOAD_POST_FAILURE,
   LOAD_POST_REQUEST,
   LOAD_POST_SUCCESS,
-  OPERATE_POST_FAILURE,
-  OPERATE_POST_REQUEST,
-  OPERATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
   UPDATE_POST_REQUEST,
   UPDATE_POST_SUCCESS,
+  CLOSE_POST_REQUEST,
+  CLOSE_POST_SUCCESS,
+  CLOSE_POST_FAILURE,
   SEARCH_POSTS_REQUEST,
   SEARCH_POSTS_SUCCESS,
   SEARCH_POSTS_FAILURE,
@@ -75,8 +75,8 @@ const initialState = {
   isDeletedPost: false,
   isUpdatingPost: false,
   isUpdatedPost: false,
-  isOperatingPost: false,
-  isOperatedPost: false,
+  isClosingPost: false,
+  isClosedPost: false,
   error: '',
 };
 
@@ -291,21 +291,21 @@ const postReducer = (state = initialState, action) => {
         draft.error = action.error;
         break;
 
-      case OPERATE_POST_REQUEST:
-        draft.isOperatingPost = true;
-        draft.isOperatedPost = false;
+      case CLOSE_POST_REQUEST:
+        draft.isClosingPost = true;
+        draft.isClosedPost = false;
         draft.error = '';
         break;
 
-      case OPERATE_POST_SUCCESS:
-        draft.isOperatingPost = false;
-        draft.isOperatedPost = true;
+      case CLOSE_POST_SUCCESS:
+        draft.isClosingPost = false;
+        draft.isClosedPost = true;
         draft.error = '';
         break;
 
-      case OPERATE_POST_FAILURE:
-        draft.isOperatingPost = false;
-        draft.isOperatedPost = false;
+      case CLOSE_POST_FAILURE:
+        draft.isClosingPost = false;
+        draft.isClosedPost = false;
         draft.error = action.error;
         break;
 
