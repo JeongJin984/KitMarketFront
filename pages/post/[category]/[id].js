@@ -22,11 +22,17 @@ import {
 import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
 import UpdatePostModal from '../../../components/UpdatePostModal';
-import {deletePostRequest, loadPostRequest} from "../../../data/event/postEvent";
+import {
+  deletePostRequest,
+  loadPostRequest,
+} from '../../../data/event/postEvent';
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
+  // const username = 'a';
+  const { id, writer, title, dueDate, content, maxNum, curNum, applications } =
+    singlePost;
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
@@ -40,17 +46,15 @@ const PostView = () => {
     category = '스터디';
   } else if (singlePost.category === 'carPool') {
     category = '카풀/택시';
+  } else if (singlePost.category === 'miniProject') {
+    category = '미니프로젝트';
   }
 
   const onClickDelete = useCallback(() => {
     if (confirm('게시물을 삭제 하시겠습니까?')) {
-      dispatch(deletePostRequest({ id: singlePost.id }));
+      dispatch(deletePostRequest({ id }));
     }
   }, [singlePost]);
-
-  const UsernameLabel = styled(Label)`
-    margin-left: auto;
-  `;
 
   return (
     <AppLayout>
@@ -72,19 +76,19 @@ const PostView = () => {
               <Col xs="6">
                 <br />
                 <CardTitle className="text-center" tag="h3">
-                  {singlePost.title}
+                  {title}
                 </CardTitle>
               </Col>
               <Col xs="3">
                 <CardText className="text-right" tag="h5">
-                  D-{singlePost.deadLine}
+                  D-{dueDate}
                 </CardText>
                 <CardText
                   className="text-right"
                   tag="h6"
                   style={{ marginTop: '10%' }}
                 >
-                  {singlePost.writer}
+                  {writer}
                 </CardText>
               </Col>
             </Row>
@@ -103,14 +107,13 @@ const PostView = () => {
               style={{ backgroundColor: 'white', height: 400 }}
             >
               <CardText tag="h4" style={{ height: 350 }}>
-                {singlePost.content}
+                {content}
               </CardText>
               <br />
               <Row>
                 <Col xs="6">
                   <CardText tag="h5">
-                    {singlePost.maxNum}명중에{' '}
-                    {singlePost.maxNum - singlePost.curNum}명 구해요
+                    {maxNum}명중에 {maxNum - curNum}명 구해요
                   </CardText>
                 </Col>
                 <Col xs="6">
@@ -167,26 +170,44 @@ const PostView = () => {
               함께하고 싶은 사람
             </CardTitle>
             <hr />
-            <Form style={{ height: 500 }}>
-              {singlePost.applications.map((application) => (
-                <>
-                  <Row>
-                    <Col xs="9">
-                      <FormGroup check>
-                        <Input type="checkbox" />
-                        {application.content}
-                      </FormGroup>
-                    </Col>
-                    <UsernameLabel>{application.username}</UsernameLabel>
-                  </Row>
-                  <br />{' '}
-                </>
-              ))}
+            <Form style={{ height: '85%', position: 'relative' }}>
+              <div
+                style={{
+                  height: '80%',
+                  paddingLeft: '5%',
+                  paddingRight: '5%',
+                  overflow: 'auto',
+                }}
+              >
+                {applications.map((application) => (
+                  <>
+                    <FormGroup
+                      check
+                      style={{ width: '100%', marginBottom: '5%' }}
+                    >
+                      <Input type="checkbox" />
+                      {application.content}
+                      <Label style={{ float: 'right' }}>
+                        {application.username}
+                      </Label>
+                    </FormGroup>
+                    <br />{' '}
+                  </>
+                ))}
+              </div>
+              <hr />
+              <Button
+                color="dark"
+                size="lg"
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  bottom: 0,
+                }}
+              >
+                완료
+              </Button>
             </Form>
-            <hr />
-            <Button color="dark" size="lg">
-              완료
-            </Button>
           </Card>
         </Col>
       </Row>
