@@ -289,6 +289,7 @@ function loadApplicatedPostsAPI(data) {
 function* loadApplicatedPosts(action) {
   try {
     const result = yield call(loadApplicatedPostsAPI, action.data);
+    // const result = applicatedPosts;
     yield put({
       type: LOAD_APPLICATED_POSTS_SUCCESS,
       data: result.data,
@@ -328,11 +329,11 @@ function* deletePost(action) {
 function updatePostAPI(data) {
   return axios({
     method: 'PUT',
-    url: `${defaultURL}/api/${data.category}?id=${data.id}`,
+    url: `${defaultURL}/api/${data.data.category}?id=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
-    data: { writer, title, content, deadLine, maxNum, curNum, category },
+    data: data.data,
   });
 }
 

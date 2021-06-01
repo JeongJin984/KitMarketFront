@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button, Modal } from 'reactstrap';
 import WritePostForm from './WritePostForm';
-import {addPostRequest} from "../data/event/postEvent";
+import { addPostRequest } from '../data/event/postEvent';
 
 const WritePostModal = () => {
   const initialInputs = {
@@ -27,12 +27,17 @@ const WritePostModal = () => {
     homepage: '',
     region: '',
     duration: '',
+    topic: '',
+    projectDuration: '',
     departure: '',
     destination: '',
+    gender: 'MALE',
+    departHours: '',
+    departMinutes: '',
   };
   const { isPosted } = useSelector((state) => state.post);
-  // const { username } = useSelector((state) => state.user.me);
-  const { username } = 1;
+  const { username } = useSelector((state) => state.user.me);
+  // const { username } = 1;
   const [modal, setModal] = useState(false);
   const [inputs, setInputs] = useState(initialInputs);
 
@@ -90,8 +95,13 @@ const WritePostModal = () => {
         homepage,
         region,
         duration,
+        topic,
+        projectDuration,
         departure,
         destination,
+        gender,
+        departHours,
+        departMinutes,
       } = inputs;
       const ampmHours = ampm === 'PM' ? parseInt(hours) + 12 : hours;
       const deadLine = `${year}-${month < 10 ? `0${month}` : month}-${
@@ -105,7 +115,7 @@ const WritePostModal = () => {
         title,
         content,
         deadLine,
-        maxNum,
+        maxNum: parseInt(maxNum),
         curNum: maxNum - needNum,
         category,
       };
@@ -130,6 +140,15 @@ const WritePostModal = () => {
           fare,
           departure,
           destination,
+          gender,
+          departHours,
+          departMinutes,
+        };
+      } else if (category === 'miniProject') {
+        data = {
+          ...data,
+          topic,
+          projectDuration,
         };
       }
       console.log(data);

@@ -48,6 +48,7 @@ const initialState = {
   isLoadedPost: false,
   singlePost: {
     createdAt: '',
+    deadLine: '',
     applications: [],
     participants: [],
   },
