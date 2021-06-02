@@ -97,36 +97,20 @@ const PostView = () => {
             body
             outline
             style={{
-              backgroundColor: '#F3F3F2',
+              backgroundColor: 'white',
               borderColor: '#F3F3F2',
-              height: 700,
+              height: 750,
             }}
           >
             <Row>
-              <Col xs="3">
-                <CardTitle tag="h5">{category}</CardTitle>
-              </Col>
-              <Col xs="6">
-                <br />
-                <CardTitle className="text-center" tag="h3">
-                  {title}
-                </CardTitle>
-              </Col>
-              <Col xs="3">
-                <CardText className="text-right" tag="h5">
+              <Col xs="1">
+                <CardText className="text-center" tag="h5">
                   D-{dueDate}
                 </CardText>
-                <CardText
-                  className="text-right"
-                  tag="h6"
-                  style={{ marginTop: '10%' }}
-                >
-                  {writer}
-                </CardText>
               </Col>
-            </Row>
-            <hr />
-            <Row style={{ display: 'flex' }}>
+              <CardTitle className="text-center" tag="h3">
+                {title}
+              </CardTitle>
               <div style={{ marginLeft: 'auto' }}>
                 <UpdatePostModal />
                 <Button color="#00FFFFFF" size="sm" onClick={onClickDelete}>
@@ -134,32 +118,204 @@ const PostView = () => {
                 </Button>
               </div>
             </Row>
+            <hr />
+            <br />
+            {singlePost.category === 'contest' &&(
+              <div>              
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>카테고리</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">{category}</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>분야</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">리포트</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>주최기관</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">한국도로공사</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>참가대상</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">대학생</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>홈페이지</label>
+                  </Col>
+                  <Col xs="10">
+                    <CardTitle tag="h5">https://www.youtube.com/</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+              </div>
+            )}
+            {singlePost.category === 'study' &&(
+              <div>              
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>카테고리</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">{category}</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>분야</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">언어</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>지역</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">옥계</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>기간</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">6개월</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+              </div>
+            )}
+            {singlePost.category === 'carPool' &&(
+              <div>              
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>카테고리</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">{category}</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>출발지</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">금오공대</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>도착지</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">구미역</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>출발시간</label>
+                  </Col>
+                  <Col xs="10">
+                    <CardTitle tag="h5">AM 10시 30분</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>성별</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">남성</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>요금</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">3000원</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+              </div>
+            )}
+            {singlePost.category === 'miniProject' &&(
+              <div>              
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>카테고리</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">{category}</CardTitle>
+                  </Col>
+                  <Col xs="1"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>기간</label>
+                  </Col>
+                  <Col xs="3">
+                    <CardTitle tag="h5">6개월</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>주제</label>
+                  </Col>
+                  <Col xs="10">
+                    <CardTitle tag="h5">매일 같이 운동하기 프로젝트</CardTitle>
+                  </Col>
+                </Row>
+                <br />
+              </div>
+            )}
+            <Row>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>구하는 인원</label>
+              </Col>
+              <Col xs="6">
+                <CardText tag="h5">
+                  {maxNum}명중에 {maxNum - curNum}명 구해요
+                </CardText>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col xs="2">
+                <label style={{ fontWeight: 'bold' }}>내용</label>
+              </Col>
+            </Row> 
+            <Row>
             <Card
               body
               outline
-              style={{ backgroundColor: 'white', height: 400 }}
+              style={{ backgroundColor: 'white', height: 270 }}
             >
-              <CardText tag="h4" style={{ height: 350 }}>
+              <CardText tag="h5" style={{ height: 150 }}>
                 {content}
               </CardText>
               <br />
-              <Row>
-                <Col xs="6">
-                  <CardText tag="h5">
-                    {maxNum}명중에 {maxNum - curNum}명 구해요
-                  </CardText>
-                </Col>
-                <Col xs="6">
-                  <CardText tag="h6" className="mb-2 text-muted text-right">
-                    {/* 2021.04.08. 6:30PM */}
-                    {createdAt}
-                  </CardText>
-                </Col>
-              </Row>
             </Card>
-            <hr />
+            </Row>
             <Row>
               <Col xs="9">
+                <br />
+                <br />
                 <br />
                 <br />
                 <br />
@@ -168,6 +324,8 @@ const PostView = () => {
                 </Button>{' '}
               </Col>
               <Col xs="3">
+                <br />
+                <br />
                 <Button
                   id="Popover1"
                   outline
@@ -198,7 +356,7 @@ const PostView = () => {
           </Card>
         </Col>
         <Col xs="4" style={{ marginLeft: '-1%' }}>
-          <Card body outline color="secondary" style={{ height: 700 }}>
+          <Card body outline color="secondary" style={{ height: 750 }}>
             <CardTitle className="text-center" tag="h4">
               함께하고 싶은 사람
             </CardTitle>
@@ -250,6 +408,8 @@ const PostView = () => {
           </Card>
         </Col>
       </Row>
+      <br />
+      <br />
     </AppLayout>
   );
 };
