@@ -25,7 +25,7 @@ const JumbotronComponent = () => {
     (e) => {
       e.preventDefault();
       category
-        ? router.push(`/board/${category}/?select=${select}&search=${input}`)
+        ? router.push(`/board/${category}?select=${select}&search=${input}`)
         : router.push(`/?select=${select}&search=${input}`);
     },
     [category, select, input]

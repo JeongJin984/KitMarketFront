@@ -77,8 +77,9 @@ const loadDummyPosts = (data) => {
 //됨
 function* loadPosts(action) {
   try {
-    // const result = yield call(loadPostsAPI, action.data);
-    const result = { data: loadDummyPosts(action.data) };
+    const result = yield call(loadPostsAPI, action.data);
+    console.log(action.data);
+    // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -103,8 +104,9 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    // const result = yield call(loadPostAPI, action.data);
-    const result = dummyPost;
+    console.log(action.data);
+    const result = yield call(loadPostAPI, action.data);
+    // const result = dummyPost;
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -132,6 +134,7 @@ function addPostAPI(data) {
 function* addPost(action) {
   try {
     yield call(addPostAPI, action.data);
+    console.log(action.data);
     yield put({
       type: ADD_POST_SUCCESS,
     });
@@ -159,6 +162,7 @@ function* joinPost(action) {
   try {
     yield call(joinPostAPI, action.data);
     // const result = { data: { username: 'username' } };
+    console.log(action.data);
     yield put({
       type: JOIN_POST_SUCCESS,
     });
@@ -211,6 +215,7 @@ function permitJoinAPI(data) {
 function* permitJoin(action) {
   try {
     yield call(permitJoinAPI, action.data);
+    console.log(action.data);
     yield put({
       type: PERMIT_JOIN_SUCCESS,
     });
@@ -236,6 +241,7 @@ function* loadCreatedPosts(action) {
   try {
     // const result = createdPosts;
     const result = yield call(loadCreatedPostsAPI, action.data);
+    console.log(action.data);
     yield put({
       type: LOAD_CREATED_POSTS_SUCCESS,
       data: result.data,
@@ -262,6 +268,7 @@ function* loadParticipatingPosts(action) {
   try {
     // const result = participatingPosts;
     const result = yield call(loadParticipatingPostsAPI, action.data);
+    console.log(action.data);
     yield put({
       type: LOAD_PARTICIPATING_POSTS_SUCCESS,
       data: result.data,
@@ -289,6 +296,7 @@ function* loadApplicatedPosts(action) {
   try {
     const result = yield call(loadApplicatedPostsAPI, action.data);
     // const result = applicatedPosts;
+    console.log(action.data);
     yield put({
       type: LOAD_APPLICATED_POSTS_SUCCESS,
       data: result.data,
@@ -313,6 +321,7 @@ function deletePostAPI(data) {
 
 function* deletePost(action) {
   try {
+    console.log(action.data);
     yield call(deletePostAPI, action.data);
     yield put({
       type: DELETE_POST_SUCCESS,
@@ -338,6 +347,7 @@ function updatePostAPI(data) {
 
 function* updatePost(action) {
   try {
+    console.log(action.data);
     yield call(updatePostAPI, action.data);
     yield put({
       type: UPDATE_POST_SUCCESS,
@@ -362,6 +372,7 @@ function closePostAPI(data) {
 
 function* closePost(action) {
   try {
+    console.log(action.data);
     yield call(closePostAPI, action.data);
     yield put({
       type: CLOSE_POST_SUCCESS,
@@ -377,7 +388,7 @@ function* closePost(action) {
 function searchPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/post/search?${data.select}=${data.input}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/search?${data.select}=${data.search}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -386,8 +397,9 @@ function searchPostsAPI(data) {
 
 function* searchPosts(action) {
   try {
-    // yield call(searchPostsAPI, action.data);
-    const result = { data: loadDummyPosts(action.data) };
+    console.log(action.data);
+    yield call(searchPostsAPI, action.data);
+    // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: SEARCH_POSTS_SUCCESS,
       data: result.data,
@@ -413,6 +425,7 @@ function loadParticipatingPostAPI(data) {
 function* loadParticipatingPost(action) {
   try {
     // yield call(loadParticipatingPostAPI, action.data);
+    console.log(action.data);
     const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_PARTICIPATING_POST_SUCCESS,
