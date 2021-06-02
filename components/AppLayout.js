@@ -36,7 +36,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Cookie from 'universal-cookie';
 import axios from 'axios';
-import {logoutRequest} from "../data/event/userEvent";
+import { logoutRequest } from '../data/event/userEvent';
 
 const AppLayout = ({ children }) => {
   const [dropdownOpen, setOpen] = useState(false);
@@ -89,13 +89,22 @@ const AppLayout = ({ children }) => {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                   <NavStyle>
-                    {isLoggedIn ? (
+                    {!isLoggedIn ? (
                       <Nav
                         className="mr-auto"
                         style={{ marginLeft: '-6%' }}
                         navbar
                       >
                         <NavItem>
+                          <Link
+                            href={{
+                              pathname: '/board/post',
+                            }}
+                          >
+                            전체
+                          </Link>
+                        </NavItem>
+                        <NavItem style={{ marginLeft: '5%' }}>
                           <Link
                             href={{
                               pathname: '/board/contest',
@@ -116,7 +125,7 @@ const AppLayout = ({ children }) => {
                         <NavItem>
                           <Link
                             href={{
-                              pathname: '/helloworld',
+                              pathname: '/board/miniProject',
                             }}
                           >
                             미니프로젝트　　
@@ -134,7 +143,7 @@ const AppLayout = ({ children }) => {
                         <NavItem>
                           <Link
                             href={{
-                              pathname: '/board/carPool',
+                              pathname: '/board/closed',
                             }}
                           >
                             마감　　
@@ -147,6 +156,15 @@ const AppLayout = ({ children }) => {
                         style={{ marginLeft: '-6%' }}
                         navbar
                       >
+                        <NavItem style={{ marginLeft: '5%' }}>
+                          <Link
+                            href={{
+                              pathname: '/login',
+                            }}
+                          >
+                            전체
+                          </Link>
+                        </NavItem>
                         <NavItem>
                           <Link
                             href={{
@@ -186,7 +204,7 @@ const AppLayout = ({ children }) => {
                         <NavItem>
                           <Link
                             href={{
-                              pathname: '/board/carPool',
+                              pathname: '/login',
                             }}
                           >
                             마감　　
@@ -250,45 +268,52 @@ const AppLayout = ({ children }) => {
       <Row style={{ backgroundColor: '#F2F2F2' }}>
         <Col xs="1"></Col>
         <Col xs="2">
-        <img
-          resizemode={'cover'}
-          style={{ width: '60%' , height: '60%', marginTop:"10%", marginLeft:"20%"}}
-          src="/images/knilogo.png"
-          alt="KnI"
-        />   
+          <img
+            resizemode={'cover'}
+            style={{
+              width: '60%',
+              height: '60%',
+              marginTop: '10%',
+              marginLeft: '20%',
+            }}
+            src="/images/knilogo.png"
+            alt="KnI"
+          />
         </Col>
         <Col xs="2">
-        <br />
-        <div className="mb-1 text-muted ">남정진(팀장)</div> 
-        <div className="mb-1 text-muted ">아키텍쳐 구축</div>
-        <div className="mb-1 text-muted ">로그인 인증/ 구현</div>
-        <div className="mb-1 text-muted ">skawjdwls@gmail.com</div>
-        <br />
+          <br />
+          <div className="mb-1 text-muted ">남정진(팀장)</div>
+          <div className="mb-1 text-muted ">아키텍쳐 구축</div>
+          <div className="mb-1 text-muted ">로그인 인증/ 구현</div>
+          <div className="mb-1 text-muted ">skawjdwls@gmail.com</div>
+          <br />
         </Col>
         <Col xs="2">
-        <br />
-        <div className="mb-1 text-muted ">박기남</div> 
-        <div className="mb-1 text-muted ">API 개발</div>
-        <div className="mb-1 text-muted ">qkrwnlska@gmail.com</div>
+          <br />
+          <div className="mb-1 text-muted ">박기남</div>
+          <div className="mb-1 text-muted ">API 개발</div>
+          <div className="mb-1 text-muted ">qkrwnlska@gmail.com</div>
         </Col>
         <Col xs="2">
-        <br />
-        <div className="mb-1 text-muted ">추헌재</div> 
-        <div className="mb-1 text-muted ">FrontEnd 개발</div>
-        <div className="mb-1 text-muted ">cngjswo@gmail.com</div>
+          <br />
+          <div className="mb-1 text-muted ">추헌재</div>
+          <div className="mb-1 text-muted ">FrontEnd 개발</div>
+          <div className="mb-1 text-muted ">cngjswo@gmail.com</div>
         </Col>
         <Col xs="2">
-        <br />
-        <div className="mb-1 text-muted ">배지원</div> 
-        <div className="mb-1 text-muted ">UI/UX 개발</div>
-        <div className="mb-1 text-muted ">1gbae53@gmail.com</div>
+          <br />
+          <div className="mb-1 text-muted ">배지원</div>
+          <div className="mb-1 text-muted ">UI/UX 개발</div>
+          <div className="mb-1 text-muted ">1gbae53@gmail.com</div>
         </Col>
         <Col xs="1"></Col>
       </Row>
       <Row style={{ backgroundColor: '#F2F2F2' }}>
         <Col xs="4"></Col>
         <Col xs="4">
-          <div className="mb-1 text-muted text-center">금오공과대학교 컴퓨터공학과 창의설계프로젝트 SAT</div>
+          <div className="mb-1 text-muted text-center">
+            금오공과대학교 컴퓨터공학과 창의설계프로젝트 SAT
+          </div>
         </Col>
         <Col xs="4"></Col>
       </Row>
