@@ -9,39 +9,38 @@ import {
   ModalFooter,
   ModalBody,
 } from 'reactstrap';
-import { cancelJoinRequest, joinPostRequest } from '../data/event/postEvent';
+import {
+  cancelJoinRequest,
+  joinPostRequest,
+  closePostRequest,
+} from '../data/event/postEvent';
 
 const JoinButton = ({ singlePost, username }) => {
-  const { writer, applications } = singlePost;
+  const { writer, applications, status } = singlePost;
   const [comment, setComment] = useState('');
   const [isJoined, setIsJoined] = useState(false);
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-  const { isJoinedPost, isCancelledJoin, isOperatedPost } = useSelector(
-    (state) => state.post
-  );
+  const { isJoinedPost, isCancelledJoin } = useSelector((state) => state.post);
 
   const modalToggle = () => setModal(!modal);
 
-  const onClickJoin = useCallback(
+  const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       const data = { id: singlePost.id, username, content: comment };
       dispatch(joinPostRequest(data));
-      if (isJoinedPost) {
-        modalToggle();
-      }
     },
-    [singlePost, username, isJoinedPost, comment]
+    [singlePost, username, comment]
   );
 
   const onClickCancel = useCallback(() => {
     dispatch(cancelJoinRequest({ id: singlePost.id, username }));
   }, [singlePost, username]);
 
-  const onClickOperating = useCallback(() => {
-    if (confirm('게시물을 마감 하시겠습니까?')) {
-      dispatch(operatePostRequest({ id: singlePost.id }));
+  const onClickClose = useCallback(() => {
+    if (confirm('모집을 마감 하시겠습니까?')) {
+      dispatch(closePostRequest({ id: singlePost.id }));
     }
   }, [singlePost]);
 
@@ -59,7 +58,7 @@ const JoinButton = ({ singlePost, username }) => {
     }
   }, [isJoinedPost, isCancelledJoin]);
 
-  if (isJoined) {
+  if (writer !== username && isJoined) {
     return (
       <Button
         color="secondary"
@@ -76,24 +75,7 @@ const JoinButton = ({ singlePost, username }) => {
         취소하기
       </Button>
     );
-  } else if (writer === username) {
-    return (
-      <Button
-        color="secondary"
-        style={{
-          marginLeft: '-120%',
-          width: '90px',
-          height: '90px',
-          borderRadius: '75%',
-          textAlign: 'center',
-          margin: '0',
-        }}
-        onClick={onClickOperating}
-      >
-        마감하기
-      </Button>
-    );
-  } else {
+  } else if (writer !== username && !isJoined) {
     return (
       <>
         <Button
@@ -111,7 +93,7 @@ const JoinButton = ({ singlePost, username }) => {
           함께하기
         </Button>
         <Modal isOpen={modal} toggle={modalToggle}>
-          <Form onSubmit={onClickJoin}>
+          <Form onSubmit={handleSubmit}>
             <ModalHeader toggle={modalToggle}>한마디 남기기</ModalHeader>
             <ModalBody>
               <Input
@@ -134,6 +116,23 @@ const JoinButton = ({ singlePost, username }) => {
           </Form>
         </Modal>
       </>
+    );
+  } else if (writer === username && status === 'POSTING') {
+    return (
+      <Button
+        color="secondary"
+        style={{
+          marginLeft: '-120%',
+          width: '90px',
+          height: '90px',
+          borderRadius: '75%',
+          textAlign: 'center',
+          margin: '0',
+        }}
+        onClick={onClickClose}
+      >
+        마감하기
+      </Button>
     );
   }
 };
