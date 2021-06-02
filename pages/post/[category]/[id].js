@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { wrapper } from '../../../store';
 import { END } from 'redux-saga';
@@ -25,18 +25,21 @@ import UpdatePostModal from '../../../components/UpdatePostModal';
 import {
   deletePostRequest,
   loadPostRequest,
+  permitJoinRequest,
 } from '../../../data/event/postEvent';
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
   const { username } = useSelector((state) => state.user.me);
   // const username = 'a';
+  const [modal, setModal] = useState(false);
+  const [checked, setChecked] = useState(new Set());
+
   const { id, writer, title, dueDate, content, maxNum, curNum, applications } =
     singlePost;
-  const [modal, setModal] = useState(false);
+
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
-
   const toggle = () => setModal(!modal);
 
   let category = '';
@@ -55,6 +58,33 @@ const PostView = () => {
       dispatch(deletePostRequest({ id }));
     }
   }, [singlePost]);
+
+  const handleCheck = useCallback(
+    (e, id) => {
+      const isChecked = e.target.checked;
+      if (isChecked) {
+        checked.add(id);
+        setChecked(checked);
+      } else {
+        checked.delete(id);
+        setChecked(checked);
+      }
+      console.log('checked', checked);
+    },
+    [checked]
+  );
+
+  const handlePermit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const checkedApps = Array.from(checked);
+
+      if (confirm('선택한 신청을 수락하시겠습니까?')) {
+        dispatch(permitJoinRequest({ appIds: checkedApps, hostName: writer }));
+      }
+    },
+    [checked]
+  );
 
   return (
     <AppLayout>
@@ -170,7 +200,10 @@ const PostView = () => {
               함께하고 싶은 사람
             </CardTitle>
             <hr />
-            <Form style={{ height: '85%', position: 'relative' }}>
+            <Form
+              style={{ height: '85%', position: 'relative' }}
+              onSubmit={handlePermit}
+            >
               <div
                 style={{
                   height: '80%',
@@ -185,7 +218,10 @@ const PostView = () => {
                       check
                       style={{ width: '100%', marginBottom: '5%' }}
                     >
-                      <Input type="checkbox" />
+                      <Input
+                        type="checkbox"
+                        onChange={(e) => handleCheck(e, application.id)}
+                      />
                       {application.content}
                       <Label style={{ float: 'right' }}>
                         {application.username}

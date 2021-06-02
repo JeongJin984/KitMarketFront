@@ -300,23 +300,6 @@ export const dummyPost = {
     curNum: 0,
     category: 'study',
     stauts: 'POSTING',
-    participants: [
-      {
-        username: 'participant1',
-        email: 'partEmail1',
-        age: 2,
-      },
-      {
-        username: 'participant0',
-        email: 'partEmail0',
-        age: 1,
-      },
-      {
-        username: 'participant2',
-        email: 'partEmail2',
-        age: 3,
-      },
-    ],
     applications: [
       {
         id: 1,
@@ -332,6 +315,24 @@ export const dummyPost = {
       },
       {
         id: 3,
+        username: 'user3',
+        content: 'content3',
+        chatDate: null,
+      },
+      {
+        id: 4,
+        username: 'user3',
+        content: 'content3',
+        chatDate: null,
+      },
+      {
+        id: 5,
+        username: 'user3',
+        content: 'content3',
+        chatDate: null,
+      },
+      {
+        id: 6,
         username: 'user3',
         content: 'content3',
         chatDate: null,
