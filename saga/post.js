@@ -155,12 +155,10 @@ function joinPostAPI(data) {
 // 됨
 function* joinPost(action) {
   try {
-    console.log(action.data);
-    const result = yield call(joinPostAPI, action.data);
+    yield call(joinPostAPI, action.data);
     // const result = { data: { username: 'username' } };
     yield put({
       type: JOIN_POST_SUCCESS,
-      data: result.data,
     });
   } catch (error) {
     yield put({
@@ -204,13 +202,12 @@ function permitJoinAPI(data) {
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
-    data: { appId: data.id, hostName: data.username },
+    data: { appIds: data.appIds, hostName: data.hostName },
   });
 }
 
 function* permitJoin(action) {
   try {
-    console.log(action.data);
     yield call(permitJoinAPI, action.data);
     yield put({
       type: PERMIT_JOIN_SUCCESS,

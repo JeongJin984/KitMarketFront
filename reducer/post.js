@@ -150,7 +150,6 @@ const postReducer = (state = initialState, action) => {
       case JOIN_POST_SUCCESS:
         draft.isJoiningPost = false;
         draft.isJoinedPost = true;
-        draft.singlePost.applications.push(action.data);
         draft.error = '';
         break;
 
