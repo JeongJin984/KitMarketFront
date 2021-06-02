@@ -42,6 +42,9 @@ import {
   SEARCH_POSTS_REQUEST,
   SEARCH_POSTS_SUCCESS,
   SEARCH_POSTS_FAILURE,
+  LOAD_PARTICIPATING_POST_REQUEST,
+  LOAD_PARTICIPATING_POST_SUCCESS,
+  LOAD_PARTICIPATING_POST_FAILURE,
 } from '../data/eventName/postEventName';
 
 const defaultURL = backURL + '/post-service';
@@ -128,7 +131,6 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
-    console.log(action.data.category);
     yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
@@ -391,9 +393,34 @@ function* searchPosts(action) {
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: SEARCH_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
+function loadParticipatingPostAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/api/${data.category}/participanting?id=${data.id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* loadParticipatingPost(action) {
+  try {
+    // yield call(loadParticipatingPostAPI, action.data);
+    const result = { data: loadDummyPosts(action.data) };
+    yield put({
+      type: LOAD_PARTICIPATING_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_PARTICIPATING_POST_FAILURE,
       error,
     });
   }
@@ -451,6 +478,10 @@ function* watchSearchPosts() {
   yield takeLatest(SEARCH_POSTS_REQUEST, searchPosts);
 }
 
+function* watchLoadParticipatingPost() {
+  yield takeLatest(LOAD_PARTICIPATING_POST_REQUEST, loadParticipatingPost);
+}
+
 export default function* chattingSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -466,5 +497,6 @@ export default function* chattingSaga() {
     fork(watchUpdatePost),
     fork(watchClosePost),
     fork(watchSearchPosts),
+    fork(watchLoadParticipatingPost),
   ]);
 }

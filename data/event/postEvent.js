@@ -12,6 +12,7 @@ import {
   CLOSE_POST_REQUEST,
   UPDATE_POST_REQUEST,
   SEARCH_POSTS_REQUEST,
+  LOAD_PARTICIPATING_POST_REQUEST,
 } from '../eventName/postEventName';
 
 export const loadMainPostsRequest = (data) => {
@@ -101,6 +102,13 @@ export const closePostRequest = (data) => {
 export const searchPostsRequest = (data) => {
   return {
     type: SEARCH_POSTS_REQUEST,
+    data,
+  };
+};
+
+export const loadParticipatingPostRequest = (data) => {
+  return {
+    type: LOAD_PARTICIPATING_POST_REQUEST,
     data,
   };
 };

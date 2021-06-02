@@ -299,7 +299,7 @@ export const dummyPost = {
     maxNum: 3,
     curNum: 0,
     category: 'study',
-    stauts: 'POSTING',
+    status: 'POSTING',
     applications: [
       {
         id: 1,
