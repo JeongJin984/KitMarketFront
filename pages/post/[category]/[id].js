@@ -30,8 +30,9 @@ import {
 
 const PostView = () => {
   const { singlePost } = useSelector((state) => state.post);
-  const { username } = useSelector((state) => state.user.me);
+  const { me } = useSelector((state) => state.user);
   // const username = 'a';
+  const { username } = me;
   const [modal, setModal] = useState(false);
   const [checked, setChecked] = useState(new Set());
 
@@ -78,14 +79,16 @@ const PostView = () => {
     (e) => {
       e.preventDefault();
       const checkedApps = Array.from(checked);
-
-      if (confirm('선택한 신청을 수락하시겠습니까?')) {
+      if (checkedApps.length === 0) {
+        alert('한 개 이상 체크하세요.');
+      } else if (confirm('선택한 신청을 수락하시겠습니까?')) {
         dispatch(permitJoinRequest({ appIds: checkedApps, hostName: writer }));
       }
     },
     [checked]
   );
 
+  const isWriter = username === writer;
   return (
     <AppLayout>
       <Row style={{ padding: '1%', marginTop: '2%' }}>
@@ -189,7 +192,7 @@ const PostView = () => {
                   <PopoverHeader>'작성자' 연락처</PopoverHeader>
                   <PopoverBody>카카오톡 id : asdfghjk</PopoverBody>
                 </UncontrolledPopover>
-                <JoinButton singlePost={singlePost} username={username} />
+                <JoinButton singlePost={singlePost} me={me} />
               </Col>
             </Row>
           </Card>

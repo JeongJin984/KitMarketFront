@@ -15,8 +15,16 @@ import {
   closePostRequest,
 } from '../data/event/postEvent';
 
-const JoinButton = ({ singlePost, username }) => {
-  const { writer, applications, status } = singlePost;
+const JoinButton = ({ singlePost, me }) => {
+  const {
+    writer,
+    applications,
+    status,
+    category,
+    gender: postGender,
+    qualification,
+  } = singlePost;
+  const { username, gender } = me;
   const [comment, setComment] = useState('');
   const [isJoined, setIsJoined] = useState(false);
   const [modal, setModal] = useState(false);
@@ -58,26 +66,15 @@ const JoinButton = ({ singlePost, username }) => {
     }
   }, [isJoinedPost, isCancelledJoin]);
 
-  if (writer !== username && isJoined) {
-    return (
-      <Button
-        color="secondary"
-        style={{
-          marginLeft: '-120%',
-          width: '90px',
-          height: '90px',
-          borderRadius: '75%',
-          textAlign: 'center',
-          margin: '0',
-        }}
-        onClick={onClickCancel}
-      >
-        취소하기
-      </Button>
-    );
-  } else if (writer !== username && !isJoined) {
-    return (
-      <>
+  const isUser = writer !== username;
+  const isWriter = writer === username;
+  const isPosting = status === 'POSTING';
+  const isCarPool = category === 'carPool';
+  const isGenderQualified = gender === postGender || postGender === 'NONE';
+
+  if (isPosting) {
+    if (isUser && isJoined) {
+      return (
         <Button
           color="secondary"
           style={{
@@ -88,51 +85,97 @@ const JoinButton = ({ singlePost, username }) => {
             textAlign: 'center',
             margin: '0',
           }}
-          onClick={modalToggle}
+          onClick={onClickCancel}
         >
-          함께하기
+          취소하기
         </Button>
-        <Modal isOpen={modal} toggle={modalToggle}>
-          <Form onSubmit={handleSubmit}>
-            <ModalHeader toggle={modalToggle}>한마디 남기기</ModalHeader>
-            <ModalBody>
-              <Input
-                type="textarea"
-                name="text"
-                id="comments"
-                placeholder="함께하고 싶어요~"
-                onChange={onChangeComment}
-                required
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button outline color="secondary" onClick={modalToggle}>
-                취소
-              </Button>{' '}
-              <Button type="submit" color="secondary">
-                완료
-              </Button>
-            </ModalFooter>
-          </Form>
-        </Modal>
-      </>
-    );
-  } else if (writer === username && status === 'POSTING') {
+      );
+    } else if (isUser && !isJoined) {
+      if (isCarPool && !isGenderQualified) {
+        return (
+          <>
+            <Button
+              color="secondary"
+              style={{
+                marginLeft: '-120%',
+                width: '90px',
+                height: '90px',
+                borderRadius: '75%',
+                textAlign: 'center',
+                margin: '0',
+              }}
+              onClick={() => alert('성별이 맞지 않습니다.')}
+            >
+              함께하기
+            </Button>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <Button
+              color="secondary"
+              style={{
+                marginLeft: '-120%',
+                width: '90px',
+                height: '90px',
+                borderRadius: '75%',
+                textAlign: 'center',
+                margin: '0',
+              }}
+              onClick={modalToggle}
+            >
+              함께하기
+            </Button>
+            <Modal isOpen={modal} toggle={modalToggle}>
+              <Form onSubmit={handleSubmit}>
+                <ModalHeader toggle={modalToggle}>한마디 남기기</ModalHeader>
+                <ModalBody>
+                  <Input
+                    type="textarea"
+                    name="text"
+                    id="comments"
+                    placeholder="함께하고 싶어요~"
+                    onChange={onChangeComment}
+                    required
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button outline color="secondary" onClick={modalToggle}>
+                    취소
+                  </Button>{' '}
+                  <Button type="submit" color="secondary">
+                    완료
+                  </Button>
+                </ModalFooter>
+              </Form>
+            </Modal>
+          </>
+        );
+      }
+    } else if (isWriter) {
+      return (
+        <Button
+          color="secondary"
+          style={{
+            marginLeft: '-120%',
+            width: '90px',
+            height: '90px',
+            borderRadius: '75%',
+            textAlign: 'center',
+            margin: '0',
+          }}
+          onClick={onClickClose}
+        >
+          마감하기
+        </Button>
+      );
+    }
+  } else {
     return (
-      <Button
-        color="secondary"
-        style={{
-          marginLeft: '-120%',
-          width: '90px',
-          height: '90px',
-          borderRadius: '75%',
-          textAlign: 'center',
-          margin: '0',
-        }}
-        onClick={onClickClose}
-      >
-        마감하기
-      </Button>
+      <>
+        <button>a</button>
+      </>
     );
   }
 };
