@@ -89,7 +89,7 @@ const AppLayout = ({ children }) => {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                   <NavStyle>
-                    {!isLoggedIn ? (
+                    {isLoggedIn ? (
                       <Nav
                         className="mr-auto"
                         style={{ marginLeft: '-6%' }}
