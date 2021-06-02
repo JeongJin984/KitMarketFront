@@ -19,14 +19,14 @@ const BoardPagination = () => {
 
   const { category, status, select, search } = router.query;
   const route = (page) => {
-    if (category) {
-      router.push(`/board/${category}?page=${page}`);
-    } else if (status) {
-      router.push(`/?status=${status}&page=${page}`);
+    if (category && status) {
+      router.push(`/board/${category}?status=${status}&page=${page}`);
     } else if (select) {
-      router.push(`/?select=${select}&search=${search}&page=${page}`);
-    } else {
-      router.push(`/?page=${page}`);
+      router.push(
+        `/board/${category}?select=${select}&search=${search}&page=${page}`
+      );
+    } else if (category) {
+      router.push(`/board/${category}?page=${page}`);
     }
   };
 
