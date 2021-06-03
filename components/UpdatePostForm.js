@@ -245,6 +245,7 @@ const UpdatePostForm = ({
               <Col xs="2" style={{ marginRight: '-3%' }}>
                 <Input
                   name="departMinutes"
+                  type="number"
                   min="0"
                   max="59"
                   onChange={onChange}
@@ -276,6 +277,7 @@ const UpdatePostForm = ({
               <Col xs="3">
                 <Input
                   name="fare"
+                  type="number"
                   onChange={onChange}
                   defaultValue={fare}
                   placeholder=""
@@ -452,6 +454,7 @@ const UpdatePostForm = ({
           <Col xs="2" style={{ marginRight: '-3%' }}>
             <Input
               name="minutes"
+              type="number"
               min="0"
               max="59"
               onChange={onChange}

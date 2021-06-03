@@ -195,6 +195,7 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               <Col xs="2" style={{ marginRight: '-3%' }}>
                 <Input
                   name="departMinutes"
+                  type="number"
                   min="0"
                   max="59"
                   onChange={onChange}
@@ -225,6 +226,7 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
               <Col xs="3">
                 <Input
                   name="fare"
+                  type="number"
                   onChange={onChange}
                   placeholder=""
                   required
@@ -379,6 +381,7 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
           <Col xs="2" style={{ marginRight: '-3%' }}>
             <Input
               name="minutes"
+              type="number"
               min="0"
               max="59"
               onChange={onChange}

@@ -141,8 +141,10 @@ const WritePostModal = () => {
           departure,
           destination,
           gender,
-          departHours,
-          departMinutes,
+          departTime: {
+            hours: departHours,
+            minutes: departMinutes,
+          },
         };
       } else if (category === 'miniProject') {
         data = {
