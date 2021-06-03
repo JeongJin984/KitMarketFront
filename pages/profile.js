@@ -17,6 +17,11 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Modal, 
+  ModalHeader, 
+  ModalBody, 
+  ModalFooter,
+  Input,
 } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 import classnames from 'classnames';
@@ -38,6 +43,8 @@ const profile = () => {
   );
   const router = useRouter();
   const tab = router.query.tab || '';
+  const [modal, setModal] = useState(false);
+  const togglebutton = () => setModal(!modal);
 
   const toggle = useCallback(
     (tab) => {
