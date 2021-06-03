@@ -45,7 +45,9 @@ const JoinButton = ({ singlePost, me }) => {
 
   const onClickCancel = useCallback(() => {
     dispatch(cancelJoinRequest({ id: singlePost.id, username }));
-  }, [singlePost, username]);
+  }, 
+  [singlePost, username]
+  );
 
   const onClickClose = useCallback(() => {
     if (confirm('모집을 마감 하시겠습니까?')) {
@@ -59,7 +61,9 @@ const JoinButton = ({ singlePost, me }) => {
 
   useEffect(() => {
     setIsJoined(applications.some((a) => a.username === username));
-  }, [applications, username]);
+  }, 
+  [applications, username]
+  );
 
   useEffect(() => {
     if (isJoinedPost || isCancelledJoin) {

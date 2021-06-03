@@ -101,7 +101,7 @@ const AppLayout = ({ children }) => {
                               pathname: '/board/post',
                             }}
                           >
-                            전체
+                            전체　　
                           </Link>
                         </NavItem>
                         <NavItem style={{ marginLeft: '5%' }}>
@@ -162,7 +162,7 @@ const AppLayout = ({ children }) => {
                               pathname: '/login',
                             }}
                           >
-                            전체
+                            전체　　
                           </Link>
                         </NavItem>
                         <NavItem>
