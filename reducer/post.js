@@ -36,9 +36,12 @@ import {
   CLOSE_POST_REQUEST,
   CLOSE_POST_SUCCESS,
   CLOSE_POST_FAILURE,
-  SEARCH_POSTS_REQUEST,
-  SEARCH_POSTS_SUCCESS,
-  SEARCH_POSTS_FAILURE,
+  SEARCH_POSTS_TITLE_REQUEST,
+  SEARCH_POSTS_TITLE_SUCCESS,
+  SEARCH_POSTS_TITLE_FAILURE,
+  SEARCH_POSTS_USERNAME_REQUEST,
+  SEARCH_POSTS_USERNAME_SUCCESS,
+  SEARCH_POSTS_USERNAME_FAILURE,
   LOAD_PARTICIPATING_POST_REQUEST,
   LOAD_PARTICIPATING_POST_SUCCESS,
   LOAD_PARTICIPATING_POST_FAILURE,
@@ -311,13 +314,13 @@ const postReducer = (state = initialState, action) => {
         draft.error = action.error;
         break;
 
-      case SEARCH_POSTS_REQUEST:
+      case SEARCH_POSTS_TITLE_REQUEST:
         draft.isSearchingPost = true;
         draft.isSearchedPost = false;
         draft.error = '';
         break;
 
-      case SEARCH_POSTS_SUCCESS:
+      case SEARCH_POSTS_TITLE_SUCCESS:
         draft.isSearchingPost = false;
         draft.isSearchedPost = true;
         draft.mainPosts = action.data.data;
@@ -327,7 +330,29 @@ const postReducer = (state = initialState, action) => {
         draft.error = '';
         break;
 
-      case SEARCH_POSTS_FAILURE:
+      case SEARCH_POSTS_TITLE_FAILURE:
+        draft.isSearchingPost = false;
+        draft.isSearchedPost = false;
+        draft.error = action.error;
+        break;
+
+      case SEARCH_POSTS_USERNAME_REQUEST:
+        draft.isSearchingPost = true;
+        draft.isSearchedPost = false;
+        draft.error = '';
+        break;
+
+      case SEARCH_POSTS_USERNAME_SUCCESS:
+        draft.isSearchingPost = false;
+        draft.isSearchedPost = true;
+        draft.mainPosts = action.data.data;
+        draft.meta.size = action.data.size;
+        draft.meta.currentPage = action.data.currentPage;
+        draft.meta.maxPage = action.data.maxPage;
+        draft.error = '';
+        break;
+
+      case SEARCH_POSTS_USERNAME_FAILURE:
         draft.isSearchingPost = false;
         draft.isSearchedPost = false;
         draft.error = action.error;

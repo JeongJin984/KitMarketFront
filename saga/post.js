@@ -39,9 +39,12 @@ import {
   CLOSE_POST_REQUEST,
   CLOSE_POST_SUCCESS,
   CLOSE_POST_FAILURE,
-  SEARCH_POSTS_REQUEST,
-  SEARCH_POSTS_SUCCESS,
-  SEARCH_POSTS_FAILURE,
+  SEARCH_POSTS_TITLE_REQUEST,
+  SEARCH_POSTS_TITLE_SUCCESS,
+  SEARCH_POSTS_TITLE_FAILURE,
+  SEARCH_POSTS_USERNAME_REQUEST,
+  SEARCH_POSTS_USERNAME_SUCCESS,
+  SEARCH_POSTS_USERNAME_FAILURE,
   LOAD_PARTICIPATING_POST_REQUEST,
   LOAD_PARTICIPATING_POST_SUCCESS,
   LOAD_PARTICIPATING_POST_FAILURE,
@@ -60,7 +63,7 @@ const {
 function loadPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/${data.category}?status=${data.status}offset=${data.page}`,
+    url: `${defaultURL}/api/${data.category}?status=${data.status}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -77,9 +80,9 @@ const loadDummyPosts = (data) => {
 //됨
 function* loadPosts(action) {
   try {
-    const result = yield call(loadPostsAPI, action.data);
-    console.log(action.data);
-    // const result = { data: loadDummyPosts(action.data) };
+    // const result = yield call(loadPostsAPI, action.data);
+    console.log(action.data, 'loadPostsssssssssssss');
+    const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -104,7 +107,7 @@ function loadPostAPI(data) {
 
 function* loadPost(action) {
   try {
-    console.log(action.data);
+    console.log(action.data, 'load posttttttt');
     const result = yield call(loadPostAPI, action.data);
     // const result = dummyPost;
     yield put({
@@ -134,7 +137,7 @@ function addPostAPI(data) {
 function* addPost(action) {
   try {
     yield call(addPostAPI, action.data);
-    console.log(action.data);
+    console.log(action.data, 'adddddddddd');
     yield put({
       type: ADD_POST_SUCCESS,
     });
@@ -159,10 +162,9 @@ function joinPostAPI(data) {
 
 // 됨
 function* joinPost(action) {
+  console.log(action.data, 'joinnnnnnnnnnn');
   try {
     yield call(joinPostAPI, action.data);
-    // const result = { data: { username: 'username' } };
-    console.log(action.data);
     yield put({
       type: JOIN_POST_SUCCESS,
     });
@@ -188,7 +190,7 @@ function cancelJoinAPI(data) {
 //됨
 function* cancelJoin(action) {
   try {
-    console.log(action.data);
+    console.log(action.data, 'cancelllllllll');
     yield call(cancelJoinAPI, action.data);
     yield put({
       type: CANCEL_JOIN_SUCCESS,
@@ -214,8 +216,8 @@ function permitJoinAPI(data) {
 
 function* permitJoin(action) {
   try {
+    console.log(action.data, 'permitttttttttttttt');
     yield call(permitJoinAPI, action.data);
-    console.log(action.data);
     yield put({
       type: PERMIT_JOIN_SUCCESS,
     });
@@ -239,9 +241,9 @@ function loadCreatedPostsAPI(data) {
 //됨
 function* loadCreatedPosts(action) {
   try {
+    console.log(action.data, 'my postsssssss');
     // const result = createdPosts;
     const result = yield call(loadCreatedPostsAPI, action.data);
-    console.log(action.data);
     yield put({
       type: LOAD_CREATED_POSTS_SUCCESS,
       data: result.data,
@@ -257,7 +259,7 @@ function* loadCreatedPosts(action) {
 function loadParticipatingPostsAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/post/participants?username=${data.username}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/participant?username=${data.username}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -266,9 +268,9 @@ function loadParticipatingPostsAPI(data) {
 //됨
 function* loadParticipatingPosts(action) {
   try {
+    console.log(action.data, 'participating postsssss');
     // const result = participatingPosts;
     const result = yield call(loadParticipatingPostsAPI, action.data);
-    console.log(action.data);
     yield put({
       type: LOAD_PARTICIPATING_POSTS_SUCCESS,
       data: result.data,
@@ -294,9 +296,9 @@ function loadApplicatedPostsAPI(data) {
 //됨
 function* loadApplicatedPosts(action) {
   try {
+    console.log(action.data, 'applicated postssssss');
     const result = yield call(loadApplicatedPostsAPI, action.data);
     // const result = applicatedPosts;
-    console.log(action.data);
     yield put({
       type: LOAD_APPLICATED_POSTS_SUCCESS,
       data: result.data,
@@ -312,7 +314,7 @@ function* loadApplicatedPosts(action) {
 function deletePostAPI(data) {
   return axios({
     method: 'DELETE',
-    url: `${defaultURL}/api/post/${data.id}`,
+    url: `${defaultURL}/api/post?id=${data.id}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -321,7 +323,7 @@ function deletePostAPI(data) {
 
 function* deletePost(action) {
   try {
-    console.log(action.data);
+    console.log(action.data, 'deleteeeeeee');
     yield call(deletePostAPI, action.data);
     yield put({
       type: DELETE_POST_SUCCESS,
@@ -347,7 +349,7 @@ function updatePostAPI(data) {
 
 function* updatePost(action) {
   try {
-    console.log(action.data);
+    console.log(action.data, 'updateeee');
     yield call(updatePostAPI, action.data);
     yield put({
       type: UPDATE_POST_SUCCESS,
@@ -372,7 +374,7 @@ function closePostAPI(data) {
 
 function* closePost(action) {
   try {
-    console.log(action.data);
+    console.log(action.data, 'closeee');
     yield call(closePostAPI, action.data);
     yield put({
       type: CLOSE_POST_SUCCESS,
@@ -397,7 +399,7 @@ function searchPostsAPI(data) {
 
 function* searchPosts(action) {
   try {
-    console.log(action.data);
+    console.log(action.data, 'searchhhhhhhhhhhhhhhh');
     yield call(searchPostsAPI, action.data);
     // const result = { data: loadDummyPosts(action.data) };
     yield put({
@@ -407,6 +409,60 @@ function* searchPosts(action) {
   } catch (error) {
     yield put({
       type: SEARCH_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
+function searchPostsTitleAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/api/post/search/title?key=${data.search}&offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* searchPostsTitle(action) {
+  try {
+    console.log(action.data, 'searchhhhhhhhhhhhhhhhtitle');
+    yield call(searchPostsTitleAPI, action.data);
+    // const result = { data: loadDummyPosts(action.data) };
+    yield put({
+      type: SEARCH_POSTS_TITLE_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: SEARCH_POSTS_TITLE_FAILURE,
+      error,
+    });
+  }
+}
+
+function searchPostsUsernameAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/api/post/search/username?key=${data.search}&offset=${data.page}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
+}
+
+function* searchPostsUsername(action) {
+  try {
+    console.log(action.data, 'searchhhhhhhhhhhhhhhhusername');
+    yield call(searchPostsUsernameAPI, action.data);
+    // const result = { data: loadDummyPosts(action.data) };
+    yield put({
+      type: SEARCH_POSTS_USERNAME_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: SEARCH_POSTS_USERNAME_FAILURE,
       error,
     });
   }
@@ -487,8 +543,12 @@ function* watchClosePost() {
   yield takeLatest(CLOSE_POST_REQUEST, closePost);
 }
 
-function* watchSearchPosts() {
-  yield takeLatest(SEARCH_POSTS_REQUEST, searchPosts);
+function* watchSearchPostsTitle() {
+  yield takeLatest(SEARCH_POSTS_TITLE_REQUEST, searchPostsTitle);
+}
+
+function* watchSearchPostsUsername() {
+  yield takeLatest(SEARCH_POSTS_USERNAME_REQUEST, searchPostsUsername);
 }
 
 function* watchLoadParticipatingPost() {
@@ -509,7 +569,8 @@ export default function* chattingSaga() {
     fork(watchDeletePost),
     fork(watchUpdatePost),
     fork(watchClosePost),
-    fork(watchSearchPosts),
+    fork(watchSearchPostsTitle),
+    fork(watchSearchPostsUsername),
     fork(watchLoadParticipatingPost),
   ]);
 }

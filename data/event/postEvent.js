@@ -11,7 +11,8 @@ import {
   LOAD_POST_REQUEST,
   CLOSE_POST_REQUEST,
   UPDATE_POST_REQUEST,
-  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_TITLE_REQUEST,
+  SEARCH_POSTS_USERNAME_REQUEST,
   LOAD_PARTICIPATING_POST_REQUEST,
 } from '../eventName/postEventName';
 
@@ -99,9 +100,16 @@ export const closePostRequest = (data) => {
   };
 };
 
-export const searchPostsRequest = (data) => {
+export const searchPostsTitleRequest = (data) => {
   return {
-    type: SEARCH_POSTS_REQUEST,
+    type: SEARCH_POSTS_TITLE_REQUEST,
+    data,
+  };
+};
+
+export const searchPostsUsernameRequest = (data) => {
+  return {
+    type: SEARCH_POSTS_USERNAME_REQUEST,
     data,
   };
 };

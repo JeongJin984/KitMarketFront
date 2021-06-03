@@ -9,7 +9,7 @@ export const dummyPosts = [
         writer: 'Account0',
         title: 'Dummy',
         content: "I'm Dummy",
-        deadLine: 4,
+        dueDate: 4,
         createdAt: '2021-04-10T12:56:18.583858',
         maxNum: 3,
         curNum: 1,
@@ -288,7 +288,7 @@ export const dummyPosts = [
 
 export const dummyPost = {
   data: {
-    id: 9,
+    id: 1,
     writer: 'Account0',
     title: 'Dummy0',
     content: "I'm Dummy00",

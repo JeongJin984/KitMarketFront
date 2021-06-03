@@ -13,7 +13,8 @@ import WritePostModal from '../../components/WritePostModal';
 import BoardPagination from '../../components/BoardPagination';
 import {
   loadMainPostsRequest,
-  searchPostsRequest,
+  searchPostsTitleRequest,
+  searchPostsUsernameRequest,
 } from '../../data/event/postEvent';
 
 const Category = () => {
@@ -58,22 +59,25 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const status = query.status;
     const page = query.page - 1 || 0;
     const { select, search } = query;
-
-    const data = { category, status, page };
+    console.log('queeeeeeeeeeeeee', query);
     const cookie = req ? req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-
-    if (search) {
-      store.dispatch(searchPostsRequest({ select, search, page }));
-    } else {
-      store.dispatch(loadMainPostsRequest(data));
+    if (q !== 'style.css') {
+      if (search && select === 'title') {
+        store.dispatch(searchPostsTitleRequest({ search, page }));
+      } else if (search && select === 'username') {
+        store.dispatch(searchPostsUsernameRequest({ search, page }));
+      } else if (status) {
+        store.dispatch(loadMainPostsRequest({ category, status, page }));
+      } else {
+        store.dispatch(loadMainPostsRequest({ category, page }));
+      }
+      store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+      await store.sagaTask.toPromise();
     }
-
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-    await store.sagaTask.toPromise();
   }
 );
 
