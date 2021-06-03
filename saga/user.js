@@ -19,7 +19,7 @@ import {
 import axios from 'axios';
 import { frontURL, backURL } from '../config/config';
 
-const defaultURL = backURL + "/user-service";
+const defaultURL = backURL + '/user-service';
 
 function logInAPI(data) {
   return axios({
@@ -64,7 +64,7 @@ function loadUserAPI() {
   return axios({
     method: 'GET',
     url: `${defaultURL}/user`,
-  })
+  });
 }
 
 function* logIn(action) {
@@ -83,15 +83,15 @@ function* logIn(action) {
 
 function* logOut() {
   try {
-    console.log("asdfasdfasdf")
+    console.log('asdfasdfasdf');
     yield call(logOutAPI);
     yield put({
-      type: LOGOUT_SUCCESS
-    })
-  } catch(error) {
+      type: LOGOUT_SUCCESS,
+    });
+  } catch (error) {
     yield put({
-      type: LOGOUT_FAILURE
-    })
+      type: LOGOUT_FAILURE,
+    });
   }
 }
 
@@ -106,14 +106,17 @@ function* signUp(action) {
 
 function* loadProfile(action) {
   try {
-    const result = yield call(loadProfileAPI);
+    // const result = yield call(loadProfileAPI);
+    const result = { data: { username: 'asd' } };
     yield put({
       type: LOAD_PROFILE_SUCCESS,
       data: result.data,
     });
   } catch (error) {
-    type: LOAD_PROFILE_FAILURE;
-    error: error;
+    yield put({
+      type: LOAD_PROFILE_FAILURE,
+      error: error,
+    });
   }
 }
 function* loadUser() {
@@ -121,13 +124,13 @@ function* loadUser() {
     const result = yield call(loadUserAPI);
     yield put({
       type: LOAD_USER_SUCCESS,
-      data: result.data
-    })
+      data: result.data,
+    });
   } catch (error) {
     yield put({
       type: LOAD_USER_FAILURE,
-      error: error
-    })
+      error: error,
+    });
   }
 }
 
@@ -157,6 +160,6 @@ export default function* userSaga() {
     fork(watchLogout),
     fork(watchSignUp),
     fork(watchLoadProfile),
-    fork(watchLoadUser)
+    fork(watchLoadUser),
   ]);
 }

@@ -80,9 +80,9 @@ const loadDummyPosts = (data) => {
 //됨
 function* loadPosts(action) {
   try {
-    // const result = yield call(loadPostsAPI, action.data);
+    const result = yield call(loadPostsAPI, action.data);
     console.log(action.data, 'loadPostsssssssssssss');
-    const result = { data: loadDummyPosts(action.data) };
+    // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -387,33 +387,6 @@ function* closePost(action) {
   }
 }
 
-function searchPostsAPI(data) {
-  return axios({
-    method: 'GET',
-    url: `${defaultURL}/api/post/search?${data.select}=${data.search}&offset=${data.page}`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
-function* searchPosts(action) {
-  try {
-    console.log(action.data, 'searchhhhhhhhhhhhhhhh');
-    yield call(searchPostsAPI, action.data);
-    // const result = { data: loadDummyPosts(action.data) };
-    yield put({
-      type: SEARCH_POSTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (error) {
-    yield put({
-      type: SEARCH_POSTS_FAILURE,
-      error,
-    });
-  }
-}
-
 function searchPostsTitleAPI(data) {
   return axios({
     method: 'GET',
@@ -427,7 +400,7 @@ function searchPostsTitleAPI(data) {
 function* searchPostsTitle(action) {
   try {
     console.log(action.data, 'searchhhhhhhhhhhhhhhhtitle');
-    yield call(searchPostsTitleAPI, action.data);
+    const result = yield call(searchPostsTitleAPI, action.data);
     // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: SEARCH_POSTS_TITLE_SUCCESS,
@@ -454,7 +427,7 @@ function searchPostsUsernameAPI(data) {
 function* searchPostsUsername(action) {
   try {
     console.log(action.data, 'searchhhhhhhhhhhhhhhhusername');
-    yield call(searchPostsUsernameAPI, action.data);
+    const result = yield call(searchPostsUsernameAPI, action.data);
     // const result = { data: loadDummyPosts(action.data) };
     yield put({
       type: SEARCH_POSTS_USERNAME_SUCCESS,
@@ -480,7 +453,7 @@ function loadParticipatingPostAPI(data) {
 
 function* loadParticipatingPost(action) {
   try {
-    // yield call(loadParticipatingPostAPI, action.data);
+    //const result = yield call(loadParticipatingPostAPI, action.data);
     console.log(action.data);
     const result = { data: loadDummyPosts(action.data) };
     yield put({
