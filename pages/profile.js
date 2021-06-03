@@ -23,12 +23,12 @@ import classnames from 'classnames';
 import ProfilePost from '../components/ProfilePost';
 import ProfilePagination from '../components/ProfilePagination';
 import { useRouter } from 'next/router';
-import {loadProfileRequest} from "../data/event/userEvent";
+import { loadProfileRequest } from '../data/event/userEvent';
 import {
   loadApplicatedPostsRequest,
   loadCreatedPostsRequest,
-  loadParticipatingPostsRequest
-} from "../data/event/postEvent";
+  loadParticipatingPostsRequest,
+} from '../data/event/postEvent';
 
 const profile = () => {
   const [activeTab, setActiveTab] = useState('1');
@@ -262,8 +262,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const tab = query.tab || 'created';
     const page = query.page - 1 || 0;
     const state = store.getState();
-    // const { username } = state.user.me;
-    const username = 'user';
+    const { username } = state.user.me;
     const data = { page, username };
     store.dispatch(loadProfileRequest());
     if (tab === 'created') store.dispatch(loadCreatedPostsRequest(data));
