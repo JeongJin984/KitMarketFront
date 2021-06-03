@@ -1,22 +1,27 @@
 import produce from 'immer';
 import {
   LOAD_PROFILE_FAILURE,
-  LOAD_PROFILE_REQUEST, LOAD_PROFILE_SUCCESS,
+  LOAD_PROFILE_REQUEST,
+  LOAD_PROFILE_SUCCESS,
   LOAD_USER_FAILURE,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
-  LOGIN_SUCCESS, LOGOUT_REQUEST, SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS
-} from "../data/eventName/userEventName";
+  LOGIN_SUCCESS,
+  LOGOUT_REQUEST,
+  SIGNUP_FAILURE,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+} from '../data/eventName/userEventName';
 
 export const initialState = {
   error: null,
-  isLoggedIn: false,
+  isLoggedIn: true,
   isLogginIn: false,
   isSignedUp: false,
   isSigningUp: false,
-  me: null,
+  me: { username: 'user1', gender: 'MALE' },
   isLoadingProfile: false,
   isLoadedProfile: false,
   profile: null,
