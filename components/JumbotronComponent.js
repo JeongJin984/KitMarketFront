@@ -21,9 +21,14 @@ const JumbotronComponent = () => {
     setInput(e.target.value);
   }, []);
 
+  const onChangeSelect = useCallback((e) => {
+    setSelect(e.target.value);
+  }, []);
+
   const onClickSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      console.log('submit', select);
       router.push(`/board/${category}?select=${select}&search=${input}`);
     },
     [category, select, input]
@@ -80,16 +85,10 @@ const JumbotronComponent = () => {
                     zIndex: 3,
                   }}
                   name="select"
+                  onChange={onChangeSelect}
                 >
-                  <option value="title" onClick={() => setSelect('title')}>
-                    제목
-                  </option>
-                  <option
-                    value="username"
-                    onClick={() => setSelect('username')}
-                  >
-                    작성자
-                  </option>
+                  <option value="title">제목</option>
+                  <option value="username">작성자</option>
                 </Input>
                 <Input
                   type="text"

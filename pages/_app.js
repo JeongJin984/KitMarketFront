@@ -15,11 +15,7 @@ class MyApp extends App {
     }
     if (
       !state.user.me &&
-      !(
-        ctx.pathname === '/login' ||
-        ctx.pathname === '/signup' ||
-        ctx.pathname === '/'
-      )
+      !(ctx.pathname === '/login' || ctx.pathname === '/signup')
     ) {
       ctx.store.dispatch(loadUserRequest());
     }
