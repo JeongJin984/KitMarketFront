@@ -153,7 +153,104 @@ const profile = () => {
             </Col>
           </Row>
           <div className="col text-right">
-            <Button color="secondary">Edit</Button>
+            <Button color="secondary" onClick={togglebutton}>Edit</Button>
+            <Modal  size="lg" isOpen={modal} toggle={togglebutton}>
+              <ModalHeader toggle={togglebutton}>내 프로필 수정</ModalHeader>
+              <ModalBody>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Username</label>
+                  </Col>
+                  <Col xs="6">
+                    <Input placeholder="username" />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>E-mail</label>
+                  </Col>
+                  <Col xs="6">
+                    <Input placeholder="E-mail" />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Birth</label>
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                  <Col xs="2">
+                    <Input
+                      type="number"
+                      min="1"
+                      max="12"
+                      placeholder=""
+                      required
+                    />
+                  </Col>
+                  <Col xs="2">
+                    <Input
+                      type="number"
+                      min="1"
+                      max="31"
+                      placeholder=""
+                      required
+                    />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Gender</label>
+                  </Col>
+                  <Col xs="3">
+                    <Input type="select">
+                      <option>남자</option>
+                      <option>여자</option>
+                    </Input>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Phone</label>
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>KaKao ID</label>
+                  </Col>
+                  <Col xs="6">
+                    <Input placeholder="kakao id" />
+                  </Col>
+                </Row>
+                <br />
+              </ModalBody>
+              <ModalFooter>
+                <Button outline color="secondary" onClick={togglebutton}>취소</Button>{' '}
+                <Button color="secondary" onClick={togglebutton}>수정</Button>
+              </ModalFooter>
+            </Modal>
           </div>
           <br />
           <div>
