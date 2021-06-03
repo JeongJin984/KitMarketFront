@@ -82,13 +82,16 @@ const PostView = () => {
       if (checkedApps.length === 0) {
         alert('한 개 이상 체크하세요.');
       } else if (confirm('선택한 신청을 수락하시겠습니까?')) {
-        dispatch(permitJoinRequest({ appIds: checkedApps, hostName: writer }));
+        dispatch(
+          permitJoinRequest({ appIds: checkedApps, hostName: username })
+        );
       }
     },
     [checked]
   );
 
   const isWriter = username === writer;
+
   return (
     <AppLayout>
       <Row style={{ padding: '1%', marginTop: '2%' }}>
@@ -259,13 +262,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const cookie = req ? req.headers.cookie : '';
     const { category, id } = query;
     const data = { category, id };
+
     axios.defaults.headers.Cookie = '';
     if (req && cookie) {
       axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
     }
-    store.dispatch(loadPostRequest(data));
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
-    await store.sagaTask.toPromise();
+    if (id !== 'style.css') {
+      store.dispatch(loadPostRequest(data));
+      store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+      await store.sagaTask.toPromise();
+    }
   }
 );
 

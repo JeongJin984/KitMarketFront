@@ -24,9 +24,7 @@ const JumbotronComponent = () => {
   const onClickSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      category
-        ? router.push(`/board/${category}?select=${select}&search=${input}`)
-        : router.push(`/?select=${select}&search=${input}`);
+      router.push(`/board/${category}?select=${select}&search=${input}`);
     },
     [category, select, input]
   );
@@ -133,7 +131,7 @@ const JumbotronComponent = () => {
                     href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
                   />
                   <link rel="stylesheet" href="style.css" />
-                  <a className="search-btn" href="#">
+                  <a className="search-btn">
                     <i className="fas fa-search" style={{ color: 'black' }} />
                   </a>
                 </Button>

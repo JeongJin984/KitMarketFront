@@ -31,7 +31,7 @@ const PostCard = ({ postInfo }) => {
             </Col>
             <Col xs="5">
               <CardTitle tag="h5" className="text-right">
-                D-{postInfo.deadLine}
+                D-{postInfo.dueDate}
               </CardTitle>
             </Col>
             <br />

@@ -37,6 +37,7 @@ const JoinButton = ({ singlePost, me }) => {
     (e) => {
       e.preventDefault();
       const data = { id: singlePost.id, username, content: comment };
+      console.log(data);
       dispatch(joinPostRequest(data));
     },
     [singlePost, username, comment]
@@ -171,11 +172,21 @@ const JoinButton = ({ singlePost, me }) => {
         </Button>
       );
     }
-  } else {
+  } else if (!isPosting) {
     return (
-      <>
-        <button>a</button>
-      </>
+      <Button
+        color="secondary"
+        style={{
+          marginLeft: '-120%',
+          width: '90px',
+          height: '90px',
+          borderRadius: '75%',
+          textAlign: 'center',
+          margin: '0',
+        }}
+      >
+        모집완료
+      </Button>
     );
   }
 };
