@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { wrapper } from '../../store';
@@ -21,6 +21,17 @@ const Category = () => {
   const { mainPosts } = useSelector((state) => state.post);
   const router = useRouter();
   const { category } = router.query;
+
+  const onChangeSelect = useCallback((e) => {
+    const selected = e.target.value;
+    if (selected === 'POSTING') {
+      router.push(`/board/${category}?status=POSTING`);
+    } else if (selected === 'CLOSED') {
+      router.push(`/board/${category}?status=CLOSED`);
+    } else {
+      router.push(`/board/${category}`);
+    }
+  }, []);
   return (
     <AppLayout>
       <JumbotronComponent />
@@ -28,16 +39,11 @@ const Category = () => {
         style={{ width: 'min-content', marginLeft: 'auto' }}
         type="select"
         name="select"
+        onChange={onChangeSelect}
       >
-        <option onClick={() => router.push(`/board/${category}`)}>전체</option>
-        <option
-          onClick={() => router.push(`/board/${category}?status=POSTING`)}
-        >
-          모집중인 모임
-        </option>
-        <option onClick={() => router.push(`/board/${category}?status=CLOSED`)}>
-          모집 종료된 모임
-        </option>
+        <option value="ALL">전체</option>
+        <option value="POSTING">모집중인 모임</option>
+        <option value="CLOSED">모집 종료된 모임</option>
       </Input>
       <Row>
         {mainPosts.map((postInfo) => (
@@ -69,6 +75,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (search && select === 'title') {
         store.dispatch(searchPostsTitleRequest({ search, page }));
       } else if (search && select === 'username') {
+        console.log('titleeee');
         store.dispatch(searchPostsUsernameRequest({ search, page }));
       } else if (status) {
         store.dispatch(loadMainPostsRequest({ category, status, page }));
