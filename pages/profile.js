@@ -36,6 +36,25 @@ import {
 } from '../data/event/postEvent';
 
 const profile = () => {
+  const [imgBase64, setImgBase64] = useState(""); // 파일 base64
+  const [imgFile, setImgFile] = useState(null);	//파일	
+
+  const handleChangeFile = (event) => {
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+      const base64 = reader.result;
+      if (base64) {
+        setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+      }
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
+      setImgFile(event.target.files[0]); // 파일 상태 업데이트
+    }
+  }
+
   const [activeTab, setActiveTab] = useState('1');
   const profile = useSelector((state) => state.user.profile);
   const { createdPosts, participatingPosts, applicatedPosts } = useSelector(
@@ -72,16 +91,16 @@ const profile = () => {
           <hr />
           <Row>
             <Col xs="5">
-              <Media>
-                <Media left href="#">
-                  <Media
-                    object
-                    data-src="holder.js/128x128"
-                    alt="Generic placeholder image"
-                  />
-                  {/* 크기조절 해야할듯 */}
-                </Media>
-              </Media>
+              <br />
+              <div className="App">
+                <div style={{"backgroundColor": "#efefef", "width":"500px", "height" : "500px"}}>
+                  <img src="" src={imgBase64} style={{"width":"500px", "height" : "500px"}}/>
+                </div>
+                <br />
+                <div>
+                  <input type="file" name="imgFile" id="imgFile" onChange={handleChangeFile}/>
+                </div>
+              </div>
             </Col>
             <Col xs="7">
               <br />
@@ -190,25 +209,12 @@ const profile = () => {
                   <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>Birth</label>
                   </Col>
-                  <Col xs="2">
-                    <Input placeholder="" />
-                  </Col>
-                  <Col xs="2">
+                  <Col xs ="6">
                     <Input
-                      type="number"
-                      min="1"
-                      max="12"
-                      placeholder=""
-                      required
-                    />
-                  </Col>
-                  <Col xs="2">
-                    <Input
-                      type="number"
-                      min="1"
-                      max="31"
-                      placeholder=""
-                      required
+                      type="date"
+                      name="date"
+                      id="exampleDate"
+                      placeholder="date placeholder"
                     />
                   </Col>
                 </Row>
@@ -292,16 +298,6 @@ const profile = () => {
                   신청 대기 중
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  className={classnames({ active: activeTab === '4' })}
-                  onClick={() => {
-                    toggle('4');
-                  }}
-                >
-                  마감된 모임
-                </NavLink>
-              </NavItem>
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
@@ -327,17 +323,6 @@ const profile = () => {
                 </Row>
               </TabPane>
               <TabPane tabId="3">
-                <br />
-                <Row>
-                  {applicatedPosts.data.map((post) => (
-                    <ProfilePost postInfo={post} tab={tab} />
-                  ))}
-                </Row>
-                <Row>
-                  <ProfilePagination posts={applicatedPosts} />
-                </Row>
-              </TabPane>
-              <TabPane tabId="4">
                 <br />
                 <Row>
                   {applicatedPosts.data.map((post) => (
