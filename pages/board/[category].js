@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { wrapper } from '../../store';
@@ -19,19 +19,24 @@ import {
 
 const Category = () => {
   const { mainPosts } = useSelector((state) => state.post);
-  const router = useRouter();
-  const { category } = router.query;
 
-  const onChangeSelect = useCallback((e) => {
-    const selected = e.target.value;
-    if (selected === 'POSTING') {
-      router.push(`/board/${category}?status=POSTING`);
-    } else if (selected === 'CLOSED') {
-      router.push(`/board/${category}?status=CLOSED`);
-    } else {
-      router.push(`/board/${category}`);
-    }
-  }, []);
+  const router = useRouter();
+  const { category, status } = router.query;
+
+  const onChangeSelect = useCallback(
+    (e) => {
+      const selected = e.target.value;
+      if (selected === 'POSTING') {
+        router.push(`/board/${category}?status=POSTING`);
+      } else if (selected === 'CLOSED') {
+        router.push(`/board/${category}?status=CLOSED`);
+      } else {
+        router.push(`/board/${category}`);
+      }
+    },
+    [category]
+  );
+
   return (
     <AppLayout>
       <JumbotronComponent />
@@ -41,7 +46,14 @@ const Category = () => {
         name="select"
         onChange={onChangeSelect}
       >
-        <option value="ALL">전체</option>
+        {status ? (
+          <option value="ALL">전체</option>
+        ) : (
+          <option value="ALL" selected>
+            전체
+          </option>
+        )}
+
         <option value="POSTING">모집중인 모임</option>
         <option value="CLOSED">모집 종료된 모임</option>
       </Input>
