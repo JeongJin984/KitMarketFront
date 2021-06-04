@@ -17,6 +17,11 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Modal, 
+  ModalHeader, 
+  ModalBody, 
+  ModalFooter,
+  Input,
 } from 'reactstrap';
 import AppLayout from '../components/AppLayout';
 import classnames from 'classnames';
@@ -31,6 +36,25 @@ import {
 } from '../data/event/postEvent';
 
 const profile = () => {
+  const [imgBase64, setImgBase64] = useState(""); // 파일 base64
+  const [imgFile, setImgFile] = useState(null);	//파일	
+
+  const handleChangeFile = (event) => {
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+      const base64 = reader.result;
+      if (base64) {
+        setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+      }
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
+      setImgFile(event.target.files[0]); // 파일 상태 업데이트
+    }
+  }
+
   const [activeTab, setActiveTab] = useState('1');
   const profile = useSelector((state) => state.user.profile);
   const { createdPosts, participatingPosts, applicatedPosts } = useSelector(
@@ -38,6 +62,8 @@ const profile = () => {
   );
   const router = useRouter();
   const tab = router.query.tab || '';
+  const [modal, setModal] = useState(false);
+  const togglebutton = () => setModal(!modal);
 
   const toggle = useCallback(
     (tab) => {
@@ -65,16 +91,16 @@ const profile = () => {
           <hr />
           <Row>
             <Col xs="5">
-              <Media>
-                <Media left href="#">
-                  <Media
-                    object
-                    data-src="holder.js/128x128"
-                    alt="Generic placeholder image"
-                  />
-                  {/* 크기조절 해야할듯 */}
-                </Media>
-              </Media>
+              <br />
+              <div className="App">
+                <div style={{"backgroundColor": "#efefef", "width":"500px", "height" : "500px"}}>
+                  <img src="" src={imgBase64} style={{"width":"500px", "height" : "500px"}}/>
+                </div>
+                <br />
+                <div>
+                  <input type="file" name="imgFile" id="imgFile" onChange={handleChangeFile}/>
+                </div>
+              </div>
             </Col>
             <Col xs="7">
               <br />
@@ -153,7 +179,91 @@ const profile = () => {
             </Col>
           </Row>
           <div className="col text-right">
-            <Button color="secondary">Edit</Button>
+            <Button color="secondary" onClick={togglebutton}>Edit</Button>
+            <Modal  size="lg" isOpen={modal} toggle={togglebutton}>
+              <ModalHeader toggle={togglebutton}>내 프로필 수정</ModalHeader>
+              <ModalBody>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Username</label>
+                  </Col>
+                  <Col xs="6">
+                    <Input placeholder="username" />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>E-mail</label>
+                  </Col>
+                  <Col xs="6">
+                    <Input placeholder="E-mail" />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Birth</label>
+                  </Col>
+                  <Col xs ="6">
+                    <Input
+                      type="date"
+                      name="date"
+                      id="exampleDate"
+                      placeholder="date placeholder"
+                    />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Gender</label>
+                  </Col>
+                  <Col xs="3">
+                    <Input type="select">
+                      <option>남자</option>
+                      <option>여자</option>
+                    </Input>
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Phone</label>
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                  <Col xs="2">
+                    <Input placeholder="" />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>KaKao ID</label>
+                  </Col>
+                  <Col xs="6">
+                    <Input placeholder="kakao id" />
+                  </Col>
+                </Row>
+                <br />
+              </ModalBody>
+              <ModalFooter>
+                <Button outline color="secondary" onClick={togglebutton}>취소</Button>{' '}
+                <Button color="secondary" onClick={togglebutton}>수정</Button>
+              </ModalFooter>
+            </Modal>
           </div>
           <br />
           <div>
@@ -188,16 +298,6 @@ const profile = () => {
                   신청 대기 중
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  className={classnames({ active: activeTab === '4' })}
-                  onClick={() => {
-                    toggle('4');
-                  }}
-                >
-                  마감된 모임
-                </NavLink>
-              </NavItem>
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
@@ -223,17 +323,6 @@ const profile = () => {
                 </Row>
               </TabPane>
               <TabPane tabId="3">
-                <br />
-                <Row>
-                  {applicatedPosts.data.map((post) => (
-                    <ProfilePost postInfo={post} tab={tab} />
-                  ))}
-                </Row>
-                <Row>
-                  <ProfilePagination posts={applicatedPosts} />
-                </Row>
-              </TabPane>
-              <TabPane tabId="4">
                 <br />
                 <Row>
                   {applicatedPosts.data.map((post) => (
