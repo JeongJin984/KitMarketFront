@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
 
-import { Row, Input, Button, Fade } from 'reactstrap';
+import { Row, Button, Fade } from 'reactstrap';
 
-import PostCard from '../components/PostCard';
 import JumbotronComponent from '../components/JumbotronComponent';
 import AppLayout from '../components/AppLayout';
-import WritePostModal from '../components/WritePostModal';
-import BoardPagination from '../components/BoardPagination';
-import { loadMainPostsRequest } from '../data/event/postEvent';
+
+import { loadUserRequest } from '../data/event/userEvent';
 
 const Home = () => {
   const [fadeIn, setFadeIn] = useState(true);
@@ -180,5 +176,18 @@ const Home = () => {
     </AppLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store, req }) => {
+    const cookie = req ? req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (req && cookie) {
+      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
+    }
+    store.dispatch(loadUserRequest());
+    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+    await store.sagaTask.toPromise();
+  }
+);
 
 export default Home;
