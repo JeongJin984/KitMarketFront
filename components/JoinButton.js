@@ -181,7 +181,7 @@ const JoinButton = ({ singlePost, me }) => {
           margin: '0',
         }}
       >
-        모집완료
+        -모집완료-
       </Button>
     );
   }

@@ -342,13 +342,13 @@ export const dummyPost = {
       {
         id: 1,
         username: 'user4',
-        content: 'content1',
+        email: 'aaaa@asf.com',
         chatDate: null,
       },
       {
         id: 2,
         username: 'user5',
-        content: 'content1',
+        email: 'aaaasadada@asf.com',
         chatDate: null,
       },
     ],
@@ -359,8 +359,50 @@ export const participatingPosts = {
   data: {
     size: 8,
     currentPage: 0,
-    maxPage: 1,
+    maxPage: 2,
     data: [
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
+      {
+        id: 10,
+        category: 'study',
+        title: 'participant0',
+        writer: 'user',
+        createdAt: '2021-05-02T23:22:00.452893',
+      },
       {
         id: 10,
         category: 'study',

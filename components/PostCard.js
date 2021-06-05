@@ -17,6 +17,18 @@ const PostCard = ({ postInfo }) => {
   // const { mainPosts } = useSelector((state) => state.post);
   const date = postInfo.createdAt.split('T')[0];
   const router = useRouter();
+
+  let category = '';
+  if (postInfo.category === 'contest') {
+    category = '공모전';
+  } else if (postInfo.category === 'study') {
+    category = '스터디';
+  } else if (postInfo.category === 'carPool') {
+    category = '카풀/택시';
+  } else if (postInfo.category === 'miniProject') {
+    category = '미니프로젝트';
+  }
+
   const onClickPost = () => {
     router.push(`/post/${postInfo.category}/${postInfo.id}`);
   };
@@ -27,7 +39,7 @@ const PostCard = ({ postInfo }) => {
         <CardBody>
           <Row>
             <Col xs="7">
-              <CardTitle tag="h5">{postInfo.category}</CardTitle>
+              <CardTitle tag="h5">{category}</CardTitle>
             </Col>
             <Col xs="5">
               <CardTitle tag="h5" className="text-right">
