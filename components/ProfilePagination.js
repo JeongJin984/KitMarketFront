@@ -19,9 +19,13 @@ const ProfilePagination = ({ posts }) => {
       ? router.push(`/profile?tab=${tab}&page=${page}`)
       : router.push(`/profile?page=${page}`);
   };
-  const onClickPage = useCallback((page) => {
-    routeTab(page);
-  }, []);
+
+  const onClickPage = useCallback(
+    (page) => {
+      routeTab(page);
+    },
+    [tab]
+  );
 
   const onClickNext = useCallback(() => {
     if (currentPage + 1 < maxPage) {

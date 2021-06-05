@@ -10,13 +10,26 @@ import {
   CardSubtitle,
   Button,
 } from 'reactstrap';
-import {cancelJoinRequest} from "../data/event/postEvent";
+import { cancelJoinRequest } from '../data/event/postEvent';
 
 const ProfilePost = ({ postInfo, tab }) => {
-  const { id, category, title, writer, createdAt } = postInfo;
+  const { id, title, writer, createdAt } = postInfo;
+
   const dispatch = useDispatch();
   const router = useRouter();
+
   const { isCancelledJoin } = useSelector((state) => state.post);
+
+  let category = '';
+  if (postInfo.category === 'contest') {
+    category = '공모전';
+  } else if (postInfo.category === 'study') {
+    category = '스터디';
+  } else if (postInfo.category === 'carPool') {
+    category = '카풀/택시';
+  } else if (postInfo.category === 'miniProject') {
+    category = '미니프로젝트';
+  }
 
   const onClickPost = () => {
     router.push(`/post/${postInfo.category}/${postInfo.id}`);

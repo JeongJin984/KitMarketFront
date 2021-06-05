@@ -17,9 +17,9 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Modal, 
-  ModalHeader, 
-  ModalBody, 
+  Modal,
+  ModalHeader,
+  ModalBody,
   ModalFooter,
   Input,
 } from 'reactstrap';
@@ -36,8 +36,8 @@ import {
 } from '../data/event/postEvent';
 
 const profile = () => {
-  const [imgBase64, setImgBase64] = useState(""); // 파일 base64
-  const [imgFile, setImgFile] = useState(null);	//파일	
+  const [imgBase64, setImgBase64] = useState(''); // 파일 base64
+  const [imgFile, setImgFile] = useState(null); //파일
 
   const handleChangeFile = (event) => {
     let reader = new FileReader();
@@ -48,18 +48,29 @@ const profile = () => {
       if (base64) {
         setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
       }
-    }
+    };
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
       setImgFile(event.target.files[0]); // 파일 상태 업데이트
     }
-  }
+  };
 
   const [activeTab, setActiveTab] = useState('1');
-  const profile = useSelector((state) => state.user.profile);
+  const { profile: profileState, isLoadedProfile } = useSelector(
+    (state) => state.user
+  );
   const { createdPosts, participatingPosts, applicatedPosts } = useSelector(
     (state) => state.post
   );
+  const [profile, setProfile] = useState({
+    username: '',
+    email: '',
+    age: '',
+    major: '',
+    grade: '',
+    gender: '',
+  });
+
   const router = useRouter();
   const tab = router.query.tab || '';
   const [modal, setModal] = useState(false);
@@ -83,6 +94,10 @@ const profile = () => {
     else setActiveTab('1');
   }, []);
 
+  useEffect(() => {
+    if (isLoadedProfile) setProfile(profileState);
+  }, [isLoadedProfile]);
+
   return (
     <AppLayout>
       <Card style={{ marginTop: '2%' }}>
@@ -93,12 +108,27 @@ const profile = () => {
             <Col xs="5">
               <br />
               <div className="App">
-                <div style={{"backgroundColor": "#efefef", "width":"500px", "height" : "500px"}}>
-                  <img src="" src={imgBase64} style={{"width":"500px", "height" : "500px"}}/>
+                <div
+                  style={{
+                    backgroundColor: '#efefef',
+                    width: '250px',
+                    height: '250px',
+                  }}
+                >
+                  <img
+                    src=""
+                    src={imgBase64}
+                    style={{ width: '250px', height: '250px' }}
+                  />
                 </div>
                 <br />
                 <div>
-                  <input type="file" name="imgFile" id="imgFile" onChange={handleChangeFile}/>
+                  <input
+                    type="file"
+                    name="imgFile"
+                    id="imgFile"
+                    onChange={handleChangeFile}
+                  />
                 </div>
               </div>
             </Col>
@@ -111,7 +141,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">username</CardText>
+                  <CardText tag="h5">{profile.username}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -123,7 +153,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">email</CardText>
+                  <CardText tag="h5">{profile.email}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -131,11 +161,23 @@ const profile = () => {
               <Row>
                 <Col xs="2">
                   <CardText tag="h6" className="mb-2 text-muted">
-                    Birth
+                    Major
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5"></CardText>
+                  <CardText tag="h5">{profile.major}</CardText>
+                </Col>
+              </Row>
+              <hr />
+              <br />
+              <Row>
+                <Col xs="2">
+                  <CardText tag="h6" className="mb-2 text-muted">
+                    Grade
+                  </CardText>
+                </Col>
+                <Col xs="10">
+                  <CardText tag="h5">{profile.grade}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -147,7 +189,7 @@ const profile = () => {
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">성별</CardText>
+                  <CardText tag="h5">{profile.gender}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -155,23 +197,11 @@ const profile = () => {
               <Row>
                 <Col xs="2">
                   <CardText tag="h6" className="mb-2 text-muted">
-                    Phone
+                    Age
                   </CardText>
                 </Col>
                 <Col xs="10">
-                  <CardText tag="h5">핸드폰번호</CardText>
-                </Col>
-              </Row>
-              <hr />
-              <br />
-              <Row>
-                <Col xs="2">
-                  <CardText tag="h6" className="mb-2 text-muted">
-                    KaKao ID
-                  </CardText>
-                </Col>
-                <Col xs="10">
-                  <CardText tag="h5">카카오톡아이디</CardText>
+                  <CardText tag="h5">{profile.age}</CardText>
                 </Col>
               </Row>
               <hr />
@@ -179,8 +209,10 @@ const profile = () => {
             </Col>
           </Row>
           <div className="col text-right">
-            <Button color="secondary" onClick={togglebutton}>Edit</Button>
-            <Modal  size="lg" isOpen={modal} toggle={togglebutton}>
+            <Button color="secondary" onClick={togglebutton}>
+              Edit
+            </Button>
+            <Modal size="lg" isOpen={modal} toggle={togglebutton}>
               <ModalHeader toggle={togglebutton}>내 프로필 수정</ModalHeader>
               <ModalBody>
                 <br />
@@ -209,7 +241,7 @@ const profile = () => {
                   <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>Birth</label>
                   </Col>
-                  <Col xs ="6">
+                  <Col xs="6">
                     <Input
                       type="date"
                       name="date"
@@ -260,8 +292,12 @@ const profile = () => {
                 <br />
               </ModalBody>
               <ModalFooter>
-                <Button outline color="secondary" onClick={togglebutton}>취소</Button>{' '}
-                <Button color="secondary" onClick={togglebutton}>수정</Button>
+                <Button outline color="secondary" onClick={togglebutton}>
+                  취소
+                </Button>{' '}
+                <Button color="secondary" onClick={togglebutton}>
+                  수정
+                </Button>
               </ModalFooter>
             </Modal>
           </div>
@@ -353,6 +389,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const state = store.getState();
     const { username } = state.user.me;
     const data = { page, username };
+
     store.dispatch(loadProfileRequest());
     if (tab === 'created') store.dispatch(loadCreatedPostsRequest(data));
     else if (tab === 'participating')
