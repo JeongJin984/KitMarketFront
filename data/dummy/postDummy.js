@@ -298,7 +298,7 @@ export const dummyPost = {
     subject: 'ABC',
     maxNum: 3,
     curNum: 0,
-    category: 'study',
+    category: 'contest',
     status: 'POSTING',
     applications: [
       {
@@ -335,6 +335,20 @@ export const dummyPost = {
         id: 6,
         username: 'user3',
         content: 'content3',
+        chatDate: null,
+      },
+    ],
+    participants: [
+      {
+        id: 1,
+        username: 'user4',
+        content: 'content1',
+        chatDate: null,
+      },
+      {
+        id: 2,
+        username: 'user5',
+        content: 'content1',
         chatDate: null,
       },
     ],

@@ -101,8 +101,7 @@ const PostView = () => {
 
   const isParticipant = participants.some((p) => p.username === username);
   const isWriter = username === writer;
-  console.log(participants);
-  console.log(isParticipant, 'isPr');
+
   return (
     <AppLayout>
       <Row style={{ padding: '1%', marginTop: '2%' }}>
