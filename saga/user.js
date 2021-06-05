@@ -106,8 +106,8 @@ function* signUp(action) {
 
 function* loadProfile(action) {
   try {
-    // const result = yield call(loadProfileAPI);
-    const result = { data: { username: 'asd' } };
+    const result = yield call(loadProfileAPI);
+    // const result = { data: { username: 'asd' } };
     yield put({
       type: LOAD_PROFILE_SUCCESS,
       data: result.data,
@@ -121,7 +121,9 @@ function* loadProfile(action) {
 }
 function* loadUser() {
   try {
-    const result = yield call(loadUserAPI);
+    console.log('load usersrsresrse');
+    const result = { data: { username: 'user1', gender: 'MALE', age: 5 } };
+    // const result = yield call(loadUserAPI);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result.data,

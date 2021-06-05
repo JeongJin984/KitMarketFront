@@ -17,11 +17,11 @@ import {
 
 export const initialState = {
   error: null,
-  isLoggedIn: true,
+  isLoggedIn: false,
   isLogginIn: false,
   isSignedUp: false,
   isSigningUp: false,
-  me: { username: 'user1', gender: 'MALE' },
+  me: null,
   isLoadingProfile: false,
   isLoadedProfile: false,
   profile: null,
@@ -64,7 +64,7 @@ const userReducer = (state = initialState, action) => {
       case LOAD_USER_FAILURE:
         draft.isLoggedIn = false;
         draft.isLogginIn = false;
-        draft.error = 'action.error';
+        draft.error = action.error;
         break;
 
       case LOGOUT_REQUEST:
