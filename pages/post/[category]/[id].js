@@ -48,6 +48,20 @@ const PostView = () => {
     curNum,
     applications,
     participants,
+    subject,
+    region,
+    duration,
+    gender,
+    fare,
+    departure,
+    destination,
+    departTime,
+    contestCategory,
+    hostOrganization,
+    qualification,
+    homepage,
+    projectDuration,
+    topic,
   } = singlePost;
 
   const dispatch = useDispatch();
@@ -151,7 +165,7 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>분야</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">리포트</CardTitle>
+                    <CardTitle tag="h5">{contestCategory}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -160,14 +174,14 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>주최기관</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">한국도로공사</CardTitle>
+                    <CardTitle tag="h5">{hostOrganization}</CardTitle>
                   </Col>
                   <Col xs="1"></Col>
                   <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>참가대상</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">대학생</CardTitle>
+                    <CardTitle tag="h5">{qualification}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -176,7 +190,7 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>홈페이지</label>
                   </Col>
                   <Col xs="10">
-                    <CardTitle tag="h5">https://www.youtube.com/</CardTitle>
+                    <CardTitle tag="h5">{homepage}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -207,7 +221,7 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>분야</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">언어</CardTitle>
+                    <CardTitle tag="h5">{subject}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -216,14 +230,14 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>지역</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">옥계</CardTitle>
+                    <CardTitle tag="h5">{region}</CardTitle>
                   </Col>
                   <Col xs="1"></Col>
                   <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>기간</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">6개월</CardTitle>
+                    <CardTitle tag="h5">{duration}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -256,14 +270,14 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>출발지</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">금오공대</CardTitle>
+                    <CardTitle tag="h5">{departure}</CardTitle>
                   </Col>
                   <Col xs="1"></Col>
                   <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>도착지</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">구미역</CardTitle>
+                    <CardTitle tag="h5">{destination}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -272,7 +286,9 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>출발시간</label>
                   </Col>
                   <Col xs="10">
-                    <CardTitle tag="h5">AM 10시 30분</CardTitle>
+                    <CardTitle tag="h5">
+                      {departTime.hours} : {departTime.minutes}
+                    </CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -281,14 +297,14 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>성별</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">남성</CardTitle>
+                    <CardTitle tag="h5">{gender}</CardTitle>
                   </Col>
                   <Col xs="1"></Col>
                   <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>요금</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">3000원</CardTitle>
+                    <CardTitle tag="h5">{fare}원</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -319,7 +335,7 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>기간</label>
                   </Col>
                   <Col xs="3">
-                    <CardTitle tag="h5">6개월</CardTitle>
+                    <CardTitle tag="h5">{projectDuration}</CardTitle>
                   </Col>
                 </Row>
                 <br />
@@ -328,7 +344,7 @@ const PostView = () => {
                     <label style={{ fontWeight: 'bold' }}>주제</label>
                   </Col>
                   <Col xs="10">
-                    <CardTitle tag="h5">매일 같이 운동하기 프로젝트</CardTitle>
+                    <CardTitle tag="h5">{topic}</CardTitle>
                   </Col>
                 </Row>
                 <br />
