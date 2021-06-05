@@ -50,10 +50,10 @@ function signUpAPI(data) {
   });
 }
 
-function loadProfileAPI() {
+function loadProfileAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/user`,
+    url: `${defaultURL}/profile/${data.username}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -106,8 +106,8 @@ function* signUp(action) {
 
 function* loadProfile(action) {
   try {
-    const result = yield call(loadProfileAPI);
-    // const result = { data: { username: 'asd' } };
+    console.log('load profielee', action.data);
+    const result = yield call(loadProfileAPI, action.data);
     yield put({
       type: LOAD_PROFILE_SUCCESS,
       data: result.data,
@@ -122,7 +122,7 @@ function* loadProfile(action) {
 function* loadUser() {
   try {
     console.log('load usersrsresrse');
-    const result = { data: { username: 'user1', gender: 'MALE', age: 5 } };
+    const result = { data: { username: 'user4', gender: 'MALE', age: 5 } };
     // const result = yield call(loadUserAPI);
     yield put({
       type: LOAD_USER_SUCCESS,

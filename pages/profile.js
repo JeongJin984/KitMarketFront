@@ -390,7 +390,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { username } = state.user.me;
     const data = { page, username };
 
-    store.dispatch(loadProfileRequest());
+    store.dispatch(loadProfileRequest({ username }));
     if (tab === 'created') store.dispatch(loadCreatedPostsRequest(data));
     else if (tab === 'participating')
       store.dispatch(loadParticipatingPostsRequest(data));
