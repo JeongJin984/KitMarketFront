@@ -26,7 +26,6 @@ const JoinButton = ({ singlePost, me }) => {
   } = singlePost;
   const { username, gender } = me;
   const [comment, setComment] = useState('');
-  const [isJoined, setIsJoined] = useState(false);
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const { isJoinedPost, isCancelledJoin } = useSelector((state) => state.post);
@@ -45,9 +44,7 @@ const JoinButton = ({ singlePost, me }) => {
 
   const onClickCancel = useCallback(() => {
     dispatch(cancelJoinRequest({ id: singlePost.id, username }));
-  }, 
-  [singlePost, username]
-  );
+  }, [singlePost, username]);
 
   const onClickClose = useCallback(() => {
     if (confirm('모집을 마감 하시겠습니까?')) {
@@ -60,17 +57,12 @@ const JoinButton = ({ singlePost, me }) => {
   }, []);
 
   useEffect(() => {
-    setIsJoined(applications.some((a) => a.username === username));
-  }, 
-  [applications, username]
-  );
-
-  useEffect(() => {
     if (isJoinedPost || isCancelledJoin) {
       location.reload();
     }
   }, [isJoinedPost, isCancelledJoin]);
 
+  const isJoined = applications.some((a) => a.username === username);
   const isUser = writer !== username;
   const isWriter = writer === username;
   const isPosting = status === 'POSTING';

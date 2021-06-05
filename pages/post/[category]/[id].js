@@ -36,8 +36,17 @@ const PostView = () => {
   const [modal, setModal] = useState(false);
   const [checked, setChecked] = useState(new Set());
 
-  const { id, writer, title, dueDate, content, maxNum, curNum, applications } =
-    singlePost;
+  const {
+    id,
+    writer,
+    title,
+    dueDate,
+    content,
+    maxNum,
+    curNum,
+    applications,
+    participants,
+  } = singlePost;
 
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
@@ -90,8 +99,10 @@ const PostView = () => {
     [checked]
   );
 
+  const isParticipant = participants.some((p) => p.username === username);
   const isWriter = username === writer;
-
+  console.log(participants);
+  console.log(isParticipant, 'isPr');
   return (
     <AppLayout>
       <Row style={{ padding: '1%', marginTop: '2%' }}>
