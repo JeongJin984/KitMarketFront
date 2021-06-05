@@ -26,7 +26,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -34,8 +33,7 @@ import {
   ButtonDropdown,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Cookie from 'universal-cookie';
-import axios from 'axios';
+
 import { logoutRequest } from '../data/event/userEvent';
 
 const AppLayout = ({ children }) => {
@@ -140,15 +138,6 @@ const AppLayout = ({ children }) => {
                             카풀/택시　　
                           </Link>
                         </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/board/closed',
-                            }}
-                          >
-                            마감　　
-                          </Link>
-                        </NavItem>
                       </Nav>
                     ) : (
                       <Nav
@@ -201,15 +190,6 @@ const AppLayout = ({ children }) => {
                             카풀/택시　　
                           </Link>
                         </NavItem>
-                        <NavItem>
-                          <Link
-                            href={{
-                              pathname: '/login',
-                            }}
-                          >
-                            마감　　
-                          </Link>
-                        </NavItem>
                       </Nav>
                     )}
                   </NavStyle>
@@ -224,8 +204,8 @@ const AppLayout = ({ children }) => {
                             rel="stylesheet"
                             href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
                           />
-                          <link rel="stylesheet" href="style.css" />
-                          <a className="user-btn" href="#">
+                          <link rel="stylesheet" />
+                          <a className="user-btn">
                             <i
                               className="fas fa-user"
                               style={{ color: 'black' }}
