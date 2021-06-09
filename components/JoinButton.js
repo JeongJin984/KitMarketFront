@@ -19,6 +19,7 @@ const JoinButton = ({ singlePost, me }) => {
   const {
     writer,
     applications,
+    participants,
     status,
     category,
     gender: postGender,
@@ -68,8 +69,25 @@ const JoinButton = ({ singlePost, me }) => {
   const isPosting = status === 'POSTING';
   const isCarPool = category === 'carPool';
   const isGenderQualified = gender === postGender || postGender === 'NONE';
+  const isParticipant = participants.some((p) => p.username === username);
 
-  if (isPosting) {
+  if (!isPosting || isParticipant) {
+    return (
+      <Button
+        color="secondary"
+        style={{
+          marginLeft: '-120%',
+          width: '90px',
+          height: '90px',
+          borderRadius: '75%',
+          textAlign: 'center',
+          margin: '0',
+        }}
+      >
+        X
+      </Button>
+    );
+  } else if (isPosting) {
     if (isUser && isJoined) {
       return (
         <Button
@@ -168,22 +186,6 @@ const JoinButton = ({ singlePost, me }) => {
         </Button>
       );
     }
-  } else if (!isPosting) {
-    return (
-      <Button
-        color="secondary"
-        style={{
-          marginLeft: '-120%',
-          width: '90px',
-          height: '90px',
-          borderRadius: '75%',
-          textAlign: 'center',
-          margin: '0',
-        }}
-      >
-        -모집완료-
-      </Button>
-    );
   }
 };
 

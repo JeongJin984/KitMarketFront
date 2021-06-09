@@ -30,7 +30,7 @@ import {
 } from '../../../data/event/postEvent';
 
 const PostView = () => {
-  const { singlePost } = useSelector((state) => state.post);
+  const { singlePost, isPermittedJoin } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
   const [checked, setChecked] = useState(new Set());
 
@@ -114,6 +114,10 @@ const PostView = () => {
       dispatch(deletePostRequest({ id }));
     }
   }, [singlePost]);
+
+  useEffect(() => {
+    if (isPermittedJoin) location.reload();
+  }, [isPermittedJoin]);
 
   const isParticipant = participants.some((p) => p.username === username);
   const isWriter = username === writer;
