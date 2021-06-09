@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { wrapper } from '../store';
 import { END } from 'redux-saga';
 import axios from 'axios';
@@ -28,7 +28,7 @@ import classnames from 'classnames';
 import ProfilePost from '../components/ProfilePost';
 import ProfilePagination from '../components/ProfilePagination';
 import { useRouter } from 'next/router';
-import { loadProfileRequest } from '../data/event/userEvent';
+import { loadProfileRequest, loadUserRequest } from '../data/event/userEvent';
 import {
   loadApplicatedPostsRequest,
   loadCreatedPostsRequest,
@@ -55,13 +55,16 @@ const profile = () => {
     }
   };
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const [activeTab, setActiveTab] = useState('1');
-  const { profile: profileState, isLoadedProfile } = useSelector(
-    (state) => state.user
-  );
-  const { createdPosts, participatingPosts, applicatedPosts } = useSelector(
+  const { profile: profileState, isLoadedProfile, me } = useSelector((state) => state.user);
+  const { username } = me;
+  const { createdPosts, participatingPosts, applicatedPosts, isLoadedPosts } = useSelector(
     (state) => state.post
   );
+
   const [profile, setProfile] = useState({
     username: '',
     email: '',
@@ -71,9 +74,11 @@ const profile = () => {
     gender: '',
   });
 
-  const router = useRouter();
-  const tab = router.query.tab || '';
   const [modal, setModal] = useState(false);
+
+  const tab = router.query.tab || '';
+  const page = router.query.page - 1 || 0;
+
   const togglebutton = () => setModal(!modal);
 
   const toggle = useCallback(
@@ -97,6 +102,24 @@ const profile = () => {
   useEffect(() => {
     if (isLoadedProfile) setProfile(profileState);
   }, [isLoadedProfile]);
+
+  useEffect(() => {}, [isLoadedPosts])
+
+  useEffect(() => {
+    if (!profileState) {
+      dispatch(loadProfileRequest({ username }));
+    }
+  }, [dispatch, username]);
+
+  useEffect(() => {
+    if (tab === 'participating') {
+      dispatch(loadParticipatingPostsRequest({ username, page }));
+    } else if (tab === 'applicated') {
+      dispatch(loadApplicatedPostsRequest({ username, page }));
+    } else {
+      dispatch(loadCreatedPostsRequest({ username, page }));
+    }
+  }, [dispatch, username, page, tab])
 
   return (
     <AppLayout>
@@ -239,15 +262,23 @@ const profile = () => {
                 <Row>
                   <Col xs="2"></Col>
                   <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Birth</label>
+                    <label style={{ fontWeight: 'bold' }}>Major</label>
                   </Col>
                   <Col xs="6">
                     <Input
-                      type="date"
-                      name="date"
-                      id="exampleDate"
-                      placeholder="date placeholder"
+                      type="text"
+                      name="major"
                     />
+                  </Col>
+                </Row>
+                <br />
+                <Row>
+                  <Col xs="2"></Col>
+                  <Col xs="2">
+                    <label style={{ fontWeight: 'bold' }}>Grade</label>
+                  </Col>
+                  <Col xs="2">
+                    <Input type="number" min="1" max="4" placeholder="" />
                   </Col>
                 </Row>
                 <br />
@@ -267,26 +298,10 @@ const profile = () => {
                 <Row>
                   <Col xs="2"></Col>
                   <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Phone</label>
+                    <label style={{ fontWeight: 'bold' }}>Age</label>
                   </Col>
                   <Col xs="2">
-                    <Input placeholder="" />
-                  </Col>
-                  <Col xs="2">
-                    <Input placeholder="" />
-                  </Col>
-                  <Col xs="2">
-                    <Input placeholder="" />
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>KaKao ID</label>
-                  </Col>
-                  <Col xs="6">
-                    <Input placeholder="kakao id" />
+                    <Input type="number" max="99" />
                   </Col>
                 </Row>
                 <br />
@@ -362,7 +377,7 @@ const profile = () => {
                 <br />
                 <Row>
                   {applicatedPosts.data.map((post) => (
-                    <ProfilePost postInfo={post} tab={tab} />
+                    <ProfilePost postInfo={post} tab={tab} key={post.id} />
                   ))}
                 </Row>
                 <Row>
@@ -378,26 +393,8 @@ const profile = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store, req, query }) => {
-    const cookie = req ? req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
-    if (req && cookie) {
-      axios.defaults.headers.Cookie = cookie; // SSR일 때만 쿠키를 넣어줌
-    }
-    const tab = query.tab || 'created';
-    const page = query.page - 1 || 0;
-    const state = store.getState();
-    const { username } = state.user.me;
-    const data = { page, username };
-
-    store.dispatch(loadProfileRequest({ username }));
-    if (tab === 'created') store.dispatch(loadCreatedPostsRequest(data));
-    else if (tab === 'participating')
-      store.dispatch(loadParticipatingPostsRequest(data));
-    else if (tab === 'applicated')
-      store.dispatch(loadApplicatedPostsRequest(data));
-
-    store.dispatch(END); // Request가 끝날 때 까지 기다려줌
+  async ({ store }) => {
+    store.dispatch(END);
     await store.sagaTask.toPromise();
   }
 );

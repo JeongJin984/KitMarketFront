@@ -14,11 +14,11 @@ const ProfilePagination = ({ posts }) => {
 
   const currentPageSet = pages.slice(5 * pageSetNum, 5 * pageSetNum + 5);
 
-  const routeTab = (page) => {
+  const routeTab = useCallback((page) => {
     tab
       ? router.push(`/profile?tab=${tab}&page=${page}`)
       : router.push(`/profile?page=${page}`);
-  };
+  }, [tab]);
 
   const onClickPage = useCallback(
     (page) => {
@@ -29,23 +29,27 @@ const ProfilePagination = ({ posts }) => {
 
   const onClickNext = useCallback(() => {
     if (currentPage + 1 < maxPage) {
-      routeCategory(currentPage + 2);
+      routeTab(currentPage + 2);
     }
   }, [currentPage, maxPage]);
 
   const onClickPrev = useCallback(() => {
     if (currentPage - 1 >= 0) {
-      routeCategory(currentPage);
+      routeTab(currentPage);
     }
   }, [currentPage]);
 
   const onClickNextEnd = useCallback(() => {
-    routeTab(maxPage);
-  }, [maxPage]);
+    if (currentPage + 1 < maxPage) {
+      routeTab(maxPage);
+    }
+  }, [currentPage, maxPage, tab]);
 
   const onClickPrevEnd = useCallback(() => {
-    routeTab(1);
-  }, []);
+    if (currentPage - 1 >= 0) {
+      routeTab(1);
+    }
+  }, [currentPage, tab]);
 
   return (
     <Pagination

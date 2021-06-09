@@ -1,6 +1,7 @@
 import { wrapper } from '../store';
 import axios from 'axios';
 import App from 'next/app';
+import { END } from 'redux-saga';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { loadUserRequest } from '../data/event/userEvent';
@@ -15,11 +16,15 @@ class MyApp extends App {
     }
     if (
       !state.user.me &&
-      !(ctx.pathname === '/login' || ctx.pathname === '/signup')
+      !(
+        ctx.pathname === '/login' ||
+        ctx.pathname === '/signup' ||
+        ctx.pathname === '/'
+      )
     ) {
       ctx.store.dispatch(loadUserRequest());
     }
-
+    
     return {
       pageProps: {
         // Call page-level getInitialProps
