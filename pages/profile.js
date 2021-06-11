@@ -242,16 +242,6 @@ const profile = () => {
                 <Row>
                   <Col xs="2"></Col>
                   <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Username</label>
-                  </Col>
-                  <Col xs="6">
-                    <Input placeholder="username" />
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
                     <label style={{ fontWeight: 'bold' }}>E-mail</label>
                   </Col>
                   <Col xs="6">
