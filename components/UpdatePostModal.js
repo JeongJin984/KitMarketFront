@@ -15,7 +15,7 @@ const UpdatePostButton = () => {
     title,
     content,
     maxNum,
-    needNum,
+    curNum,
     category,
     deadLine,
     fare,
@@ -29,6 +29,8 @@ const UpdatePostButton = () => {
     destination,
     departHours,
     departMinutes,
+    lat: initialLat,
+    long: initialLong,
   } = useSelector((state) => state.post.singlePost);
 
   const year = deadLine.substr(0, 4);
@@ -45,7 +47,7 @@ const UpdatePostButton = () => {
     title,
     content,
     maxNum,
-    needNum,
+    needNum: maxNum - curNum,
     category,
     year,
     month,
@@ -69,8 +71,11 @@ const UpdatePostButton = () => {
     qualification: 'HIGHSCHOOL',
     gender: 'MALE',
   };
+
   const [modal, setModal] = useState(false);
   const [inputs, setInputs] = useState({});
+  const [lat, setLat] = useState('');
+  const [long, setLong] = useState('');
   const dispatch = useDispatch();
   const current = new Date();
 
@@ -90,16 +95,18 @@ const UpdatePostButton = () => {
     setModal(!modal);
   };
 
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
-  };
+  }, [inputs]);
 
   const onReset = () => {
-    setInputs(initialInputs);
+    setInputs({});
+    setLat('');
+    setLong('');
   };
 
   const handleSubmit = useCallback(
@@ -175,6 +182,8 @@ const UpdatePostButton = () => {
             hours: departHours,
             minutes: departMinutes,
           },
+          lat,
+          long,
         };
       } else if (category === 'miniProject') {
         data = {
@@ -183,7 +192,7 @@ const UpdatePostButton = () => {
           projectDuration,
         };
       }
-
+      console.log(data);
       if (
         deadLineDate.getTime() <= current.getTime() ||
         isNaN(deadLineDate.getTime())
@@ -193,7 +202,7 @@ const UpdatePostButton = () => {
         dispatch(updatePostRequest({ id, data }));
       }
     },
-    [isUpdatedPost, inputs]
+    [isUpdatedPost, inputs, lat, long]
   );
 
   return (
@@ -209,6 +218,10 @@ const UpdatePostButton = () => {
           inputs={inputs}
           setInputs={setInputs}
           initialInputs={initialInputs}
+          initialLat={initialLat}
+          initialLong={initialLong}
+          setLat={setLat}
+          setLong={setLong}
         />
       </Modal>
     </>

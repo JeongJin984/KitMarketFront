@@ -40,6 +40,8 @@ const WritePostModal = () => {
   // const { username } = 1;
   const [modal, setModal] = useState(false);
   const [inputs, setInputs] = useState(initialInputs);
+  const [lat, setLat] = useState('');
+  const [long, setLong] = useState('');
 
   const dispatch = useDispatch();
   const current = new Date();
@@ -70,8 +72,9 @@ const WritePostModal = () => {
 
   const onReset = () => {
     setInputs(initialInputs);
+    setLat('');
+    setLong('');
   };
-
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -103,6 +106,8 @@ const WritePostModal = () => {
         departHours,
         departMinutes,
       } = inputs;
+      console.log('sdf', lat, long);
+
       const ampmHours = ampm === 'PM' ? parseInt(hours) + 12 : hours;
       const deadLine = `${year}-${month < 10 ? `0${month}` : month}-${
         date < 10 ? `0${date}` : date
@@ -145,6 +150,8 @@ const WritePostModal = () => {
             hours: departHours,
             minutes: departMinutes,
           },
+          lat,
+          long,
         };
       } else if (category === 'miniProject') {
         data = {
@@ -160,11 +167,13 @@ const WritePostModal = () => {
         isNaN(deadLineDate.getTime())
       ) {
         alert('올바른 날짜를 입력해주세요.');
+      } else if (category === 'carPool' && !lat && !long) {
+        alert('출발지를 지정 해주세요.'); 
       } else {
         dispatch(addPostRequest(data));
       }
     },
-    [isPosted, inputs]
+    [isPosted, inputs, lat, long]
   );
 
   return (
@@ -197,6 +206,8 @@ const WritePostModal = () => {
           handleSubmit={handleSubmit}
           toggle={toggle}
           onChange={onChange}
+          setLat={setLat}
+          setLong={setLong}
           inputs={inputs}
         />
       </Modal>

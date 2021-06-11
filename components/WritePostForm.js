@@ -11,7 +11,9 @@ import {
   Input,
 } from 'reactstrap';
 
-const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
+import MarkableMap from './MarkableMap';
+
+const WritePostForm = ({ handleSubmit, toggle, onChange, setLat, setLong, inputs }) => {
   const { category, maxNum } = inputs;
   return (
     <Form onSubmit={handleSubmit}>
@@ -301,6 +303,18 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, inputs }) => {
           </Col>
         </Row>
         <br />
+        {category === 'carPool' && (
+          <Row>
+            <Col xs="2">
+              <label style={{ fontWeight: 'bold' }}>출발지 상세 설정</label>
+            </Col>
+            <MarkableMap 
+              setLat={setLat}
+              setLong={setLong}
+            />
+          </Row>
+        )}
+
         <label style={{ fontWeight: 'bold' }}>내용</label>
         <Input
           style={{ height: 300 }}

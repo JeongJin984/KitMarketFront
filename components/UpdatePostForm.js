@@ -11,6 +11,8 @@ import {
   Input,
 } from 'reactstrap';
 
+import MarkableMap from './MarkableMap';
+
 const UpdatePostForm = ({
   handleSubmit,
   toggle,
@@ -18,6 +20,10 @@ const UpdatePostForm = ({
   inputs,
   setInputs,
   initialInputs,
+  initialLat,
+  initialLong,
+  setLat,
+  setLong,
 }) => {
   const {
     title,
@@ -48,6 +54,8 @@ const UpdatePostForm = ({
 
   useEffect(() => {
     setInputs(initialInputs);
+    setLat(initialLat);
+    setLong(initialLong);
   }, []);
 
   return (
@@ -362,6 +370,19 @@ const UpdatePostForm = ({
           </Col>
         </Row>
         <br />
+        {category === 'carPool' && (
+          <Row>
+            <Col xs="2">
+              <label style={{ fontWeight: 'bold' }}>출발지 상세 설정</label>
+            </Col>
+            <MarkableMap 
+              setLat={setLat}
+              setLong={setLong}
+              initialLat={initialLat}
+              initialLong={initialLong}
+            />
+          </Row>
+        )}
         <label style={{ fontWeight: 'bold' }}>내용</label>
         <Input
           style={{ height: 300 }}

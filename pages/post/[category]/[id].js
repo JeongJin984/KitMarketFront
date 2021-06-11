@@ -22,6 +22,7 @@ import {
 import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
 import UpdatePostModal from '../../../components/UpdatePostModal';
+import Map from '../../../components/Map';
 
 import {
   deletePostRequest,
@@ -62,8 +63,10 @@ const PostView = () => {
     homepage,
     projectDuration,
     topic,
+    lat,
+    long,
   } = singlePost;
-
+  console.log(lat, long)
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
   const toggle = () => setModal(!modal);
@@ -376,14 +379,24 @@ const PostView = () => {
                 outline
                 style={{ backgroundColor: 'white', height: 270 }}
               >
-                <CardText tag="h5" style={{ height: 150 }}>
-                  {content}
-                </CardText>
+                {singlePost.category === 'carPool' ? (
+                  <CardText tag="h5" style={{ height: 150, position: "relative" }}>
+                    <Map lat={lat} long={long} />
+                    <div style={{ display: "inline" }}>
+                      {content}
+                    </div> 
+                  </CardText>
+                  ) : (
+                  <CardText tag="h5" style={{ height: 150 }}>
+                      {content} 
+                  </CardText>
+                  )
+                }
                 <br />
               </Card>
             </Row>
             <Row>
-              <Col xs="9">
+              <Col xs="8">
                 <br />
                 <br />
                 <br />
@@ -397,7 +410,7 @@ const PostView = () => {
                   이전으로
                 </Button>{' '}
               </Col>
-              <Col xs="3">
+              <Col xs="4">
                 <br />
                 <br />
                 <Button
