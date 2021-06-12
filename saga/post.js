@@ -390,7 +390,9 @@ function* closePost(action) {
 function searchPostsTitleAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/post/search/title?key=${data.search}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/search/title?key=${encodeURIComponent(
+      data.search
+    )}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
@@ -417,7 +419,9 @@ function* searchPostsTitle(action) {
 function searchPostsUsernameAPI(data) {
   return axios({
     method: 'GET',
-    url: `${defaultURL}/api/post/search/username?key=${data.search}&offset=${data.page}`,
+    url: `${defaultURL}/api/post/search/username?key=${encodeURIComponent(
+      data.search
+    )}&offset=${data.page}`,
     headers: {
       'X-Request-With': 'XMLHttpRequest',
     },
