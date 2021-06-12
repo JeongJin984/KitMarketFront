@@ -509,17 +509,28 @@ const PostView = () => {
                 </div>
                 <hr />
                 {isWriter ? (
+                  <div>
+                  <Col xs="6">
+                    <Button
+                    color="#00FFFFFF"
+                    size="sm"
+                    onClick={handleClick}
+                    >
+                    참여하고 있는 사람 보기
+                    </Button>
+                  </Col>
                   <Button
-                    color="dark"
-                    size="lg"
-                    style={{
-                      position: 'absolute',
-                      width: '100%',
-                      bottom: 0,
-                    }}
-                  >
-                    완료
+                  color="dark"
+                  size="lg"
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    bottom: 0,
+                  }}
+                    >
+                  완료
                   </Button>
+                </div>
                 ) : (
                   <></>
                 )}
