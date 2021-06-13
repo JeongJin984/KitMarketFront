@@ -10,6 +10,8 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
   SIGNUP_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
@@ -19,6 +21,8 @@ export const initialState = {
   error: null,
   isLoggedIn: false,
   isLogginIn: false,
+  isLoggedOut: false,
+  isLoggingOut: false,
   isSignedUp: false,
   isSigningUp: false,
   me: null,
@@ -68,8 +72,22 @@ const userReducer = (state = initialState, action) => {
         break;
 
       case LOGOUT_REQUEST:
+        draft.isLoggingOut = true;
+        draft.isLoggedOut = false;
+        draft.error = '';
+        break;
+
+      case LOGOUT_SUCCESS:
         draft.isLoggedIn = false;
+        draft.isLoggingOut = false;
+        draft.isLoggedOut = true;
         draft.me = null;
+        break;
+
+      case LOGOUT_FAILURE:
+        draft.isLoggingOut = false;
+        draft.isLoggedOut = false;
+        draft.error = action.error;
         break;
 
       case SIGNUP_REQUEST:
