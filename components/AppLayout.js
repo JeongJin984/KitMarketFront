@@ -56,7 +56,8 @@ const AppLayout = ({ children }) => {
     router.push('/login');
   };
 
-  const onClickLogOut = () => {
+  const onClickLogOut = async () => {
+    await router.push('/');
     dispatch(logoutRequest());
   };
 
