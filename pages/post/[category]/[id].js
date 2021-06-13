@@ -23,6 +23,7 @@ import AppLayout from '../../../components/AppLayout';
 import JoinButton from '../../../components/JoinButton';
 import UpdatePostModal from '../../../components/UpdatePostModal';
 import Map from '../../../components/Map';
+import ApplicationsForm from '../../../components/ApplicationsForm';
 
 import {
   deletePostRequest,
@@ -66,7 +67,7 @@ const PostView = () => {
     lat,
     long,
   } = singlePost;
-  console.log(lat, long)
+
   const dispatch = useDispatch();
   const createdAt = singlePost.createdAt.replace('T', ' ').substr(0, 16);
   const toggle = () => setModal(!modal);
@@ -380,18 +381,18 @@ const PostView = () => {
                 style={{ backgroundColor: 'white', height: 270 }}
               >
                 {singlePost.category === 'carPool' ? (
-                  <CardText tag="h5" style={{ height: 150, position: "relative" }}>
+                  <CardText
+                    tag="h5"
+                    style={{ height: 150, position: 'relative' }}
+                  >
                     <Map lat={lat} long={long} />
-                    <div style={{ display: "inline" }}>
-                      {content}
-                    </div> 
+                    <div style={{ display: 'inline' }}>{content}</div>
                   </CardText>
-                  ) : (
+                ) : (
                   <CardText tag="h5" style={{ height: 150 }}>
-                      {content} 
+                    {content}
                   </CardText>
-                  )
-                }
+                )}
                 <br />
               </Card>
             </Row>
@@ -443,349 +444,13 @@ const PostView = () => {
           </Card>
         </Col>
         <Col xs="4" style={{ marginLeft: '-1%' }}>
-          {singlePost.category === 'contest' && (
-            <Card body outline color="secondary" style={{ height: 850 }}>
-              {isParticipant ? (
-                <CardTitle className="text-center" tag="h4">
-                  참여하고 있는 사람
-                </CardTitle>
-              ) : (
-                <CardTitle className="text-center" tag="h4">
-                  함께하고 싶은 사람
-                </CardTitle>
-              )}
-              <hr />
-              <Form
-                style={{ height: '85%', position: 'relative' }}
-                onSubmit={handlePermit}
-              >
-                <div
-                  style={{
-                    height: '80%',
-                    paddingLeft: '5%',
-                    paddingRight: '5%',
-                    overflow: 'auto',
-                  }}
-                >
-                  {isParticipant ? (
-                    <>
-                      {participants.map((participant) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            {participant.email}
-                            <Label style={{ float: 'right' }}>
-                              {participant.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {applications.map((application) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            <Input
-                              type="checkbox"
-                              onChange={(e) => handleCheck(e, application.id)}
-                            />
-                            {application.content}
-                            <Label style={{ float: 'right' }}>
-                              {application.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  )}
-                </div>
-                <hr />
-                {isWriter ? (
-                  <div>
-                  <Col xs="6">
-                    <Button
-                    color="#00FFFFFF"
-                    size="sm"
-                    onClick={handleClick}
-                    >
-                    참여하고 있는 사람 보기
-                    </Button>
-                  </Col>
-                  <Button
-                  color="dark"
-                  size="lg"
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    bottom: 0,
-                  }}
-                    >
-                  완료
-                  </Button>
-                </div>
-                ) : (
-                  <></>
-                )}
-              </Form>
-            </Card>
-          )}
-          {singlePost.category === 'study' && (
-            <Card body outline color="secondary" style={{ height: 750 }}>
-              {isParticipant ? (
-                <CardTitle className="text-center" tag="h4">
-                  참여하고 있는 사람
-                </CardTitle>
-              ) : (
-                <CardTitle className="text-center" tag="h4">
-                  함께하고 싶은 사람
-                </CardTitle>
-              )}
-              <hr />
-              <Form
-                style={{ height: '85%', position: 'relative' }}
-                onSubmit={handlePermit}
-              >
-                <div
-                  style={{
-                    height: '80%',
-                    paddingLeft: '5%',
-                    paddingRight: '5%',
-                    overflow: 'auto',
-                  }}
-                >
-                  {isParticipant ? (
-                    <>
-                      {participants.map((participant) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            {participant.email}
-                            <Label style={{ float: 'right' }}>
-                              {participant.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {applications.map((application) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            <Input
-                              type="checkbox"
-                              onChange={(e) => handleCheck(e, application.id)}
-                            />
-                            {application.content}
-                            <Label style={{ float: 'right' }}>
-                              {application.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  )}
-                </div>
-                <hr />
-                {isWriter ? (
-                  <Button
-                    color="dark"
-                    size="lg"
-                    style={{
-                      position: 'absolute',
-                      width: '100%',
-                      bottom: 0,
-                    }}
-                  >
-                    완료
-                  </Button>
-                ) : (
-                  <></>
-                )}
-              </Form>
-            </Card>
-          )}
-          {singlePost.category === 'carPool' && (
-            <Card body outline color="secondary" style={{ height: 880 }}>
-              {isParticipant ? (
-                <CardTitle className="text-center" tag="h4">
-                  참여하고 있는 사람
-                </CardTitle>
-              ) : (
-                <CardTitle className="text-center" tag="h4">
-                  함께하고 싶은 사람
-                </CardTitle>
-              )}
-              <hr />
-              <Form
-                style={{ height: '85%', position: 'relative' }}
-                onSubmit={handlePermit}
-              >
-                <div
-                  style={{
-                    height: '80%',
-                    paddingLeft: '5%',
-                    paddingRight: '5%',
-                    overflow: 'auto',
-                  }}
-                >
-                  {isParticipant ? (
-                    <>
-                      {participants.map((participant) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            {participant.email}
-                            <Label style={{ float: 'right' }}>
-                              {participant.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {applications.map((application) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            <Input
-                              type="checkbox"
-                              onChange={(e) => handleCheck(e, application.id)}
-                            />
-                            {application.content}
-                            <Label style={{ float: 'right' }}>
-                              {application.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  )}
-                </div>
-                <hr />
-                {isWriter ? (
-                  <Button
-                    color="dark"
-                    size="lg"
-                    style={{
-                      position: 'absolute',
-                      width: '100%',
-                      bottom: 0,
-                    }}
-                  >
-                    완료
-                  </Button>
-                ) : (
-                  <></>
-                )}
-              </Form>
-            </Card>
-          )}
-          {singlePost.category === 'miniProject' && (
-            <Card body outline color="secondary" style={{ height: 750 }}>
-              {isParticipant ? (
-                <CardTitle className="text-center" tag="h4">
-                  참여하고 있는 사람
-                </CardTitle>
-              ) : (
-                <CardTitle className="text-center" tag="h4">
-                  함께하고 싶은 사람
-                </CardTitle>
-              )}
-              <hr />
-              <Form
-                style={{ height: '85%', position: 'relative' }}
-                onSubmit={handlePermit}
-              >
-                <div
-                  style={{
-                    height: '80%',
-                    paddingLeft: '5%',
-                    paddingRight: '5%',
-                    overflow: 'auto',
-                  }}
-                >
-                  {isParticipant ? (
-                    <>
-                      {participants.map((participant) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            {participant.email}
-                            <Label style={{ float: 'right' }}>
-                              {participant.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {applications.map((application) => (
-                        <>
-                          <FormGroup
-                            check
-                            style={{ width: '100%', marginBottom: '5%' }}
-                          >
-                            <Input
-                              type="checkbox"
-                              onChange={(e) => handleCheck(e, application.id)}
-                            />
-                            {application.content}
-                            <Label style={{ float: 'right' }}>
-                              {application.username}
-                            </Label>
-                          </FormGroup>
-                          <br />{' '}
-                        </>
-                      ))}
-                    </>
-                  )}
-                </div>
-                <hr />
-                {isWriter ? (
-                  <Button
-                    color="dark"
-                    size="lg"
-                    style={{
-                      position: 'absolute',
-                      width: '100%',
-                      bottom: 0,
-                    }}
-                  >
-                    완료
-                  </Button>
-                ) : (
-                  <></>
-                )}
-              </Form>
-            </Card>
-          )}
+          <ApplicationsForm
+            singlePost={singlePost}
+            isWriter={isWriter}
+            isParticipant={isParticipant}
+            handleCheck={handleCheck}
+            handlePermit={handlePermit}
+          />
         </Col>
       </Row>
       <br />
