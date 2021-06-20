@@ -27,11 +27,12 @@ const UpdatePostButton = () => {
     projectDuration,
     departure,
     destination,
-    departHours,
-    departMinutes,
+    departTime,
     lat: initialLat,
     long: initialLong,
   } = useSelector((state) => state.post.singlePost);
+
+  const { hours: departHours, minutes: departMinutes } = departTime;
 
   const year = deadLine.substr(0, 4);
   const month = parseInt(deadLine.substr(5, 2));
@@ -95,13 +96,16 @@ const UpdatePostButton = () => {
     setModal(!modal);
   };
 
-  const onChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  }, [inputs]);
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    },
+    [inputs]
+  );
 
   const onReset = () => {
     setInputs({});

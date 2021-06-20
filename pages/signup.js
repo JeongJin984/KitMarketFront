@@ -17,13 +17,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { useCookies } from "react-cookie"
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import {signUpRequest} from "../data/event/userEvent";
+import { signUpRequest } from '../data/event/userEvent';
 
 const signUp = () => {
-
-  const { isSignedUp } = useSelector(state => state.user)
+  const { isSignedUp } = useSelector((state) => state.user);
 
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwdValid, setIsPwdValid] = useState(false);
@@ -34,7 +33,7 @@ const signUp = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   useEffect(() => {
     if (isSignedUp) {
       router.push('/login');
@@ -48,7 +47,8 @@ const signUp = () => {
   const onChangeEmail = useCallback((e) => {
     setEmail(e.target.value);
 
-    const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRex.test(e.target.value)) {
       setIsEmailValid(true);
     } else {
@@ -116,11 +116,6 @@ const signUp = () => {
                     onChange={onChangeUsername}
                   />
                 </Col>
-                <Col xs="2">
-                  <Button style={{ width: '95px', margin: '2%' }}>
-                    중복 확인
-                  </Button>
-                </Col>
               </Row>
             </FormGroup>{' '}
             <FormGroup>
@@ -152,11 +147,6 @@ const signUp = () => {
                     />
                   )}
                   <FormFeedback invalid>올바르지 않은 형식입니다.</FormFeedback>
-                </Col>
-                <Col xs="2">
-                  <Button style={{ width: '95px', margin: '2%' }}>
-                    중복 확인
-                  </Button>
                 </Col>
               </Row>
             </FormGroup>{' '}

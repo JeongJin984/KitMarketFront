@@ -50,17 +50,13 @@ const PostView = () => {
     curNum,
     applications,
     participants,
-    subject,
     region,
     duration,
-    gender,
     fare,
     departure,
     destination,
     departTime,
-    contestCategory,
     hostOrganization,
-    qualification,
     homepage,
     projectDuration,
     topic,
@@ -81,6 +77,52 @@ const PostView = () => {
     category = '카풀/택시';
   } else if (singlePost.category === 'miniProject') {
     category = '미니프로젝트';
+  }
+
+  let contestCategory = '';
+  if (singlePost.contestCategory === 'REPORT') {
+    contestCategory = '리포트';
+  } else if (singlePost.contestCategory === 'IDEA') {
+    contestCategory = '아이디어';
+  } else if (singlePost.contestCategory === 'DESIGN') {
+    contestCategory = '디자인';
+  } else if (singlePost.contestCategory === 'CHARACTER') {
+    contestCategory = '캐릭터';
+  } else if (singlePost.contestCategory === 'CULTURE') {
+    contestCategory = '문화';
+  } else if (singlePost.contestCategory === 'UCC') {
+    contestCategory = 'UCC';
+  } else if (singlePost.contestCategory === 'EXTERNAL_ACTIVITY') {
+    contestCategory = '대외활동';
+  }
+
+  let subject = '';
+  if (singlePost.subject === 'ENGLISH') {
+    subject = '언어';
+  } else if (singlePost.subject === 'NCS') {
+    subject = '공무원/공기업';
+  } else if (singlePost.subject === 'CERTIFICATE') {
+    subject = '자격증';
+  } else if (singlePost.subject === 'NONE') {
+    subject = '기타';
+  }
+
+  let qualification = '';
+  if (singlePost.qualification === 'HIGHSCHOOL') {
+    qualification = '고등학생';
+  } else if (singlePost.qualification === 'COLLEGE') {
+    qualification = '대학생';
+  } else if (singlePost.qualification === 'NONE') {
+    qualification = '기타';
+  }
+
+  let gender = '';
+  if (singlePost.gender === 'MALE') {
+    gender = '남자';
+  } else if (singlePost.gender === 'FEMALE') {
+    gender = '여자';
+  } else if (singlePost.gender === 'NONE') {
+    gender = '상관없음';
   }
 
   const handleCheck = useCallback(
@@ -140,7 +182,7 @@ const PostView = () => {
             }}
           >
             <Row>
-              <Col xs="1">
+              <Col xs="2">
                 <CardText className="text-center" tag="h5">
                   D-{dueDate}
                 </CardText>
@@ -383,14 +425,28 @@ const PostView = () => {
                 {singlePost.category === 'carPool' ? (
                   <CardText
                     tag="h5"
-                    style={{ height: 150, position: 'relative' }}
+                    style={{ height: '100%', position: 'relative' }}
                   >
                     <Map lat={lat} long={long} />
                     <div style={{ display: 'inline' }}>{content}</div>
+                    <CardText
+                      tag="h6"
+                      className="mb-2 text-muted text-left"
+                      style={{ position: 'absolute', bottom: 0 }}
+                    >
+                      {createdAt}
+                    </CardText>
                   </CardText>
                 ) : (
-                  <CardText tag="h5" style={{ height: 150 }}>
+                  <CardText tag="h5" style={{ height: '100%' }}>
                     {content}
+                    <CardText
+                      tag="h6"
+                      className="mb-2 text-muted text-left"
+                      style={{ position: 'absolute', bottom: 0 }}
+                    >
+                      {createdAt}
+                    </CardText>
                   </CardText>
                 )}
                 <br />
@@ -398,7 +454,6 @@ const PostView = () => {
             </Row>
             <Row>
               <Col xs="8">
-                <br />
                 <br />
                 <br />
                 <br />
@@ -413,7 +468,7 @@ const PostView = () => {
               </Col>
               <Col xs="4">
                 <br />
-                <br />
+
                 <Button
                   id="Popover1"
                   outline
@@ -450,6 +505,7 @@ const PostView = () => {
             isParticipant={isParticipant}
             handleCheck={handleCheck}
             handlePermit={handlePermit}
+            username={username}
           />
         </Col>
       </Row>

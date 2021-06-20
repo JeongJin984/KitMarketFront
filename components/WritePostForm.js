@@ -13,7 +13,14 @@ import {
 
 import MarkableMap from './MarkableMap';
 
-const WritePostForm = ({ handleSubmit, toggle, onChange, setLat, setLong, inputs }) => {
+const WritePostForm = ({
+  handleSubmit,
+  toggle,
+  onChange,
+  setLat,
+  setLong,
+  inputs,
+}) => {
   const { category, maxNum } = inputs;
   return (
     <Form onSubmit={handleSubmit}>
@@ -53,7 +60,6 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, setLat, setLong, inputs
                 <option value="CULTURE">문화</option>
                 <option value="UCC">UCC</option>
                 <option value="EXTERNAL_ACTIVITY">대외활동</option>
-                <option>기타</option>
               </Input>
             )}
             {category === 'study' && (
@@ -308,10 +314,7 @@ const WritePostForm = ({ handleSubmit, toggle, onChange, setLat, setLong, inputs
             <Col xs="2">
               <label style={{ fontWeight: 'bold' }}>출발지 상세 설정</label>
             </Col>
-            <MarkableMap 
-              setLat={setLat}
-              setLong={setLong}
-            />
+            <MarkableMap setLat={setLat} setLong={setLong} />
           </Row>
         )}
 
