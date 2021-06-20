@@ -36,34 +36,18 @@ import {
 } from '../data/event/postEvent';
 
 const profile = () => {
-  const [imgBase64, setImgBase64] = useState(''); // 파일 base64
-  const [imgFile, setImgFile] = useState(null); //파일
-
-  const handleChangeFile = (event) => {
-    let reader = new FileReader();
-
-    reader.onloadend = () => {
-      // 2. 읽기가 완료되면 아래코드가 실행됩니다.
-      const base64 = reader.result;
-      if (base64) {
-        setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
-      }
-    };
-    if (event.target.files[0]) {
-      reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
-      setImgFile(event.target.files[0]); // 파일 상태 업데이트
-    }
-  };
-
   const router = useRouter();
   const dispatch = useDispatch();
 
   const [activeTab, setActiveTab] = useState('1');
-  const { profile: profileState, isLoadedProfile, me } = useSelector((state) => state.user);
+  const {
+    profile: profileState,
+    isLoadedProfile,
+    me,
+  } = useSelector((state) => state.user);
   const { username } = me;
-  const { createdPosts, participatingPosts, applicatedPosts, isLoadedPosts } = useSelector(
-    (state) => state.post
-  );
+  const { createdPosts, participatingPosts, applicatedPosts, isLoadedPosts } =
+    useSelector((state) => state.post);
 
   const [profile, setProfile] = useState({
     username: '',
@@ -103,7 +87,7 @@ const profile = () => {
     if (isLoadedProfile) setProfile(profileState);
   }, [isLoadedProfile]);
 
-  useEffect(() => {}, [isLoadedPosts])
+  useEffect(() => {}, [isLoadedPosts]);
 
   useEffect(() => {
     if (!profileState) {
@@ -119,7 +103,7 @@ const profile = () => {
     } else {
       dispatch(loadCreatedPostsRequest({ username, page }));
     }
-  }, [dispatch, username, page, tab])
+  }, [dispatch, username, page, tab]);
 
   return (
     <AppLayout>
@@ -128,33 +112,7 @@ const profile = () => {
           <CardTitle tag="h3">내 프로필</CardTitle>
           <hr />
           <Row>
-            <Col xs="5">
-              <br />
-              <div className="App">
-                <div
-                  style={{
-                    backgroundColor: '#efefef',
-                    width: '250px',
-                    height: '250px',
-                  }}
-                >
-                  <img
-                    src=""
-                    src={imgBase64}
-                    style={{ width: '250px', height: '250px' }}
-                  />
-                </div>
-                <br />
-                <div>
-                  <input
-                    type="file"
-                    name="imgFile"
-                    id="imgFile"
-                    onChange={handleChangeFile}
-                  />
-                </div>
-              </div>
-            </Col>
+            <Col xs="5"></Col>
             <Col xs="7">
               <br />
               <Row>
@@ -255,10 +213,7 @@ const profile = () => {
                     <label style={{ fontWeight: 'bold' }}>Major</label>
                   </Col>
                   <Col xs="6">
-                    <Input
-                      type="text"
-                      name="major"
-                    />
+                    <Input type="text" name="major" />
                   </Col>
                 </Row>
                 <br />
