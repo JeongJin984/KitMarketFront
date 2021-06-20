@@ -1,14 +1,8 @@
 import React, { useCallback, useState } from 'react';
 
-import {
-  Card,
-  Button,
-  CardTitle,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import { Card, Button, CardTitle, Form } from 'reactstrap';
+
+import ApplicationsList from './ApplicationsList';
 
 const ApplicationsForm = ({
   singlePost,
@@ -16,14 +10,20 @@ const ApplicationsForm = ({
   isParticipant,
   handleCheck,
   handlePermit,
+  username,
 }) => {
   const { applications, participants } = singlePost;
 
   const [toggle, setToggle] = useState(false);
+  const [updateToggle, setUpdateToggle] = useState(false);
 
   const onClickToggle = useCallback(() => {
     setToggle(!toggle);
   }, [toggle]);
+
+  const onClickUpdateToggle = useCallback(() => {
+    setUpdateToggle(!updateToggle);
+  }, [updateToggle]);
 
   let height = 850;
 
@@ -66,81 +66,6 @@ const ApplicationsForm = ({
       );
     }
   }, [isWriter, isParticipant, toggle]);
-
-  const List = useCallback(() => {
-    if (isWriter) {
-      if (!toggle) {
-        return (
-          <>
-            {applications.map((application) => (
-              <>
-                <FormGroup check style={{ width: '100%', marginBottom: '5%' }}>
-                  <Input
-                    type="checkbox"
-                    onChange={(e) => handleCheck(e, application.id)}
-                  />
-                  {application.content}
-                  <Label style={{ float: 'right' }}>
-                    {application.username}
-                  </Label>
-                </FormGroup>
-                <br />{' '}
-              </>
-            ))}
-          </>
-        );
-      } else {
-        return (
-          <>
-            {participants.map((participant) => (
-              <>
-                <FormGroup check style={{ width: '100%', marginBottom: '5%' }}>
-                  {participant.email}
-                  <Label style={{ float: 'right' }}>
-                    {participant.username}
-                  </Label>
-                </FormGroup>
-                <br />{' '}
-              </>
-            ))}
-          </>
-        );
-      }
-    } else if (isParticipant) {
-      return (
-        <>
-          {participants.map((participant) => (
-            <>
-              <FormGroup check style={{ width: '100%', marginBottom: '5%' }}>
-                {participant.email}
-                <Label style={{ float: 'right' }}>{participant.username}</Label>
-              </FormGroup>
-              <br />{' '}
-            </>
-          ))}
-        </>
-      );
-    } else {
-      return (
-        <>
-          {applications.map((application) => (
-            <>
-              <FormGroup check style={{ width: '100%', marginBottom: '5%' }}>
-                <Input
-                  type="checkbox"
-                  onChange={(e) => handleCheck(e, application.id)}
-                  disabled
-                />
-                {application.content}
-                <Label style={{ float: 'right' }}>{application.username}</Label>
-              </FormGroup>
-              <br />{' '}
-            </>
-          ))}
-        </>
-      );
-    }
-  }, [isWriter, isParticipant, applications, participants, toggle]);
 
   const Buttons = useCallback(() => {
     if (isWriter) {
@@ -204,7 +129,17 @@ const ApplicationsForm = ({
             overflow: 'auto',
           }}
         >
-          <List />
+          <ApplicationsList
+            username={username}
+            isWriter={isWriter}
+            isParticipant={isParticipant}
+            applications={applications}
+            participants={participants}
+            toggle={toggle}
+            updateToggle={updateToggle}
+            onClickUpdateToggle={onClickUpdateToggle}
+            handleCheck={handleCheck}
+          />
         </div>
         <hr />
         <Buttons />

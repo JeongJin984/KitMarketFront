@@ -6,6 +6,9 @@ import {
   CANCEL_JOIN_FAILURE,
   CANCEL_JOIN_REQUEST,
   CANCEL_JOIN_SUCCESS,
+  UPDATE_JOIN_REQUEST,
+  UPDATE_JOIN_SUCCESS,
+  UPDATE_JOIN_FAILURE,
   DELETE_POST_FAILURE,
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
@@ -66,6 +69,8 @@ const initialState = {
   isJoinedPost: false,
   isCancellingJoin: false,
   isCancelledJoin: false,
+  isUpdatingJoin: false,
+  isUpdatedJoin: false,
   isPermittingJoin: false,
   isPermittedJoin: false,
   createdPosts: {
@@ -183,6 +188,24 @@ const postReducer = (state = initialState, action) => {
         draft.isCancellingJoin = false;
         draft.isCancelledJoin = false;
         draft.error = action.error;
+        break;
+
+      case UPDATE_JOIN_REQUEST:
+        draft.isUpdatingJoin = true;
+        draft.isUpdatedJoin = false;
+        draft.error = '';
+        break;
+
+      case UPDATE_JOIN_SUCCESS:
+        draft.isUpdatingJoin = false;
+        draft.isUpdatedJoin = true;
+        draft.error = '';
+        break;
+
+      case UPDATE_JOIN_FAILURE:
+        draft.isUpdatingJoin = false;
+        draft.isUpdatedJoin = false;
+        draft.erro = action.error;
         break;
 
       case PERMIT_JOIN_REQUEST:

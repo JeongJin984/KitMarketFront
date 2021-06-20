@@ -3,6 +3,7 @@ import {
   CANCEL_JOIN_REQUEST,
   DELETE_POST_REQUEST,
   JOIN_POST_REQUEST,
+  UPDATE_JOIN_REQUEST,
   PERMIT_JOIN_REQUEST,
   LOAD_APPLICATED_POSTS_REQUEST,
   LOAD_CREATED_POSTS_REQUEST,
@@ -47,6 +48,13 @@ export const joinPostRequest = (data) => {
 export const cancelJoinRequest = (data) => {
   return {
     type: CANCEL_JOIN_REQUEST,
+    data,
+  };
+};
+
+export const updateJoinRequest = (data) => {
+  return {
+    type: UPDATE_JOIN_REQUEST,
     data,
   };
 };

@@ -18,6 +18,9 @@ import {
   CANCEL_JOIN_REQUEST,
   CANCEL_JOIN_SUCCESS,
   CANCEL_JOIN_FAILURE,
+  UPDATE_JOIN_REQUEST,
+  UPDATE_JOIN_SUCCESS,
+  UPDATE_JOIN_FAILURE,
   PERMIT_JOIN_REQUEST,
   PERMIT_JOIN_SUCCESS,
   PERMIT_JOIN_FAILURE,
@@ -198,6 +201,32 @@ function* cancelJoin(action) {
   } catch (error) {
     yield put({
       type: CANCEL_JOIN_FAILURE,
+      error,
+    });
+  }
+}
+
+function updateJoinAPI(data) {
+  return axios({
+    method: 'PUT',
+    url: `${defaultURL}/api/app/update?postId=${data.id}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: { username: data.username, content: data.content },
+  });
+}
+
+function* updateJoin(action) {
+  try {
+    console.log(action.data, 'update join');
+    yield call(updateJoinAPI, action.data);
+    yield put({
+      type: UPDATE_JOIN_SUCCESS,
+    });
+  } catch (error) {
+    yield put({
+      type: UPDATE_JOIN_FAILURE,
       error,
     });
   }
@@ -492,6 +521,10 @@ function* watchCancelJoin() {
   yield takeLatest(CANCEL_JOIN_REQUEST, cancelJoin);
 }
 
+function* watchUpdateJoin() {
+  yield takeLatest(UPDATE_JOIN_REQUEST, updateJoin);
+}
+
 function* watchPermitJoin() {
   yield takeLatest(PERMIT_JOIN_REQUEST, permitJoin);
 }
@@ -539,6 +572,7 @@ export default function* chattingSaga() {
     fork(watchAddPost),
     fork(watchJoinPost),
     fork(watchCancelJoin),
+    fork(watchUpdateJoin),
     fork(watchPermitJoin),
     fork(watchLoadCreatePosts),
     fork(watchLoadParticipatingPosts),
