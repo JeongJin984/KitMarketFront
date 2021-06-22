@@ -50,7 +50,7 @@ const AppllicationsList = ({
         }
       });
     }
-  }, [updateToggle]);
+  }, [updateToggle, applications]);
 
   useEffect(() => {
     if (isUpdatedJoin) {

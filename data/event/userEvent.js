@@ -4,6 +4,7 @@ import {
   LOGIN_REQUEST,
   LOGOUT_REQUEST,
   SIGNUP_REQUEST,
+  UPDATE_PROFILE_REQUEST,
 } from '../eventName/userEventName';
 
 export const loginRequest = (data) => {
@@ -36,6 +37,13 @@ export const signUpRequest = (data) => {
 export const loadProfileRequest = (data) => {
   return {
     type: LOAD_PROFILE_REQUEST,
+    data,
+  };
+};
+
+export const updateProfileRequest = (data) => {
+  return {
+    type: UPDATE_PROFILE_REQUEST,
     data,
   };
 };

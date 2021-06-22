@@ -15,6 +15,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_FAILURE,
   LOAD_USER_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILURE,
 } from '../data/eventName/userEventName';
 import axios from 'axios';
 import { frontURL, backURL } from '../config/config';
@@ -32,41 +35,6 @@ function logInAPI(data) {
   });
 }
 
-function logOutAPI() {
-  return axios({
-    methos: 'post',
-    url: `${defaultURL}/logout`,
-  });
-}
-
-function signUpAPI(data) {
-  return axios({
-    method: 'post',
-    url: `${defaultURL}/signup`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-    data,
-  });
-}
-
-function loadProfileAPI(data) {
-  return axios({
-    method: 'GET',
-    url: `${defaultURL}/profile/${data.username}`,
-    headers: {
-      'X-Request-With': 'XMLHttpRequest',
-    },
-  });
-}
-
-function loadUserAPI() {
-  return axios({
-    method: 'GET',
-    url: `${defaultURL}/user`,
-  });
-}
-
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
@@ -81,9 +49,16 @@ function* logIn(action) {
   }
 }
 
+function logOutAPI() {
+  return axios({
+    methos: 'post',
+    url: `${defaultURL}/logout`,
+  });
+}
+
 function* logOut() {
   try {
-    console.log('asdfasdfasdf');
+    console.log('asdfasdfasdffffffffffff');
     yield call(logOutAPI);
     yield put({
       type: LOGOUT_SUCCESS,
@@ -95,13 +70,38 @@ function* logOut() {
   }
 }
 
+function signUpAPI(data) {
+  return axios({
+    method: 'post',
+    url: `${defaultURL}/signup`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data,
+  });
+}
+
 function* signUp(action) {
   try {
     yield call(signUpAPI, action.data);
     yield put({
       type: SIGNUP_SUCCESS,
     });
-  } catch (error) {}
+  } catch (error) {
+    yield put({
+      type: SIGNUP_FAILURE,
+    });
+  }
+}
+
+function loadProfileAPI(data) {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/profile/${data.username}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+  });
 }
 
 function* loadProfile(action) {
@@ -119,10 +119,18 @@ function* loadProfile(action) {
     });
   }
 }
+
+function loadUserAPI() {
+  return axios({
+    method: 'GET',
+    url: `${defaultURL}/user`,
+  });
+}
+
 function* loadUser() {
   try {
     console.log('load usersrsresrse');
-    const result = { data: { username: 'user4', gender: 'MALE', age: 5 } };
+    const result = { data: { username: 'user1', gender: 'MALE', age: 5 } };
     // const result = yield call(loadUserAPI);
     yield put({
       type: LOAD_USER_SUCCESS,
@@ -131,6 +139,39 @@ function* loadUser() {
   } catch (error) {
     yield put({
       type: LOAD_USER_FAILURE,
+      error: error,
+    });
+  }
+}
+
+function updateProfileAPI(data) {
+  console.log('updateeeeprof');
+  return axios({
+    method: 'PUT',
+    url: `${defaultURL}/profile/${data.username}`,
+    headers: {
+      'X-Request-With': 'XMLHttpRequest',
+    },
+    data: {
+      email: data.email,
+      major: data.major,
+      grade: data.grade,
+      gender: data.gender,
+      age: data.age,
+    },
+  });
+}
+
+function* updateProfile(action) {
+  try {
+    const result = yield call(updateProfileAPI, action.data);
+    yield put({
+      type: UPDATE_PROFILE_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: UPDATE_PROFILE_FAILURE,
       error: error,
     });
   }
@@ -156,6 +197,10 @@ function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
+function* watchUpdateProfile() {
+  yield takeLatest(UPDATE_PROFILE_REQUEST, updateProfile);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
@@ -163,5 +208,6 @@ export default function* userSaga() {
     fork(watchSignUp),
     fork(watchLoadProfile),
     fork(watchLoadUser),
+    fork(watchUpdateProfile),
   ]);
 }

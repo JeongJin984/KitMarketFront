@@ -9,7 +9,7 @@ import {
   CardTitle,
   CardText,
   Button,
-  Media,
+  Form,
   Row,
   Col,
   TabContent,
@@ -28,7 +28,10 @@ import classnames from 'classnames';
 import ProfilePost from '../components/ProfilePost';
 import ProfilePagination from '../components/ProfilePagination';
 import { useRouter } from 'next/router';
-import { loadProfileRequest, loadUserRequest } from '../data/event/userEvent';
+import {
+  loadProfileRequest,
+  updateProfileRequest,
+} from '../data/event/userEvent';
 import {
   loadApplicatedPostsRequest,
   loadCreatedPostsRequest,
@@ -46,8 +49,10 @@ const profile = () => {
     me,
   } = useSelector((state) => state.user);
   const { username } = me;
-  const { createdPosts, participatingPosts, applicatedPosts, isLoadedPosts } =
-    useSelector((state) => state.post);
+  const { createdPosts, participatingPosts, applicatedPosts } = useSelector(
+    (state) => state.post
+  );
+  const { isUpdatedProfile } = useSelector((state) => state.user);
 
   const [profile, setProfile] = useState({
     username: '',
@@ -57,6 +62,7 @@ const profile = () => {
     grade: '',
     gender: '',
   });
+  const [inputs, setInputs] = useState({});
 
   const [modal, setModal] = useState(false);
 
@@ -77,6 +83,37 @@ const profile = () => {
     [activeTab]
   );
 
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setInputs({
+        ...inputs,
+        [name]: value,
+      });
+    },
+    [inputs]
+  );
+
+  const onReset = useCallback(() => {
+    if (isLoadedProfile) {
+      setInputs({
+        email: profileState.email,
+        age: profileState.age,
+        major: profileState.major,
+        grade: profileState.grade,
+        gender: profileState.gender,
+      });
+    }
+  }, [setInputs, profileState]);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(updateProfileRequest({ ...inputs, username }));
+    },
+    [dispatch, inputs]
+  );
+
   useEffect(() => {
     if (tab === 'participating') setActiveTab('2');
     else if (tab === 'applicated') setActiveTab('3');
@@ -84,10 +121,29 @@ const profile = () => {
   }, []);
 
   useEffect(() => {
-    if (isLoadedProfile) setProfile(profileState);
+    if (isLoadedProfile) {
+      setProfile(profileState);
+      setInputs({
+        email: profileState.email,
+        age: profileState.age,
+        major: profileState.major,
+        grade: profileState.grade,
+        gender: profileState.gender,
+      });
+    }
   }, [isLoadedProfile]);
 
-  useEffect(() => {}, [isLoadedPosts]);
+  useEffect(() => {
+    if (modal === false) {
+      onReset();
+    }
+  }, [modal]);
+
+  useEffect(() => {
+    if (isUpdatedProfile) {
+      location.reload();
+    }
+  }, [isUpdatedProfile]);
 
   useEffect(() => {
     if (!profileState) {
@@ -194,71 +250,104 @@ const profile = () => {
               Edit
             </Button>
             <Modal size="lg" isOpen={modal} toggle={togglebutton}>
-              <ModalHeader toggle={togglebutton}>내 프로필 수정</ModalHeader>
-              <ModalBody>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>E-mail</label>
-                  </Col>
-                  <Col xs="6">
-                    <Input placeholder="E-mail" />
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Major</label>
-                  </Col>
-                  <Col xs="6">
-                    <Input type="text" name="major" />
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Grade</label>
-                  </Col>
-                  <Col xs="2">
-                    <Input type="number" min="1" max="4" placeholder="" />
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Gender</label>
-                  </Col>
-                  <Col xs="3">
-                    <Input type="select">
-                      <option>남자</option>
-                      <option>여자</option>
-                    </Input>
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col xs="2"></Col>
-                  <Col xs="2">
-                    <label style={{ fontWeight: 'bold' }}>Age</label>
-                  </Col>
-                  <Col xs="2">
-                    <Input type="number" max="99" />
-                  </Col>
-                </Row>
-                <br />
-              </ModalBody>
-              <ModalFooter>
-                <Button outline color="secondary" onClick={togglebutton}>
-                  취소
-                </Button>{' '}
-                <Button color="secondary" onClick={togglebutton}>
-                  수정
-                </Button>
-              </ModalFooter>
+              <Form onSubmit={handleSubmit}>
+                <ModalHeader toggle={togglebutton}>내 프로필 수정</ModalHeader>
+                <ModalBody>
+                  <br />
+                  <Row>
+                    <Col xs="2"></Col>
+                    <Col xs="2">
+                      <label style={{ fontWeight: 'bold' }}>E-mail</label>
+                    </Col>
+                    <Col xs="6">
+                      <Input
+                        type="text"
+                        defaultValue={inputs.email}
+                        onChange={onChange}
+                        required
+                      />
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col xs="2"></Col>
+                    <Col xs="2">
+                      <label style={{ fontWeight: 'bold' }}>Major</label>
+                    </Col>
+                    <Col xs="6">
+                      <Input
+                        type="text"
+                        name="major"
+                        defaultValue={inputs.major}
+                        onChange={onChange}
+                        required
+                      />
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col xs="2"></Col>
+                    <Col xs="2">
+                      <label style={{ fontWeight: 'bold' }}>Grade</label>
+                    </Col>
+                    <Col xs="2">
+                      <Input
+                        type="number"
+                        min="1"
+                        max="4"
+                        placeholder=""
+                        defaultValue={inputs.grade}
+                        onChange={onChange}
+                        required
+                      />
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col xs="2"></Col>
+                    <Col xs="2">
+                      <label style={{ fontWeight: 'bold' }}>Gender</label>
+                    </Col>
+                    <Col xs="3">
+                      <Input
+                        type="select"
+                        name="gender"
+                        defaultValue={inputs.gender}
+                        onChange={onChange}
+                        required
+                      >
+                        <option value="MALE">남자</option>
+                        <option value="FEMALE">여자</option>
+                      </Input>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col xs="2"></Col>
+                    <Col xs="2">
+                      <label style={{ fontWeight: 'bold' }}>Age</label>
+                    </Col>
+                    <Col xs="2">
+                      <Input
+                        type="number"
+                        max="99"
+                        defaultValue={inputs.age}
+                        onChange={onChange}
+                        required
+                      />
+                    </Col>
+                  </Row>
+                  <br />
+                </ModalBody>
+                <ModalFooter>
+                  <Button outline color="secondary" onClick={togglebutton}>
+                    취소
+                  </Button>{' '}
+                  <Button color="secondary" type="submit">
+                    수정
+                  </Button>
+                </ModalFooter>
+              </Form>
             </Modal>
           </div>
           <br />

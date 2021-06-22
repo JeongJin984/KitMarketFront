@@ -415,6 +415,11 @@ const PostView = () => {
               <Col xs="2">
                 <label style={{ fontWeight: 'bold' }}>내용</label>
               </Col>
+              <Col>
+                <CardText className="text-right" tag="h6">
+                  {writer}
+                </CardText>
+              </Col>
             </Row>
             <Row>
               <Card

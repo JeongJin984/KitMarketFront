@@ -15,6 +15,9 @@ import {
   SIGNUP_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILURE,
 } from '../data/eventName/userEventName';
 
 export const initialState = {
@@ -29,6 +32,8 @@ export const initialState = {
   isLoadingProfile: false,
   isLoadedProfile: false,
   profile: null,
+  isUpdatingProfile: false,
+  isUpdatedProfile: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -123,7 +128,22 @@ const userReducer = (state = initialState, action) => {
         draft.error = action.error;
         break;
 
-      default:
+      case UPDATE_PROFILE_REQUEST:
+        draft.isUpdatingProfile = true;
+        draft.isUpdatedProfile = false;
+        draft.error = '';
+        break;
+
+      case UPDATE_PROFILE_SUCCESS:
+        draft.isUpdatingProfile = false;
+        draft.isUpdatedProfile = true;
+        draft.error = '';
+        break;
+
+      case UPDATE_PROFILE_FAILURE:
+        draft.isUpdatingProfile = false;
+        draft.isUpdatedProfile = false;
+        draft.error = action.error;
         break;
     }
   });
